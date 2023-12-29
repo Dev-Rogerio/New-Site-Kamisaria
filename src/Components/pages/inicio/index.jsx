@@ -77,7 +77,6 @@ function Inicio() {
             <h1>KAMISARIA ZANUTO</h1>
           </article>
         </div>
-
         <div className="divRight">
           <div className="divMenu">
             <ul className="divUl">
@@ -100,7 +99,6 @@ function Inicio() {
               <li>
                 <span className="material-symbols-outlined iconMenu">wc</span>
                 <a href="/">Vestuário</a>
-
                 <div className="dropDown-subMenu">
                   <ul>
                     <li>
@@ -140,7 +138,6 @@ function Inicio() {
           </div>
         </div>
       </nav>
-
       <main className="main">
         <div className="main-container">
           <section className="background">
@@ -169,7 +166,6 @@ function Inicio() {
           </section>
         </div>
       </main>
-
       <article className="article">
         <div className="first-article">
           <div className="article-left">
@@ -186,7 +182,6 @@ function Inicio() {
           </div>
         </div>
       </article>
-
       <aside className="aside">
         <div className="second-aside">
           <div className="aside-left">
@@ -203,7 +198,6 @@ function Inicio() {
           </div>
         </div>
       </aside>
-
       <footer className="footerContainer">
         <section className="sectionFooter">
           <div className="redesociais">
@@ -250,7 +244,6 @@ function Inicio() {
           </div>
         </section>
       </footer>
-
       <div className="divEnd">
         <p> &copy; Fundada desde: 1974</p>
         <p className="adress-site"> www.kamisariazanuto.com.br</p>
