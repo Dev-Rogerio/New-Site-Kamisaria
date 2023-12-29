@@ -3,6 +3,6 @@ import Inicio from "./inicio/index";
 
 test("renders menu home", () => {
   render(<Inicio />);
-  const linkElement = screen.getByText("Home");
+  const linkElement = screen.getByText("Contato");
   expect(linkElement).toBeInTheDocument();
 });

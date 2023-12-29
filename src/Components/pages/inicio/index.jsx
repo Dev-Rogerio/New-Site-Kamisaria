@@ -128,7 +128,7 @@ function Inicio() {
                   </ul>
                 </div>
               </li>
-              <li className="liContato" onClick={""}>
+              <li className="liContato">
                 <span className="material-symbols-outlined iconSubMenu">
                   phone_in_talk
                 </span>
