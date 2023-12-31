@@ -284,3 +284,139 @@ textarea:hover {
     margin: 0;
     border-radius: 4px;
 }
+
+@media screen and (max-width: 600px) {
+    .section-container {
+        margin-top: -130px;
+        display: block;
+        width: 96%;
+        height: 100%;
+
+    }
+
+    .footerContainer {
+        margin-top: 30px;
+        height: 460px;
+        /* margin-top: 150px; */
+
+    }
+
+    .formName {
+        background-color: yellow;
+    }
+
+    .spanName {
+        background-color: royalblue;
+    }
+
+    .divMenu {
+        background-color: orange;
+        width: 95px;
+    }
+
+    .divMenu {
+        width: 95px;
+        background-color: green;
+    }
+
+
+
+    .divLeft {
+        width: 98px;
+        background-color: blue;
+    }
+
+    .grid-left {
+        height: 340px;
+        width: 100%;
+
+
+    }
+
+    .info-login {
+        width: 340px;
+        height: 280px;
+    }
+
+    .area {
+        border: none;
+        border: 1px solid #222;
+    }
+
+    .text-tittle {
+        font-size: 8px;
+
+
+
+    }
+
+    .footerContainer {
+        margin-top: 10px;
+        height: 430px;
+    }
+
+
+
+    .grid-right {
+        height: 170px;
+        width: 100%;
+    }
+
+    .img-telefonista {
+        width: 340px;
+    }
+
+    .botton {
+        margin-top: 30px;
+    }
+
+    .sectionFooter {
+        margin-top: 10px;
+        display: block;
+        height: 380px;
+        justify-content: center;
+    }
+
+    .divAdress {
+        margin: 0;
+        width: 340px;
+
+    }
+
+    .divAdress p {
+        margin-left: 7px;
+        font-size: 10px;
+    }
+
+    .imgs {
+        margin-top: -120px;
+    }
+
+    .redesociais {
+        height: 80px;
+    }
+
+    .divMaps {
+        margin-top: 10px;
+        width: 340px;
+    }
+
+    .inputName {
+        width: 58px;
+
+    }
+
+    .inputEmail {
+        width: 50px;
+        background-color: orangered;
+        height: 500px;
+    }
+
+
+    .headContainner {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+}

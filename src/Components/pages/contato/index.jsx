@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../../img/logovetorizadoKZ.png";
 import Telefonista from "../../img/telefonista.jpg";
-import Mapa from "../../img/mapa.png";
+import Mapa from "../../img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
