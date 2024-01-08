@@ -1,13 +1,7 @@
 import React from "react";
-import "../inicio/style.css";
 
-import Capa from "../../img/capa.jpg";
-import One from "../../img/kz1.jpg";
-import Two from "../../img/kz2.jpg";
-import Three from "../../img/kz3.jpg";
-import Four from "../../img/kz4.jpg";
-import Logo from "../../img/logovetorizadoKZ.png";
-import Mapa from "../../img/mapa.jpg";
+import Logo from "../../../img/logovetorizadoKZ.png";
+import Mapa from "../../../img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -15,7 +9,25 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 
-function Inicio() {
+import "./style.css";
+
+function shirtMan() {
+    function contato() {
+        var contato = document.querySelector(".liContato a");
+
+        if (contato) {
+            window.open("http://localhost:3000/contato");
+        }
+    }
+    contato();
+
+    function subMan() {
+        var subman = document.querySelector(".man");
+        if (subman) {
+            window.open("http://localhost:3000/masculino");
+        }
+    }
+    subMan();
     function iconInsta() {
         var insta = document.querySelector(".insta");
         if (insta) {
@@ -56,6 +68,14 @@ function Inicio() {
     }
     iconWhats();
 
+    function DropDownMan() {
+        var subman = document.querySelector(".man");
+        if (subman) {
+            window.open("http://localhost:3000/man");
+        }
+    }
+    DropDownMan();
+
     function locationMap() {
         var urlMapa = document.querySelector(".divMaps img");
 
@@ -64,14 +84,6 @@ function Inicio() {
         }
     }
     locationMap();
-
-    // function contato() {
-    //     var contato = document.querySelector(".liContato a");
-
-    //     if (contato) {
-    //         window.open("http://localhost:3000/contato");
-    //     }
-    // }
 
     return (
         <header className="headContainner">
@@ -113,7 +125,10 @@ function Inicio() {
                                 <a href="/">Vestuário</a>
                                 <div className="dropDown-subMenu">
                                     <ul>
-                                        <li>
+                                        <li
+                                            className="man"
+                                            onClick={DropDownMan}
+                                        >
                                             <a href="/">
                                                 <span className="material-symbols-outlined iconMenu">
                                                     man_4
@@ -144,7 +159,7 @@ function Inicio() {
                                 <span className="material-symbols-outlined iconSubMenu">
                                     phone_in_talk
                                 </span>
-                                <a href="/" onClick={"contato"}>
+                                <a href="/" onClick={contato}>
                                     Contato
                                 </a>
                             </li>
@@ -152,69 +167,7 @@ function Inicio() {
                     </div>
                 </div>
             </nav>
-            <main className="main">
-                <div className="main-container">
-                    <section className="background">
-                        <div className="main-left">
-                            <section>
-                                <div className="mainTittle">
-                                    <h1>nossa tradição</h1>
-                                </div>
-                                <div className="mainDescription">
-                                    <p>
-                                        A Kamisaria Zanuto produz camisas sob
-                                        medida há 40 anos, nossa especialidade é
-                                        o corte preciso, a costura perfeita e o
-                                        caseamento impecável. Hoje também
-                                        contamos com a nossa divisão de
-                                        alfaiataria, onde você encontrará
-                                        tecidos da mais alta qualidade,
-                                        aviamentos especiais e o corte adequado
-                                        para o seu biotipo.
-                                    </p>
-                                </div>
-                            </section>
-                        </div>
-                        <div className="main-right">
-                            <article className="divPhoto">
-                                <img src={Capa} alt="" />
-                            </article>
-                        </div>
-                    </section>
-                </div>
-            </main>
-            <article className="article">
-                <div className="first-article">
-                    <div className="article-left">
-                        <div className="divImg1">
-                            <div className="img-txt">sob medida</div>
-                            <img src={One} alt="" />
-                        </div>
-                    </div>
-                    <div className="article-right">
-                        <div className="divImg2">
-                            <div className="img-txt">Alfaiataria</div>
-                            <img src={Two} alt="" />
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <aside className="aside">
-                <div className="second-aside">
-                    <div className="aside-left">
-                        <div className="divImg3">
-                            <div className="img-txt">acessórios</div>
-                            <img src={Three} alt="" />
-                        </div>
-                    </div>
-                    <div className="aside-right">
-                        <div className="divImg4">
-                            <div className="img-txt">bordados</div>
-                            <img src={Four} alt="" />
-                        </div>
-                    </div>
-                </div>
-            </aside>
+
             <footer className="footerContainer">
                 <section className="sectionFooter">
                     <div className="redesociais">
@@ -286,4 +239,4 @@ function Inicio() {
         </header>
     );
 }
-export default Inicio;
+export default shirtMan;

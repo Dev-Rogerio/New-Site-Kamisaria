@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Inicio from "./inicio/index";
+import Inicio from "./init/index";
 
 test("renders menu home", () => {
     render(<Inicio />);

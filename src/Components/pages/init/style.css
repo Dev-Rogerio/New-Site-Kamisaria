@@ -550,6 +550,7 @@ article h1 {
 
 /* Estilo para telas menores que 60px de largura */
 
+
 @media screen and (max-width: 600px) {
 
     .divNav {
@@ -587,6 +588,11 @@ article h1 {
         align-items: center;
     }
 
+    .mainDescription {
+        text-indent: 20px;
+        letter-spacing: 0.1px;
+    }
+
     .main-container {
         margin-top: -30%;
         height: 200px;
@@ -602,23 +608,24 @@ article h1 {
     }
 
     .mainDescription p {
-        font-size: 12px;
+        font-size: 13px;
     }
 
     .article {
         display: block;
-        margin-top: 400px;
-        height: 200px;
+        margin-top: 220px;
+        height: 95%;
     }
 
     .aside {
         display: block;
-        margin-top: 335px;
+        width: 100%;
+        height: 95%;
+        margin-top: 3px;
     }
 
     .first-article {
-        margin-top: -180px;
-        height: 170px;
+        height: 160px;
         width: 95%;
         display: flex;
         justify-content: center;
@@ -629,8 +636,7 @@ article h1 {
     }
 
     .second-aside {
-        margin-top: -375px;
-        height: 170px;
+        height: 160px;
         width: 95%;
         display: flex;
         justify-content: center;
@@ -665,7 +671,7 @@ article h1 {
 
     .footerContainer {
         display: block;
-        margin-top: -330px;
+        margin-top: -30px;
         justify-content: center;
         align-items: center;
         width: 100%;
@@ -702,9 +708,9 @@ article h1 {
     }
 
     .divAdress {
-        background-color: var(--corTextGray);
+        border-top: 1px solid #CCC;
         margin-top: 0px;
-        width: 100%;
+        width: 90%;
     }
 
     .divAdress p {
@@ -734,6 +740,6 @@ article h1 {
     }
 
     .divEnd {
-        margin-top: 220px;
+        margin-top: -3px;
     }
 }
