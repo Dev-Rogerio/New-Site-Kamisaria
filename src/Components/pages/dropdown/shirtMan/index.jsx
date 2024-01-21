@@ -1,7 +1,18 @@
-import React from "react";
-
-import Logo from "../../../img/logovetorizadoKZ.png";
-import Mapa from "../../../img/mapa.jpg";
+import React, { useState } from "react";
+import Logo from "../../../Img/logovetorizadoKZ.png";
+import ImgTeen from "../../../Img/hz10.jpg";
+import ImgTwelve from "../../../Img/kz12.jpg";
+import ImgThirteen from "../../../Img/kz13.jpg";
+import ImgSeventeen from "../../../Img/kz17.jpg";
+import Mapa from "../../../Img/mapa.jpg";
+import ImgTwentOne from "../../../Img/kz21.jpg";
+import ImgTwentTwo from "../../../Img/kz22.jpg";
+import ImgTwentThree from "../../../Img/kz23.jpg";
+import ImgTwentFour from "../../../Img/kz24.jpg";
+import ImgTSixteen from "../../../Img/kz26.jpg";
+import Model from "../../../Img/man.jpg";
+import ImgOne from "../../../Img/kz1.jpg";
+import ImgTwo from "../../../Img/kz3.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -11,80 +22,63 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 
 import "./style.css";
 
-function shirtMan() {
+function ShirtMan() {
+    const [hide, setHide] = useState("hide");
+    const [muda, setMuda] = useState(false);
+
+    const Mudou = () => {
+        setMuda(true);
+    };
+    const toggleModal = () => {
+        if (hide) {
+            setHide("");
+        } else if (setHide) {
+            setHide("hide");
+        }
+    };
     function contato() {
-        var contato = document.querySelector(".liContato a");
+        const contato = document.querySelector(".liContato a");
 
         if (contato) {
-            window.open("http://localhost:3000/contato");
+            window.open("http://localhost:3000/contact");
         }
     }
-    contato();
-
-    function subMan() {
-        var subman = document.querySelector(".man");
-        if (subman) {
-            window.open("http://localhost:3000/masculino");
-        }
-    }
-    subMan();
     function iconInsta() {
-        var insta = document.querySelector(".insta");
+        const insta = document.querySelector(".insta");
         if (insta) {
             window.open("https://www.instagram.com/kamisariazanuto/");
         }
     }
-    iconInsta();
-
     function iconFace() {
-        var face = window.document.querySelector(".face");
+        const face = window.document.querySelector(".face");
         if (face) {
             window.open("https://web.facebook.com/kamisaria");
         }
     }
-    iconFace();
-
     function iconYoutube() {
-        var youtube = window.document.querySelector(".youtube");
+        const youtube = window.document.querySelector(".youtube");
         if (youtube) {
             window.open("https://www.youtube.com/watch?v=-qwyq3HSuSY");
         }
     }
-    iconYoutube();
-
     function iconPinterest() {
-        var pinterest = window.document.querySelector(".pinterest");
+        const pinterest = window.document.querySelector(".pinterest");
         if (pinterest) {
             window.open("https://br.pinterest.com/");
         }
     }
-    iconPinterest();
-
     function iconWhats() {
-        var whats = window.document.querySelector(".whats");
+        const whats = window.document.querySelector(".whats");
         if (whats) {
             window.open("https://web.whatsapp.com/");
         }
     }
-    iconWhats();
-
-    function DropDownMan() {
-        var subman = document.querySelector(".man");
-        if (subman) {
-            window.open("http://localhost:3000/man");
-        }
-    }
-    DropDownMan();
-
     function locationMap() {
-        var urlMapa = document.querySelector(".divMaps img");
-
+        const urlMapa = document.querySelector(".divMaps img");
         if (urlMapa) {
             window.open("https://bit.ly/kamisaria-zanuto");
         }
     }
-    locationMap();
-
     return (
         <header className="headContainner">
             <nav className="divNav">
@@ -125,10 +119,7 @@ function shirtMan() {
                                 <a href="/">Vestuário</a>
                                 <div className="dropDown-subMenu">
                                     <ul>
-                                        <li
-                                            className="man"
-                                            onClick={DropDownMan}
-                                        >
+                                        <li className="man">
                                             <a href="/">
                                                 <span className="material-symbols-outlined iconMenu">
                                                     man_4
@@ -167,7 +158,130 @@ function shirtMan() {
                     </div>
                 </div>
             </nav>
+            <section className="grid-section-man">
+                <div className="collumn-item">
+                    <img className="img-one" src={Model} alt=""></img>
+                </div>
 
+                <div className="collumn-item">
+                    <div className="first-name">
+                        <img className="img-two" src={ImgOne} alt=""></img>
+                    </div>
+                </div>
+
+                <div className="collumn-item">
+                    <div className="first-name">
+                        <img className="img-third" src={ImgTwo} alt=""></img>
+                    </div>
+                </div>
+            </section>
+            <div className="photobook">
+                <h1>PHOTO BOOKS</h1>
+            </div>
+
+            <section id="modal-tailor" className={hide}>
+                <div className="modal-titlle">
+                    <h2>Alfaiatária</h2>
+                    <button
+                        id="close-tailor"
+                        className="button-tailor"
+                        onClick={toggleModal}
+                    >
+                        X
+                    </button>
+                </div>
+
+                <section className="modal-tailor-boby">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Impedit, officia voluptates. Itaque, quae. Ab harum sunt
+                        assumenda, dolore qui quae voluptatum nulla facilis
+                        earum atque, explicabo in ad rerum itaque.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Impedit, officia voluptates. Itaque, quae. Ab harum sunt
+                        assumenda, dolore qui quae voluptatum nulla facilis
+                        earum atque, explicabo in ad rerum itaque.
+                    </p>
+                </section>
+            </section>
+
+            <section className="grid-collumn-second js-accordion">
+                <div className="collumn-item-two">
+                    <img src={ImgTwelve} alt="" />
+                    <div className="text" onClick={toggleModal}>
+                        <h1>Alfaiatária</h1>
+                        <p onClick={Mudou}>
+                            {muda ? "false mais ⬏" : "true menos ⬎"}{" "}
+                        </p>
+                    </div>
+                </div>
+                <div className="collumn-item-two">
+                    <img src={ImgThirteen} alt="" />
+                    <div className="text">
+                        <h1>Alta costura</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+                <div className="collumn-item-two">
+                    <img src={ImgTSixteen} alt="" />
+                    <h1>Sob medida</h1>
+                </div>
+            </section>
+            <section className="grid-collumn-second js-accordion">
+                <div className="collumn-item-two">
+                    <img src={ImgSeventeen} alt="" />
+                    <div className="text">
+                        <h1>Abotuaduras</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+                <div className="collumn-item-two">
+                    <img src={ImgTwentTwo} alt="" />
+                    <div className="text">
+                        <h1>Tecidos</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+                <div className="collumn-item-two">
+                    <img src={ImgTwentThree} alt="" />
+                    <div className="text">
+                        <h1>Grade</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+            </section>
+            <section className="grid-collumn-second js-accordion">
+                <div className="collumn-item-two">
+                    <img src={ImgTwentFour} alt="" />
+                    <div className="text">
+                        <h1>Bordados</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+                <div className="collumn-item-two">
+                    <img src={ImgTwentOne} alt="" />
+                    <div className="text">
+                        <h1>Personalizada</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+                <div className="collumn-item-two">
+                    <img src={ImgTeen} alt="" />
+                    <div className="text">
+                        <h1>Loja</h1>
+                        <p>saiba mais</p>
+                        <h3>⬎</h3>
+                    </div>
+                </div>
+            </section>
             <footer className="footerContainer">
                 <section className="sectionFooter">
                     <div className="redesociais">
@@ -239,4 +353,4 @@ function shirtMan() {
         </header>
     );
 }
-export default shirtMan;
+export default ShirtMan;

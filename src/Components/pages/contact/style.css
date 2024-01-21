@@ -10,6 +10,7 @@ h2,
 * {
     padding: 0;
     margin: 0;
+
 }
 
 :root {
@@ -22,7 +23,7 @@ h2,
 .section-container {
     display: flex;
     grid-column: 1/4;
-    background-color: rgba(221, 221, 216, 0.6);
+    background-color: rgba(184, 184, 182, 0.6);
     width: 100%;
     height: 350px;
     margin: 0;
@@ -36,14 +37,11 @@ h2,
     align-items: center;
     letter-spacing: 0.8;
     color: #222;
-    font-weight: 600;
+    font-weight: 400;
     height: 20px;
-    font-size: 12px;
-    text-transform: uppercase;
-    margin-top: 7px;
-    border-radius: 4px;
-    text-indent: 10px;
-    background-color: rgb(194, 192, 192);
+    font-size: 15px;
+    font-family: sans-serif;
+    margin: none;
 }
 
 .grid-left {
@@ -52,29 +50,23 @@ h2,
     height: 100%;
     justify-content: center;
     margin: 0;
-    border: 1px solid #222;
-    border-radius: 4px;
 }
 
 .grid-right {
     display: flex;
     margin: 0;
-    color: azure;
     justify-content: center;
     align-items: center;
     width: 35%;
     height: 100%;
-    border: 1px solid #222;
-    border-radius: 4px;
 }
 
 .info-login {
     display: block;
-    background-color: var(--corBeige);
-    width: 98%;
+    width: 100%;
     height: 98%;
-    border: 1px solid azure;
     border-radius: 4px;
+    margin: 0;
 }
 
 .secaoEmail {
@@ -86,7 +78,7 @@ h2,
 
 .area {
     max-width: 100%;
-    height: 40%;
+    height: 45%;
     margin: 0;
     margin-top: 18px;
     position: relative;
@@ -103,11 +95,7 @@ textarea {
     border-radius: 4px;
     border: none;
     border: 1px solid #222;
-}
-
-textarea:hover {
-    border-radius: 4px;
-    border: 1px solid #222;
+    outline: none;
 }
 
 .formName {
@@ -117,7 +105,6 @@ textarea:hover {
     height: 45px;
     margin: 0;
     margin-top: 4px;
-    border: 1px solid #222;
     border-radius: 4px;
 }
 
@@ -128,7 +115,6 @@ textarea:hover {
     height: 45px;
     margin: 0;
     margin-top: 18px;
-    border: 1px solid #222;
     border-radius: 4px;
 }
 
@@ -148,7 +134,7 @@ textarea:hover {
 .inputName {
     color: #070707;
     font-size: 15px;
-    width: 95%;
+    width: 85%;
     padding: 1px 1px 1px;
     border: none;
     border-radius: 4px;
@@ -159,10 +145,9 @@ textarea:hover {
 .inputEmail {
     color: #070707;
     font-size: 15px;
-    width: 100%;
+    width: 85%;
     padding: 1px 1px 1px;
     border: none;
-    border-radius: 4px;
     margin: 0;
     text-transform: capitalize;
 }
@@ -172,7 +157,7 @@ textarea:hover {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 95%;
     height: 20%;
     pointer-events: none;
     border-bottom: 1px solid #ffffff;
@@ -184,7 +169,7 @@ textarea:hover {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 95%;
     height: 20%;
     pointer-events: none;
     border-bottom: 1px solid #ffffff;
@@ -214,8 +199,7 @@ textarea:hover {
     position: absolute;
     left: 0;
     bottom: -3px;
-    width: 100%;
-    height: -100%;
+    width: 105%;
     border-bottom: 3px solid #070707;
     transform: translateX(-100%);
     transition: all 0.3s ease;
@@ -226,8 +210,7 @@ textarea:hover {
     position: absolute;
     left: 0;
     bottom: -3px;
-    width: 100%;
-    height: -100%;
+    width: 105%;
     border-bottom: 3px solid #070707;
     transform: translateX(-100%);
     transition: all 0.3s ease;
@@ -263,7 +246,7 @@ textarea:hover {
     display: flex;
     width: 100%;
     height: 30px;
-    background-color: #656464;
+    background-color: #222;
     border: 1px solid #222;
     border-radius: 4px;
     justify-content: center;
@@ -282,7 +265,6 @@ textarea:hover {
     width: 98%;
     height: 98%;
     margin: 0;
-    border-radius: 4px;
 }
 
 @media screen and (max-width: 600px) {
@@ -291,14 +273,11 @@ textarea:hover {
         display: block;
         width: 96%;
         height: 100%;
-
     }
 
     .footerContainer {
         margin-top: 30px;
         height: 460px;
-        /* margin-top: 150px; */
-
     }
 
     .formName {
@@ -314,13 +293,6 @@ textarea:hover {
         width: 95px;
     }
 
-    .divMenu {
-        width: 95px;
-        background-color: green;
-    }
-
-
-
     .divLeft {
         width: 98px;
         background-color: blue;
@@ -329,8 +301,6 @@ textarea:hover {
     .grid-left {
         height: 340px;
         width: 100%;
-
-
     }
 
     .info-login {
@@ -345,18 +315,8 @@ textarea:hover {
 
     .text-tittle {
         font-size: 8px;
-
-
-
     }
-
-    .footerContainer {
-        margin-top: 10px;
-        height: 430px;
-    }
-
-
-
+    
     .grid-right {
         height: 170px;
         width: 100%;
@@ -380,7 +340,6 @@ textarea:hover {
     .divAdress {
         margin: 0;
         width: 340px;
-
     }
 
     .divAdress p {
@@ -412,11 +371,9 @@ textarea:hover {
         height: 500px;
     }
 
-
     .headContainner {
         display: flex;
         justify-content: center;
         gap: 5px;
     }
-
 }

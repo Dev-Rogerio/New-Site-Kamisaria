@@ -1,13 +1,7 @@
 import React from "react";
-import "./style.css";
-
-import Capa from "../../img/capa.jpg";
-import One from "../../img/kz1.jpg";
-import Two from "../../img/kz2.jpg";
-import Three from "../../img/kz3.jpg";
-import Four from "../../img/kz4.jpg";
-import Logo from "../../img/logovetorizadoKZ.png";
-import Mapa from "../../img/mapa.jpg";
+import Logo from "../../Img/logovetorizadoKZ.png";
+import Telefonista from "../../Img/telefonista.jpg";
+import Mapa from "../../Img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -15,9 +9,11 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 
-function Inicio() {
+import "../Contact/style.css";
+
+function contact() {
     function iconInsta() {
-        var insta = document.querySelector(".insta");
+        const insta = document.querySelector(".insta");
         if (insta) {
             window.open("https://www.instagram.com/kamisariazanuto/");
         }
@@ -25,7 +21,7 @@ function Inicio() {
     iconInsta();
 
     function iconFace() {
-        var face = window.document.querySelector(".face");
+        const face = window.document.querySelector(".face");
         if (face) {
             window.open("https://web.facebook.com/kamisaria");
         }
@@ -33,7 +29,7 @@ function Inicio() {
     iconFace();
 
     function iconYoutube() {
-        var youtube = window.document.querySelector(".youtube");
+        const youtube = window.document.querySelector(".youtube");
         if (youtube) {
             window.open("https://www.youtube.com/watch?v=-qwyq3HSuSY");
         }
@@ -41,7 +37,7 @@ function Inicio() {
     iconYoutube();
 
     function iconPinterest() {
-        var pinterest = window.document.querySelector(".pinterest");
+        const pinterest = window.document.querySelector(".pinterest");
         if (pinterest) {
             window.open("https://br.pinterest.com/");
         }
@@ -49,7 +45,7 @@ function Inicio() {
     iconPinterest();
 
     function iconWhats() {
-        var whats = window.document.querySelector(".whats");
+        const whats = window.document.querySelector(".whats");
         if (whats) {
             window.open("https://web.whatsapp.com/");
         }
@@ -57,7 +53,7 @@ function Inicio() {
     iconWhats();
 
     function locationMap() {
-        var urlMapa = document.querySelector(".divMaps img");
+        const urlMapa = document.querySelector(".divMaps img");
 
         if (urlMapa) {
             window.open("https://bit.ly/kamisaria-zanuto");
@@ -65,22 +61,21 @@ function Inicio() {
     }
     locationMap();
 
-    function contato() {
-        var contato = document.querySelector(".liContato a");
-
-        if (contato) {
-            window.open("http://localhost:3000/contact");
-        }
-    }
-    contato();
-
-    function subMan() {
-        var subman = document.querySelector(".man");
+    function DropDownMan() {
+        const subman = document.querySelector(".man");
         if (subman) {
             window.open("http://localhost:3000/man");
         }
     }
-    subMan();
+    DropDownMan();
+
+    function DropDownWoman() {
+        const subWoman = document.querySelector(".woman");
+        if (subWoman) {
+            window.open("http://localhost:3000/woman");
+        }
+    }
+    DropDownWoman();
 
     return (
         <header className="headContainner">
@@ -99,41 +94,47 @@ function Inicio() {
                         <ul className="divUl">
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    home
+                                    {/* home */}
                                 </span>
                                 <a href="/">Home</a>
                             </li>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    local_library
+                                    {/* local_library */}
                                 </span>
                                 <a href="/">História</a>
                             </li>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    design_services
+                                    {/* design_services */}
                                 </span>
                                 <a href="/">Serviços</a>
                             </li>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    wc
+                                    {/* wc */}
                                 </span>
                                 <a href="/">Vestuário</a>
                                 <div className="dropDown-subMenu">
                                     <ul>
-                                        <li className="man" onClick={subMan}>
+                                        <li
+                                            className="man"
+                                            onClick={DropDownMan}
+                                        >
                                             <a href="/">
                                                 <span className="material-symbols-outlined iconMenu">
-                                                    man_4
+                                                    {/* man_4 */}
                                                 </span>
                                                 <h1> Camisa Masc.</h1>
                                             </a>
                                         </li>
-                                        <li>
+                                        <li
+                                            className="woman"
+                                            onClick={DropDownWoman}
+                                        >
                                             <a href="/">
                                                 <span className="material-symbols-outlined iconSubMenu">
-                                                    woman
+                                                    {/* woman */}
                                                 </span>
                                                 <h1>Camisa Fem.</h1>
                                             </a>
@@ -141,7 +142,7 @@ function Inicio() {
                                         <li>
                                             <a href="/">
                                                 <span className="material-symbols-outlined  iconSubMenu">
-                                                    straighten
+                                                    {/* straighten */}
                                                 </span>
                                                 <h1>Medidas</h1>
                                             </a>
@@ -151,84 +152,60 @@ function Inicio() {
                             </li>
                             <li className="liContato">
                                 <span className="material-symbols-outlined iconSubMenu">
-                                    phone_in_talk
+                                    {/* phone_in_talk */}
                                 </span>
-                                <a href="/" onClick={contato}>
-                                    Contato
-                                </a>
+                                <a href="/">Contato</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            <main className="main">
-                <div className="main-container">
-                    <section className="background">
-                        <div className="main-left">
-                            <section>
-                                <div className="mainTittle">
-                                    <h1>nossa tradição</h1>
-                                </div>
-                                <div className="mainDescription">
-                                    <p>
-                                        A Kamisaria Zanuto produz camisas sob
-                                        medida há 40 anos, nossa especialidade é
-                                        o corte preciso, a costura perfeita e o
-                                        caseamento impecável. Hoje também
-                                        contamos com a nossa divisão de
-                                        alfaiataria, onde você encontrará
-                                        tecidos da mais alta qualidade,
-                                        aviamentos especiais e o corte adequado
-                                        para o seu biotipo.
-                                    </p>
-                                </div>
-                            </section>
+            <section className="section-container">
+                <div className="grid-left">
+                    <section className="info-login">
+                        <p className="text-tittle">Entre em contato conosco</p>
+                        <form className="formName">
+                            <input
+                                className="inputName"
+                                name="name"
+                                autoComplete="off"
+                                required
+                                onBlur={""}
+                            />
+                            <label className="labelName" form="name">
+                                <span className="spanName">Name</span>
+                            </label>
+                        </form>
+                        <p className="required-fild-name"></p>
+                        <form className="formEmail">
+                            <input
+                                className="inputEmail"
+                                name="email"
+                                autoComplete="off"
+                                required
+                                onBlurCapture={""}
+                            />
+                            <label className="labelEmail" form="email">
+                                <span className="spanEmail">E-mail</span>
+                            </label>
+                            <p className="required-fild-name"></p>
+                        </form>
+                        <div className="area">
+                            <textarea rows="5" cols="8"></textarea>
                         </div>
-                        <div className="main-right">
-                            <article className="divPhoto">
-                                <img src={Capa} alt="" />
-                            </article>
-                        </div>
+                        <button className="botton">enviar</button>
                     </section>
                 </div>
-            </main>
-            <article className="article">
-                <div className="first-article">
-                    <div className="article-left">
-                        <div className="divImg1">
-                            <div className="img-txt">sob medida</div>
-                            <img src={One} alt="" />
-                        </div>
-                    </div>
-                    <div className="article-right">
-                        <div className="divImg2">
-                            <div className="img-txt">Alfaiataria</div>
-                            <img src={Two} alt="" />
-                        </div>
-                    </div>
+                <div className="grid-right">
+                    <img className="img-telefonista" src={Telefonista} alt="" />
                 </div>
-            </article>
-            <aside className="aside">
-                <div className="second-aside">
-                    <div className="aside-left">
-                        <div className="divImg3">
-                            <div className="img-txt">acessórios</div>
-                            <img src={Three} alt="" />
-                        </div>
-                    </div>
-                    <div className="aside-right">
-                        <div className="divImg4">
-                            <div className="img-txt">bordados</div>
-                            <img src={Four} alt="" />
-                        </div>
-                    </div>
-                </div>
-            </aside>
+            </section>
+
             <footer className="footerContainer">
                 <section className="sectionFooter">
                     <div className="redesociais">
                         <div className="divTextName">
-                            <p>Siga a kamisaria zanuto</p>
+                            <p>Siga a kamisaria Zanuto</p>
                         </div>
                         <div className="iconsSociais ">
                             <a
@@ -281,10 +258,13 @@ function Inicio() {
                         </p>
                     </div>
                     <div className="divMaps">
-                        <div className="clique" onClick={locationMap}>
-                            Clique
-                        </div>
-                        <img className="imgs" src={Mapa} alt="" />
+                        <div className="clique">Clique </div>
+                        <img
+                            className="imgs"
+                            // onClick={takePath}
+                            src={Mapa}
+                            alt=""
+                        />
                     </div>
                 </section>
             </footer>
@@ -295,4 +275,4 @@ function Inicio() {
         </header>
     );
 }
-export default Inicio;
+export default contact;

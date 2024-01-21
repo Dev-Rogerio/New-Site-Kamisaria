@@ -1,0 +1,74 @@
+* {
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    padding: 1rem;
+}
+h2 {
+    padding: 1rem;    
+}
+.button-tailor {
+    padding:  0.3rem 0.5rem;
+    color: #888;
+    border: none;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    opacity: .8;
+    font-size: 1rem;
+    transition: 0.4s;
+}
+.button-tailor:hover {
+    opacity: 1;    
+}
+#window-tailor, #modal-tailor {
+    transition: 0.5s;
+    opacity: 1;
+    pointer-events: all;
+}
+#window-tailor {
+    position: fixed;
+    background-color: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5s;
+}
+#modal-tailor {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    background-color: #ccc;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-width: 90%;
+    padding: 1.2rem;
+    border-radius: 0.5rem;
+}
+.modal-titlle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #888;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+.modal-tailor-boby p {
+    margin-bottom: 1rem;
+    text-indent: 20px;
+    text-align: justify;
+}
+.hide {
+    display: none;
+}
+
+
+
+
+
+
