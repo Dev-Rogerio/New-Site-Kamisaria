@@ -1,12 +1,13 @@
 import React from "react";
+import "./style.css";
 
-function Sewing({ ativo, setAtivo }) {
+const Tailor = ({ ativo, setAtivo }) => {
     return (
         <>
             {ativo ? (
                 <section id="modal-tailor">
                     <div className="modal-titlle">
-                        <h2>Alta Costura</h2>
+                        <h2>Tailor</h2>
                         <button
                             id="close-tailor"
                             className="button-tailor"
@@ -35,5 +36,5 @@ function Sewing({ ativo, setAtivo }) {
             ) : null}
         </>
     );
-}
-export default Sewing;
+};
+export default Tailor;

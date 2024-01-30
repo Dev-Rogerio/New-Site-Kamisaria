@@ -15,7 +15,7 @@ h2 {
     color: #888;
     border: none;
     border-radius: 50%;
-    background-color: #ccc;
+    background-color: #fff;
     cursor: pointer;
     opacity: .8;
     font-size: 1rem;
@@ -42,7 +42,7 @@ h2 {
     position: fixed;
     left: 50%;
     top: 50%;
-    background-color: #ccc;
+    background-color: #fff;
     z-index: 10;
     transform: translate(-50%, -50%);
     width: 500px;
@@ -62,9 +62,6 @@ h2 {
     margin-bottom: 1rem;
     text-indent: 20px;
     text-align: justify;
-}
-.hide {
-    display: none;
 }
 
 

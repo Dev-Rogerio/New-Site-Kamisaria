@@ -1,12 +1,12 @@
 import React from "react";
 
-function Sewing({ ativo, setAtivo }) {
+function Cufflinks({ ativo, setAtivo }) {
     return (
-        <>
+        <divFragm>
             {ativo ? (
                 <section id="modal-tailor">
                     <div className="modal-titlle">
-                        <h2>Alta Costura</h2>
+                        <h2>Abotoaduras</h2>
                         <button
                             id="close-tailor"
                             className="button-tailor"
@@ -33,7 +33,7 @@ function Sewing({ ativo, setAtivo }) {
                     </section>
                 </section>
             ) : null}
-        </>
+        </divFragm>
     );
 }
-export default Sewing;
+export default Cufflinks;

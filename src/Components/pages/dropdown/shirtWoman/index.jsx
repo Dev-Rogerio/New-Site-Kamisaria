@@ -1,4 +1,5 @@
 import React from "react";
+import "../ShirtWoman/style.css";
 
 function shirtWoman() {
     return (

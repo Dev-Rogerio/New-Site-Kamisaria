@@ -6,7 +6,14 @@ import Contact from "./Components/Pages/Contact/index.jsx";
 import ShirtMan from "./Components/Pages/Dropdown/ShirtMan/index.jsx";
 import ShirtWoman from "./Components/Pages/Dropdown/ShirtWoman/index.jsx";
 import Sewing from "./Components/Modal/Sewing/index.jsx";
-import Alfaiataria from "../src/Components/Modal/Alfaiataria/index.jsx";
+import Tailor from "./Components/Modal/Tailor/index.jsx";
+import Measure from "./Components/Modal/Measure/index.jsx";
+import Tissue from "./Components/Modal/Tissue/index.jsx";
+import Cufflinks from "./Components/Modal/Cufflinks/index.jsx";
+import Grid from "./Components/Modal/Grid/index.jsx";
+import Embroidery from "./Components/Modal/Embroidery/index.jsx";
+import Custom from "./Components/Modal/Custom/index.jsx";
+import Store from "./Components/Modal/Store/index.jsx";
 
 function App() {
     return (
@@ -19,7 +26,14 @@ function App() {
                     <Route path="/woman" element={<ShirtWoman />} />
                     <Route path="/shirtman" element={<ShirtMan />} />
                     <Route path="/sewing" element={<Sewing />} />
-                    <Route path="/alfaiataria" element={<Alfaiataria />} />
+                    <Route path="/tailor" element={<Tailor />} />
+                    <Route path="/measure" element={<Measure />} />
+                    <Route path="/tissue" element={<Tissue />} />
+                    <Route path="/cufflinks" element={<Cufflinks />} />
+                    <Route path="/grid" element={<Grid />} />
+                    <Route path="/embroidery" element={<Embroidery />} />
+                    <Route path="/custom" element={<Custom />} />
+                    <Route path="/store" element={<Store />} />
                 </Routes>
             </Router>
         </div>

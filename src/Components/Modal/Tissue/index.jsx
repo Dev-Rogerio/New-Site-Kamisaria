@@ -1,20 +1,21 @@
 import React from "react";
 
-function Sewing({ ativo, setAtivo }) {
+const Tissue = ({ showtissue, setShowtissue }) => {
     return (
         <>
-            {ativo ? (
-                <section id="modal-tailor">
+            {showtissue ? (
+                <section id="modal-tailor" className={""}>
                     <div className="modal-titlle">
-                        <h2>Alta Costura</h2>
+                        <h2>Tecidos</h2>
                         <button
                             id="close-tailor"
                             className="button-tailor"
-                            onClick={() => setAtivo(false)}
+                            onClick={() => setShowtissue(false)}
                         >
                             X
                         </button>
                     </div>
+
                     <section className="modal-tailor-boby">
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing
@@ -35,5 +36,5 @@ function Sewing({ ativo, setAtivo }) {
             ) : null}
         </>
     );
-}
-export default Sewing;
+};
+export default Tissue;

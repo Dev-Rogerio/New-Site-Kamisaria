@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Sewing({ ativo, setAtivo }) {
+function Custom({ ativo, setAtivo }) {
     return (
-        <>
+        <divFragment>
             {ativo ? (
                 <section id="modal-tailor">
                     <div className="modal-titlle">
-                        <h2>Alta Costura</h2>
+                        <h2>Personalizada</h2>
                         <button
                             id="close-tailor"
                             className="button-tailor"
@@ -33,7 +33,7 @@ function Sewing({ ativo, setAtivo }) {
                     </section>
                 </section>
             ) : null}
-        </>
+        </divFragment>
     );
 }
-export default Sewing;
+export default Custom;
