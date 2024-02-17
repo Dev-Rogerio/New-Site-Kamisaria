@@ -11,12 +11,14 @@ h2,
     padding: 0;
     margin: 0;
 }
+
 :root {
     --corBeige: beige;
     --corRodape: #222;
     --corTittle: orange;
     --corTextGray: #7f7e7e;
 }
+
 .section-container {
     display: flex;
     grid-column: 1/4;
@@ -27,6 +29,7 @@ h2,
     grid-template-columns: 50% 50%;
     justify-content: space-around;
 }
+
 .text-tittle {
     display: flex;
     justify-content: start;
@@ -39,6 +42,7 @@ h2,
     font-family: sans-serif;
     margin: none;
 }
+
 .grid-left {
     display: flex;
     width: 35%;
@@ -46,6 +50,7 @@ h2,
     justify-content: center;
     margin: 0;
 }
+
 .grid-right {
     display: flex;
     margin: 0;
@@ -54,6 +59,7 @@ h2,
     width: 35%;
     height: 100%;
 }
+
 .info-login {
     display: block;
     width: 100%;
@@ -61,12 +67,14 @@ h2,
     border-radius: 4px;
     margin: 0;
 }
+
 .secaoEmail {
     display: block;
     width: 100%;
     margin: 0;
     margin-top: 5px;
 }
+
 .area {
     max-width: 100%;
     height: 45%;
@@ -75,18 +83,20 @@ h2,
     position: relative;
     border-radius: 4px;
 }
+
 textarea {
     width: 99%;
     height: 95%;
     position: absolute;
-    background-color: rgb(255, 253, 190);
+
     text-indent: 10px;
     text-transform: capitalize;
     border-radius: 4px;
     border: none;
-    border: 1px solid #222;
+
     outline: none;
 }
+
 .formName {
     overflow: hidden;
     position: relative;
@@ -96,26 +106,31 @@ textarea {
     margin-top: 4px;
     border-radius: 4px;
 }
+
 .formEmail {
     overflow: hidden;
     position: relative;
     width: 100%;
     height: 45px;
     margin: 0;
-    margin-top: 18px;
+    margin-top: 10px;
     border-radius: 4px;
 }
+
 .info-login input {
     width: 100%;
     height: 100%;
     border-radius: 3px;
     box-shadow: 7px #222;
     outline: none;
+
 }
+
 .required-fild-name {
     font-size: 10px;
     color: red;
 }
+
 .inputName {
     color: #070707;
     font-size: 15px;
@@ -123,9 +138,11 @@ textarea {
     padding: 1px 1px 1px;
     border: none;
     border-radius: 4px;
-    margin: 0;
+    margin: 1;
     text-transform: capitalize;
+    margin-top: 8px;
 }
+
 .inputEmail {
     color: #070707;
     font-size: 15px;
@@ -134,9 +151,11 @@ textarea {
     border: none;
     margin: 0;
     text-transform: capitalize;
+    margin-top: 8px;
 }
+
 .labelName {
-    color: #070707;
+    color: #ccc;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -146,8 +165,9 @@ textarea {
     border-bottom: 1px solid #ffffff;
     margin: 0;
 }
+
 .labelEmail {
-    color: #070707;
+    color: #ccc;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -157,6 +177,7 @@ textarea {
     border-bottom: 1px solid #ffffff;
     margin: 0;
 }
+
 .spanName {
     position: absolute;
     bottom: 5px;
@@ -165,6 +186,7 @@ textarea {
     transition: all 0.3s ease;
     margin: 0;
 }
+
 .spanEmail {
     position: absolute;
     bottom: 5px;
@@ -173,6 +195,7 @@ textarea {
     transition: all 0.3s ease;
     margin: 0;
 }
+
 .labelName::after {
     content: "";
     position: absolute;
@@ -183,6 +206,7 @@ textarea {
     transform: translateX(-100%);
     transition: all 0.3s ease;
 }
+
 .labelEmail::after {
     content: "";
     position: absolute;
@@ -193,6 +217,7 @@ textarea {
     transform: translateX(-100%);
     transition: all 0.3s ease;
 }
+
 .inputName:focus+label span,
 .inputName:valid+label span {
     transform: translateY(-90%);
@@ -200,6 +225,7 @@ textarea {
     bottom: 10px;
     color: #070707;
 }
+
 .inputEmail:focus+label span,
 .inputEmail:valid+label span {
     transform: translateY(-90%);
@@ -207,14 +233,17 @@ textarea {
     bottom: 10px;
     color: #070707;
 }
+
 .inputName:focus+label::after,
 .inputName:valid+label::after {
     transform: translateX(0%);
 }
+
 .inputEmail:focus+label::after,
 .inputEmail:valid+label::after {
     transform: translateX(0%);
 }
+
 .botton {
     display: flex;
     width: 100%;
@@ -229,14 +258,17 @@ textarea {
     margin-top: 10px;
     font-size: 15px;
 }
+
 .botton:hover {
     background-color: #8d8a8a;
 }
+
 .img-telefonista {
     width: 98%;
     height: 98%;
     margin: 0;
 }
+
 @media screen and (max-width: 600px) {
     .section-container {
         margin-top: -130px;
@@ -244,81 +276,102 @@ textarea {
         width: 96%;
         height: 100%;
     }
+
     .footerContainer {
         margin-top: 30px;
         height: 460px;
     }
+
     .formName {
         background-color: yellow;
     }
+
     .spanName {
         background-color: royalblue;
     }
+
     .divMenu {
         background-color: orange;
         width: 95px;
     }
+
     .divLeft {
         width: 98px;
         background-color: blue;
     }
+
     .grid-left {
         height: 340px;
         width: 100%;
     }
+
     .info-login {
         width: 340px;
         height: 280px;
     }
+
     .area {
         border: none;
         border: 1px solid #222;
     }
+
     .text-tittle {
         font-size: 8px;
-    }    
+    }
+
     .grid-right {
         height: 170px;
         width: 100%;
     }
+
     .img-telefonista {
         width: 340px;
     }
+
     .botton {
         margin-top: 30px;
     }
+
     .sectionFooter {
         margin-top: 10px;
         display: block;
         height: 380px;
         justify-content: center;
     }
+
     .divAdress {
         margin: 0;
         width: 340px;
     }
+
     .divAdress p {
         margin-left: 7px;
         font-size: 10px;
     }
+
     .imgs {
         margin-top: -120px;
     }
+
     .redesociais {
         height: 80px;
     }
+
     .divMaps {
         margin-top: 10px;
         width: 340px;
     }
+
     .inputName {
         width: 58px;
     }
+
     .inputEmail {
         width: 50px;
         background-color: orangered;
         height: 500px;
     }
+
     .headContainner {
         display: flex;
         justify-content: center;

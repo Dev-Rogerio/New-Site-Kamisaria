@@ -14,6 +14,9 @@ import Grid from "./Components/Modal/Grid/index.jsx";
 import Embroidery from "./Components/Modal/Embroidery/index.jsx";
 import Custom from "./Components/Modal/Custom/index.jsx";
 import Store from "./Components/Modal/Store/index.jsx";
+import CustomShirt from "./Components/Pages/CustomShirt/index.jsx";
+import Sales from "./Components/Pages/Sales/sales.jsx";
+import Address from "./Components/Client/Address/address.jsx";
 
 function App() {
     return (
@@ -34,6 +37,9 @@ function App() {
                     <Route path="/embroidery" element={<Embroidery />} />
                     <Route path="/custom" element={<Custom />} />
                     <Route path="/store" element={<Store />} />
+                    <Route path="/customshirt" element={<CustomShirt />} />
+                    <Route path="/sales" element={<Sales />} />
+                    <Route path="/address" element={<Address />} />
                 </Routes>
             </Router>
         </div>

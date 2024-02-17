@@ -106,18 +106,27 @@ function ShirtMan() {
                                 </span>
                                 <a href="/">Home</a>
                             </li>
+                            <div className="traits">
+                                <p>|</p>
+                            </div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
                                     local_library
                                 </span>
                                 <a href="/">História</a>
                             </li>
+                            <div className="traits">
+                                <p>|</p>
+                            </div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
                                     design_services
                                 </span>
                                 <a href="/">Serviços</a>
                             </li>
+                            <div className="traits">
+                                <p>|</p>
+                            </div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
                                     wc
@@ -152,6 +161,9 @@ function ShirtMan() {
                                     </ul>
                                 </div>
                             </li>
+                            <div className="traits">
+                                <p>|</p>
+                            </div>
                             <li className="liContato">
                                 <span className="material-symbols-outlined iconSubMenu">
                                     phone_in_talk

@@ -14,9 +14,11 @@ h3,
     padding: 0;
     margin: 0;
 }
+
 body {
     width: 100vw;
 }
+
 :root {
     --corBeige: beige;
     --corRodape: #222;
@@ -24,6 +26,7 @@ body {
     --corTextGray: #7f7e7e;
     --corDropDown: #d3d0d0;
 }
+
 .headContainner {
     display: block;
     flex-wrap: wrap;
@@ -34,6 +37,7 @@ body {
     width: 100%;
     height: 100%;
 }
+
 .divNav {
     display: grid;
     width: 100vw;
@@ -44,24 +48,30 @@ body {
     margin: 0;
     z-index: 1;
 }
+
 .divLeft {
     width: 100%;
     height: 100%;
 }
+
 .divCenter {
     display: grid;
 }
+
 .divCenter section {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .divCenter article {
     justify-content: center;
 }
+
 .logokz {
     width: 85%;
 }
+
 article h1 {
     display: grid;
     font-size: 23px;
@@ -70,34 +80,40 @@ article h1 {
     grid-row: 1/4;
     white-space: nowrap;
 }
+
 .divRight {
     display: flex;
     width: 100%;
     justify-content: center;
     margin: 0;
 }
+
 .divMenu {
     width: 100%;
     height: 40px;
     margin: 0;
     display: flex;
+    align-items: center;
     margin-top: 20px;
-    justify-content: end;
+    justify-content: center;
 }
+
 .divUl {
     display: inline-flex;
     width: 85%;
     padding: 3px;
 }
+
 .divUl li {
     display: flex;
     width: 100%;
     align-items: center;
     list-style: none;
     margin: 0;
-    justify-content: start;
+    justify-content: center;
     text-transform: uppercase;
 }
+
 .divUl li a {
     font-size: 8px;
     margin-left: 1px;
@@ -106,31 +122,45 @@ article h1 {
     letter-spacing: 0.2px;
     font-weight: 600;
 }
+
 .divUl li a:hover {
     color: #97959a;
 }
+
 .divUl li span {
     display: flex;
     gap: 5px;
     margin: 2px;
     color: #575555;
 }
+
+.traits {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+}
+
 .material-symbols-outlined {
     font-size: 12px;
 }
+
 .dropDown-subMenu {
     display: none;
 }
+
 .divNav ul li:hover .dropDown-subMenu {
     display: block;
     background-color: #222;
     position: absolute;
-    margin-top: 152px;
+    margin-top: 139px;
     margin-left: 0;
     border-radius: 3px;
     height: 120px;
     width: 120px;
 }
+
 .dropDown-subMenu ul li a {
     display: flex;
     width: 100%;
@@ -141,13 +171,16 @@ article h1 {
     color: #e6e1e199;
     gap: 10px;
 }
+
 .dropDown-subMenu ul li a:hover {
     background-color: #ccc9;
     color: #060606;
 }
+
 .divNav ul li:hover .dropDown-subMenu ul li a {
     font-size: 5px;
 }
+
 .main {
     display: flex;
     width: 100%;
@@ -158,6 +191,7 @@ article h1 {
     background-color: blueviolet;
     margin-top: 40px;
 }
+
 .main-container {
     display: flex;
     width: 100%;
@@ -166,6 +200,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .background {
     display: grid;
     width: 100%;
@@ -176,6 +211,7 @@ article h1 {
     align-items: center;
     gap: 5px;
 }
+
 .main-left {
     display: flex;
     width: 100%;
@@ -184,10 +220,12 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .main-left section {
     width: 90%;
     height: 100%;
 }
+
 .main-right {
     width: 100%;
     height: 100%;
@@ -195,6 +233,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .mainTittle {
     font-size: 22px;
     text-transform: uppercase;
@@ -203,9 +242,11 @@ article h1 {
     font-style: italic;
     margin: 10px;
 }
+
 .mainTittle h1 {
     color: var(--corTittle);
 }
+
 .mainDescription {
     text-align: justify;
     text-indent: 70px;
@@ -215,10 +256,12 @@ article h1 {
     color: #ccc;
     margin-left: 10px;
 }
+
 .mainDescription p {
     font-size: larger;
     margin-right: 20px;
 }
+
 .divPhoto {
     display: flex;
     width: 100%;
@@ -226,10 +269,12 @@ article h1 {
     background-color: var(--corRodape);
     justify-content: end;
 }
+
 .divPhoto img {
     width: 100%;
     height: 100%;
 }
+
 .article {
     display: flex;
     width: 100%;
@@ -237,6 +282,7 @@ article h1 {
     justify-content: center;
     margin-top: 20px;
 }
+
 .aside {
     display: flex;
     width: 100%;
@@ -244,6 +290,7 @@ article h1 {
     justify-content: center;
     margin-top: 20px;
 }
+
 .first-article {
     display: grid;
     width: 95%;
@@ -253,6 +300,7 @@ article h1 {
     align-items: center;
     gap: 30px;
 }
+
 .second-aside {
     display: grid;
     width: 95%;
@@ -262,6 +310,7 @@ article h1 {
     align-items: center;
     gap: 30px;
 }
+
 .article-left {
     display: flex;
     width: 100%;
@@ -269,6 +318,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .aside-left {
     display: flex;
     width: 100%;
@@ -276,12 +326,15 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .aside-left img {
     border-radius: 5px;
 }
+
 .aside-right img {
     border-radius: 5px;
 }
+
 .article-right {
     display: flex;
     width: 100%;
@@ -290,12 +343,15 @@ article h1 {
     align-items: center;
     border-radius: 5px;
 }
+
 .article-right img {
     border-radius: 5px;
 }
+
 .article-left img {
     border-radius: 5px;
 }
+
 .aside-right {
     display: flex;
     width: 100%;
@@ -303,6 +359,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .divImg1 {
     display: flex;
     width: 100%;
@@ -311,6 +368,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .divImg2 {
     display: flex;
     width: 100%;
@@ -319,6 +377,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .divImg3 {
     display: flex;
     width: 100%;
@@ -327,6 +386,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .divImg4 {
     display: flex;
     width: 100%;
@@ -335,25 +395,30 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .divImg1 img {
     width: 100%;
     height: 100%;
     position: relative;
 }
+
 .divImg2 img {
     width: 100%;
     height: 100%;
     position: relative;
 }
+
 .divImg3 img {
     width: 100%;
     height: 100%;
     position: relative;
 }
+
 .divImg4 img {
     width: 100%;
     height: 100%;
 }
+
 .img-txt {
     position: absolute;
     z-index: 1;
@@ -366,6 +431,7 @@ article h1 {
     border-top: 5px solid #ccc;
     border-bottom: 5px solid #ccc;
 }
+
 .footerContainer {
     display: flex;
     background-color: var(--corRodape);
@@ -375,6 +441,7 @@ article h1 {
     margin-top: 20px;
     justify-content: center;
 }
+
 .sectionFooter {
     display: grid;
     grid-template-columns: 25% 50% 25%;
@@ -384,6 +451,7 @@ article h1 {
     justify-content: center;
     grid-gap: 25px;
 }
+
 .redesociais {
     display: block;
     width: 100%;
@@ -391,15 +459,18 @@ article h1 {
     justify-content: center;
     border-right: 2px solid beige;
 }
+
 .divAdress {
     margin: 0;
 }
+
 .divAdress p {
     color: #ccc;
     padding: 10px;
     text-align: justify;
     font-size: 12px;
 }
+
 .divTextName {
     display: grid;
     width: 100%;
@@ -412,6 +483,7 @@ article h1 {
     font-weight: 700;
     color: #ccc;
 }
+
 .iconsSociais {
     display: flex;
     margin: 0;
@@ -422,6 +494,7 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .divMaps {
     width: 83%;
     height: 100%;
@@ -431,6 +504,7 @@ article h1 {
     border-left: 2px solid beige;
     margin: 0;
 }
+
 .divMaps img {
     width: 55%;
     height: 90%;
@@ -438,6 +512,7 @@ article h1 {
     position: relative;
     cursor: pointer;
 }
+
 .clique {
     position: absolute;
     z-index: 1;
@@ -447,6 +522,7 @@ article h1 {
     border-bottom: 1px solid var(--corTextGray);
     cursor: pointer;
 }
+
 .divEnd {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -458,6 +534,7 @@ article h1 {
     margin-top: 2px;
     align-items: center;
 }
+
 .divEnd p {
     display: flex;
     font-size: 12px;
@@ -465,9 +542,11 @@ article h1 {
     justify-content: end;
     color: #ccc;
 }
+
 .adress-site {
     margin-right: 14%;
 }
+
 .icon-rede {
     background-color: beige;
     margin: 2px;
@@ -478,9 +557,11 @@ article h1 {
     justify-content: center;
     align-items: center;
 }
+
 .iconsSociais a {
     color: rgb(99, 98, 98);
 }
+
 /* Estilo para telas menores que 60px de largura */
 @media screen and (max-width: 600px) {
     .divNav {
@@ -488,58 +569,72 @@ article h1 {
         justify-content: center;
         align-items: center;
     }
+
     .divLeft {
         display: none;
     }
+
     .divRight {
         display: none;
     }
+
     .divCenter {
         width: 70%;
         margin: 0;
     }
+
     .divPhoto {
         margin-top: 20px;
         width: 95%;
     }
+
     .divCenter section img {
         width: 50%;
         margin-top: -40%;
     }
+
     article {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .mainDescription {
         text-indent: 20px;
         letter-spacing: 0.1px;
     }
+
     .main-container {
         margin-top: -30%;
         height: 200px;
     }
+
     .background {
         display: block;
         margin-top: 20px;
     }
+
     .mainTittle {
         font-size: 15px;
     }
+
     .mainDescription p {
         font-size: 13px;
     }
+
     .article {
         display: block;
         margin-top: 220px;
         height: 95%;
     }
+
     .aside {
         display: block;
         width: 100%;
         height: 95%;
         margin-top: 3px;
     }
+
     .first-article {
         height: 160px;
         width: 95%;
@@ -550,6 +645,7 @@ article h1 {
         margin-left: 10px;
         gap: 10px;
     }
+
     .second-aside {
         height: 160px;
         width: 95%;
@@ -560,24 +656,30 @@ article h1 {
         margin-left: 10px;
         gap: 10px;
     }
+
     .aside-left {
         height: 150px;
     }
+
     .aside-right {
         height: 150px;
     }
+
     .article-left {
         height: 150px;
     }
+
     .img-txt {
         font-size: 10px;
         border: 1px solid #ccc;
         border-left: none;
         border-right: none;
     }
+
     .article-right {
         height: 150px;
     }
+
     .footerContainer {
         display: block;
         margin-top: -30px;
@@ -585,42 +687,50 @@ article h1 {
         align-items: center;
         width: 100%;
     }
+
     .sectionFooter {
         display: grid;
         grid-template-columns: 1fr;
         width: 100%;
         margin-left: 10px;
     }
+
     .iconsSociais {
         width: 100%;
         height: 50px;
         display: flex;
         justify-content: center;
     }
+
     .iconsSociais a {
         width: 25px;
-        margin-top: -20px;       
+        margin-top: -20px;
     }
+
     .redesociais {
         display: block;
         justify-content: center;
         margin: 0;
         border: none;
     }
+
     .icon-rede svg {
         width: 60%;
     }
+
     .divAdress {
         border-top: 1px solid #CCC;
         margin-top: 0px;
         width: 90%;
     }
+
     .divAdress p {
         color: #fff;
         width: 88%;
         margin-right: 20px;
         margin-left: 20px;
     }
+
     .divMaps {
         position: absolute;
         width: 100%;
@@ -633,11 +743,13 @@ article h1 {
         margin-top: 185px;
         background-color: var(--corRodape);
     }
+
     .divMaps img {
         width: 100%;
         height: 210px;
         margin-top: 20px;
     }
+
     .divEnd {
         margin-top: -3px;
     }
