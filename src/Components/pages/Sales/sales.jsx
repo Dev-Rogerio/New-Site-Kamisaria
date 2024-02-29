@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Sales/sales.css'
+import Controler from '../../Controler/controler.jsx';
+
 import Logo from '../../Img/logovetorizadoKZ.png'
 import Camisaa from '../../Img/camisaa.JPG';
 import Camisab from '../../Img/camisab.JPG';
@@ -9,210 +11,220 @@ import Camisae from '../../Img/camisae.JPG';
 import Camisaf from '../../Img/camisaf.JPG';
 import WhatsApp from '../../Img/whatsapp.png'
 import GradeIcon from '@mui/icons-material/Grade';
+import Address from '../../Modal/Address/address';
 
 const Sales = () => {
-  const [mudaPhoto, setMudaPhoto] = useState(Camisaa);
+    const [mudaPhoto, setMudaPhoto] = useState(Camisaa);
+    const [showAddressModal, setShowAddressModal] = useState(false);
+    const [ativar, setAtivar] = useState(false);
 
-  function subMan() {
-    const subman = document.querySelector(".man");
-    if (subman) {
-      window.open("http://localhost:3000/man");
+    const [valorControler, setValorControler] = useState('');
+
+    function subMan() {
+        const subman = document.querySelector(".man");
+        if (subman) {
+            window.open("http://localhost:3000/man");
+        }
     }
-  }
-  function contato() {
-    const contato = document.querySelector(".liContato a");
+    function contato() {
+        const contato = document.querySelector(".liContato a");
 
-    if (contato) {
-      window.open("http://localhost:3000/contact");
+        if (contato) {
+            window.open("http://localhost:3000/contact");
+        }
     }
-  }
-  const [reais, centavos] = (123.45).toFixed(2).split('.');
-  const [val, cent] = (99.99).toFixed(2).split('.');
+    const [reais, centavos] = (123.45).toFixed(2).split('.');
+    const [val, cent] = (99.99).toFixed(2).split('.');
 
-  return (
-    <React.Fragment>
-      <nav className="divNav-Sales">
-        <div className="divLeft-Sales">
-          <p className='information'>Para maiores informações</p>
-          <p className='information'>Fale conosco (11)93240-6348</p>
-          <div className='whatsapp'>
-            <a href="/">Ajuda</a>
-            <img src={WhatsApp} alt="" />
-          </div>
-        </div>
-        <div className="divCenter-Sales">
-          <section>
-            <img className="logokz-sales" src={Logo} alt="" />
-          </section>
-          <article className='article-sales'>
-            <h1>KAMISARIA ZANUTO</h1>
-          </article>
-        </div>
-        <div className="divRight">
-          <div className="divMenu">
-            <ul className="divUl">
-              <li>
-                <span className="material-symbols-outlined iconMenu">
-                  home
-                </span>
-                <a href="/">Home</a>
-              </li>
-              <div className="traits">
-                <p>|</p>
-              </div>
-              <li>
-                <span className="material-symbols-outlined iconMenu">
-                  local_library
-                </span>
-                <a href="/">História</a>
-              </li>
-              <div className="traits">
-                <p>|</p>
-              </div>
-              <li>
-                <span className="material-symbols-outlined iconMenu">
-                  design_services
-                </span>
-                <a href="/">Serviços</a>
-              </li>
-              <div className="traits">
-                <p>|</p>
-              </div>
-              <li>
-                <span className="material-symbols-outlined iconMenu">
-                  wc
-                </span>
-                <a href="/">Vestuário</a>
-                <div className="dropDown-subMenu">
-                  <ul>
-                    <li className="man" onClick={subMan}>
-                      <a href="/">
-                        <span className="material-symbols-outlined iconMenu">
-                          man_4
-                        </span>
-                        <h1> Camisa Masc.</h1>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/">
-                        <span className="material-symbols-outlined iconSubMenu">
-                          woman
-                        </span>
-                        <h1>Camisa Fem.</h1>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/">
-                        <span className="material-symbols-outlined  iconSubMenu">
-                          straighten
-                        </span>
-                        <h1>Medidas</h1>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <div className="traits">
-                <p>|</p>
-              </div>
-              <li className="liContato">
-                <span className="material-symbols-outlined iconSubMenu">
-                  phone_in_talk
-                </span>
-                <a href="/" onClick={contato}>
-                  Contato
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <section className="container">
-        <section className="sectionLeft">
-          <div className="scrool" onClick={() => setMudaPhoto(Camisaa)} ><img className='imgSales' src={Camisaa} alt="" /></div>
-          <div className="scrool" onClick={() => setMudaPhoto(Camisab)} ><img className='imgSales' src={Camisab} alt="" /></div>
-          <div className="scrool" onClick={() => setMudaPhoto(Camisac)} ><img className='imgSales' src={Camisac} alt="" /></div>
-          <div className="scrool" onClick={() => setMudaPhoto(Camisad)} ><img className='imgSales' src={Camisad} alt="" /></div>
-          <div className="scrool" onClick={() => setMudaPhoto(Camisae)} ><img className='imgSales' src={Camisae} alt="" /></div>
-          <div className="scrool" onClick={() => setMudaPhoto(Camisaf)} ><img className='imgSales' src={Camisaf} alt="" /></div>
-        </section>
-        <section className="sectonMain">
-          <div className="photo"><img src={mudaPhoto} alt="" /></div>
-        </section>
-        <section className="sectionRight">
-          <div className="description">
-            <p className="marca">Conferir mais produtos da marca KAMISARIA ZANUTO</p>
-            <p className='pDescription'>Camisa Social Masculina Manga Longa Slim Fit Sem Bolso</p>
-            <div className="opinion">
-              <div className="bestseller">mais vendido </div>
-              <div className="star">
-                <span className="material-symbols-outlined iconSubMenu">
-                  Grade Grade Grade Grade Grade
-                </span>
-                <p>5/0.5</p>
-                <p>10 opniões</p>
-              </div>
+    // ===================================================
+
+
+    return (
+        <div className="containerSales">
+            {!ativar && (
+                <nav className={`divNav-Sales ${ativar ? 'hidden' : ''}`}>
+                    <div className="divLeft-Sales">
+                    </div>
+                    <div className="divCenter-Sales">
+                        <section>
+                            <img className="logokz-sales" src={Logo} alt="" />
+                        </section>
+                        <article className='article-sales'>
+                            <h1>KAMISARIA ZANUTO</h1>
+                        </article>
+                    </div>
+                    <div className="divRight">
+                        <div className="divMenu">
+                            <ul className="divUl">
+                                <li>
+                                    <span className="material-symbols-outlined iconMenu">
+                                        home
+                                    </span>
+                                    <a href="/">Home</a>
+                                </li>
+                                <div className="traits">
+                                    <p>|</p>
+                                </div>
+                                <li>
+                                    <span className="material-symbols-outlined iconMenu">
+                                        local_library
+                                    </span>
+                                    <a href="/">História</a>
+                                </li>
+                                <div className="traits">
+                                    <p>|</p>
+                                </div>
+                                <li>
+                                    <span className="material-symbols-outlined iconMenu">
+                                        design_services
+                                    </span>
+                                    <a href="/">Comprar</a>
+                                </li>
+                                <div className="traits">
+                                    <p>|</p>
+                                </div>
+                                <li>
+                                    <span className="material-symbols-outlined iconMenu">
+                                        wc
+                                    </span>
+                                    <a href="/">Vestuário</a>
+                                    <div className="dropDown-subMenu">
+                                        <ul>
+                                            <li className="man" onClick={subMan}>
+                                                <a href="/">
+                                                    <span className="material-symbols-outlined iconMenu">
+                                                        man_4
+                                                    </span>
+                                                    <h1> Camisa Masc.</h1>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/">
+                                                    <span className="material-symbols-outlined iconSubMenu">
+                                                        woman
+                                                    </span>
+                                                    <h1>Camisa Fem.</h1>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/">
+                                                    <span className="material-symbols-outlined  iconSubMenu">
+                                                        straighten
+                                                    </span>
+                                                    <h1>Medidas</h1>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <div className="traits">
+                                    <p>|</p>
+                                </div>
+                                <li className="liContato">
+                                    <span className="material-symbols-outlined iconSubMenu">
+                                        phone_in_talk
+                                    </span>
+                                    <a href="/" onClick={contato}>
+                                        Contato
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>)
+            }
+
+            {ativar && <Address ativo={ativar} setAtivo={setAtivar} />}
+            <div className={`allSelect ${ativar ? 'hidden' : ''}`}>
+                <section className="container">
+                    <section className="sectionLeft">
+                        <div className="scrool" onClick={() => setMudaPhoto(Camisaa)} ><img className='imgSales' src={Camisaa} alt="" /></div>
+                        <div className="scrool" onClick={() => setMudaPhoto(Camisab)} ><img className='imgSales' src={Camisab} alt="" /></div>
+                        <div className="scrool" onClick={() => setMudaPhoto(Camisac)} ><img className='imgSales' src={Camisac} alt="" /></div>
+                        <div className="scrool" onClick={() => setMudaPhoto(Camisad)} ><img className='imgSales' src={Camisad} alt="" /></div>
+                        <div className="scrool" onClick={() => setMudaPhoto(Camisae)} ><img className='imgSales' src={Camisae} alt="" /></div>
+                        <div className="scrool" onClick={() => setMudaPhoto(Camisaf)} ><img className='imgSales' src={Camisaf} alt="" /></div>
+                    </section>
+                    <section className="sectonMain">
+                        <div className="photo"><img src={mudaPhoto} alt="" /></div>
+                    </section>
+                    <section className="sectionRight">
+                        <div className="description">
+                            <p className="marca">Conferir mais produtos da marca KAMISARIA ZANUTO</p>
+                            <p className='pDescription'>Camisa Social Masculina Manga Longa Slim Fit Sem Bolso</p>
+                            <div className="opinion">
+                                <div className="bestseller">mais vendido </div>
+                                <div className="star">
+                                    <span className="material-symbols-outlined iconSubMenu">
+                                        Grade Grade Grade Grade Grade
+                                    </span>
+                                    <p>5/0.5</p>
+                                    <p>10 opniões</p>
+                                </div>
+                            </div>
+                            <p className="valueDesc">RS  {reais}.<span>{centavos}</span></p>
+                            <div className="valueoff">
+
+                                <p className="valueTot">R$ {''} 12   <span>{cent}</span></p>
+
+                                <p className='descriptionOff'>15% OFF</p>
+                            </div>
+                            <div className='descriptionParcelado'>
+                                <p>em 3X R$ 49,<span>99</span></p>
+                            </div>
+                            <div className="pagtos">Ver os meios de pagamento</div>
+                            <div className="entrega">
+                                <p>Chegará amanhã</p>
+                                <p> por <span> R$ 15,00</span></p>
+                            </div>
+                            <p className='fpagto'>Mais forma de pagamento</p>
+                            <p className='envio'>Envio para todo país</p>
+                            <p className='formasEnvio'> Saiba os prazos de entrega e as formas de envio</p>
+                            <p className='calcularFrete'>Calcular o prazo de entrega</p>
+                            <p className="retorno">Devolução grátis</p>
+                            <p className='prazo'>Você tem 30 dias a partir da data de recebimento.</p>
+                            <p className="saibamais">Saiba mais</p>
+                            <div className="descriptionCor">
+                                <p className="cores">Cor:</p>
+                                <p>Braco</p>
+                            </div>
+                            <div className="gradecor">
+                                <div className="divOne">1</div>
+                                <div className="divTwo">2</div>
+                                <div className="divThree">3</div>
+                            </div>
+                            <p className="estoque">Tamanho:</p>
+                            <div className="gradeTamanho">
+                                <div className="size">38</div>
+                                <div className="size">40</div>
+                                <div className="size">42</div>
+                                <div className="size">44</div>
+                                <div className="size">46</div>
+                            </div>
+                            <div className="guia">
+                                <span className="material-symbols-outlined  iconSubMenu">
+                                    straighten
+                                </span>
+                                <p className='guiaDescription'>Guia de tamanhos</p>
+                            </div>
+                            <p className="disponivel">Estoque disponível</p>
+                            <p className='labelCep'>Calcular o frete:</p>
+                            <div className='InputCep'>
+                                <a href="">Informe o cep</a>
+                                <input type="text" />
+                            </div>
+                            <p className="freteGratis">Frete grátis comprando 2 ou mais unidades</p>
+                            <button className='buttonComprar' onClick={() => setAtivar(true)}>Comprar</button>
+                            <button className='buttonAdicionar'>Adicionar ao carrinho</button>
+                            <p className="vendidoPor">Vendido por <span>KAMISARIA ZANUTO</span></p>
+                            <div className="garantia">
+                                <p>7 dias de garantia de fábrica</p>
+                            </div>
+                        </div>
+                    </section>
+                </section >
             </div>
-            <p className="valueDesc">RS {reais}.<span>{centavos}</span></p>
-            <div className="valueoff">
-              <p className="valueTot">R$ {val}.<span>{cent}</span></p>
-              <p className='descriptionOff'>15% OFF</p>
-            </div>
-            <div className='descriptionParcelado'>
-              <p>em 3X R$ 49,<span>99</span></p>
-            </div>
-            <div className="pagtos">Ver os meios de pagamento</div>
-            <div className="entrega">
-              <p>Chegará amanhã</p>
-              <p> por <span> R$ 15,00</span></p>
-            </div>
-            <p className='fpagto'>Mais forma de pagamento</p>
-            <p className='envio'>Envio para todo país</p>
-            <p className='formasEnvio'> Saiba os prazos de entrega e as formas de envio</p>
-            <p className='calcularFrete'>Calcular o prazo de entrega</p>
-            <p className="retorno">Devolução grátis</p>
-            <p className='prazo'>Você tem 30 dias a partir da data de recebimento.</p>
-            <p className="saibamais">Saiba mais</p>
-            <div className="descriptionCor">
-              <p className="cores">Cor:</p>
-              <p>Braco</p>
-            </div>
-            <div className="gradecor">
-              <div className="divOne">1</div>
-              <div className="divTwo">2</div>
-              <div className="divThree">3</div>
-            </div>
-            <p className="estoque">Tamanho:</p>
-            <div className="gradeTamanho">
-              <div className="size">38</div>
-              <div className="size">40</div>
-              <div className="size">42</div>
-              <div className="size">44</div>
-              <div className="size">46</div>
-            </div>
-            <div className="guia">
-              <span className="material-symbols-outlined  iconSubMenu">
-                straighten
-              </span>
-              <p className='guiaDescription'>Guia de tamanhos</p>
-            </div>
-            <p className="disponivel">Estoque disponível</p>
-            <p className='labelCep'>Calcular o frete:</p>
-            <div className='InputCep'>
-              <a href="">Informe o cep</a>
-              <input type="text" />
-            </div>
-            <p className="freteGratis">Frete grátis comprando 2 ou mais unidades</p>
-            <button className='buttonComprar'>Comprar</button>
-            <button className='buttonAdicionar'>Adicionar ao carrinho</button>
-            <p className="vendidoPor">Vendido por <span>KAMISARIA ZANUTO</span></p>
-            <div className="garantia">
-              <p>7 dias de garantia de fábrica</p>
-            </div>
-          </div>
-        </section>
-      </section>
-    </React.Fragment >
-  )
+        </div >
+    )
 }
 export default Sales;
