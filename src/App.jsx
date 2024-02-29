@@ -16,7 +16,8 @@ import Custom from "./Components/Modal/Custom/index.jsx";
 import Store from "./Components/Modal/Store/index.jsx";
 import CustomShirt from "./Components/Pages/CustomShirt/index.jsx";
 import Sales from "./Components/Pages/Sales/sales.jsx";
-import Address from "./Components/Client/Address/address.jsx";
+import Address from "./Components/Modal/Address/address.jsx";
+import Controler from "./Components/Controler/controler.jsx"
 
 function App() {
     return (
@@ -40,6 +41,7 @@ function App() {
                     <Route path="/customshirt" element={<CustomShirt />} />
                     <Route path="/sales" element={<Sales />} />
                     <Route path="/address" element={<Address />} />
+                    <Route path="/controler" element={<Controler />} />
                 </Routes>
             </Router>
         </div>

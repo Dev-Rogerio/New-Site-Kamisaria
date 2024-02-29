@@ -14,6 +14,11 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import WcIcon from '@mui/icons-material/Wc';
+import CallIcon from '@mui/icons-material/Call';
 
 function home() {
     function iconInsta() {
@@ -66,6 +71,12 @@ function home() {
             window.open("http://localhost:3000/man");
         }
     }
+    function comprar() {
+        const purchase = document.querySelector(".liComprar a");
+        if (purchase) {
+            window.open("http://localhost:3000/sales");
+        }
+    }
     return (
         <header className="headContainner">
             <nav className="divNav">
@@ -83,7 +94,7 @@ function home() {
                         <ul className="divUl">
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    home
+                                    <HomeIcon />
                                 </span>
                                 <a href="/">Home</a>
                             </li>
@@ -92,25 +103,25 @@ function home() {
                             </div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    local_library
+                                    <LocalLibraryIcon />
                                 </span>
                                 <a href="/">História</a>
                             </li>
                             <div className="traits">
                                 <p>|</p>
                             </div>
-                            <li>
+                            <li className="liComprar">
                                 <span className="material-symbols-outlined iconMenu">
-                                    design_services
+                                    <ShoppingCartIcon />
                                 </span>
-                                <a href="/">Serviços</a>
+                                <a href="/" onClick={comprar}>Comprar</a>
                             </li>
                             <div className="traits">
                                 <p>|</p>
                             </div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    wc
+                                    <WcIcon />
                                 </span>
                                 <a href="/">Vestuário</a>
                                 <div className="dropDown-subMenu">
@@ -148,7 +159,7 @@ function home() {
                             </div>
                             <li className="liContato">
                                 <span className="material-symbols-outlined iconSubMenu">
-                                    phone_in_talk
+                                    <CallIcon />
                                 </span>
                                 <a href="/" onClick={contato}>
                                     Contato

@@ -122,7 +122,7 @@ function ShirtMan() {
                                 <span className="material-symbols-outlined iconMenu">
                                     design_services
                                 </span>
-                                <a href="/">Serviços</a>
+                                <a href="/">Comprar</a>
                             </li>
                             <div className="traits">
                                 <p>|</p>
