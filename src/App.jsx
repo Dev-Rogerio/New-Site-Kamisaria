@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "./Components/Pages/Home/index.jsx";
@@ -18,8 +18,10 @@ import CustomShirt from "./Components/Pages/CustomShirt/index.jsx";
 import Sales from "./Components/Pages/Sales/sales.jsx";
 import Address from "./Components/Modal/Address/address.jsx";
 import Controler from "./Components/Controler/controler.jsx"
+import Tabela from "./Components/Controler/Tabela/tabela.jsx"
 
 function App() {
+    const [price, setPrice] = useState('1050');
     return (
         <div>
             <Router>
@@ -39,9 +41,10 @@ function App() {
                     <Route path="/custom" element={<Custom />} />
                     <Route path="/store" element={<Store />} />
                     <Route path="/customshirt" element={<CustomShirt />} />
-                    <Route path="/sales" element={<Sales />} />
+                    <Route path="/sales" element={<Sales price={price} />} />
                     <Route path="/address" element={<Address />} />
-                    <Route path="/controler" element={<Controler />} />
+                    <Route path="/controler" element={<Controler setPrice={setPrice} />} />
+                    <Route path="/tabela" element={<Tabela />} />
                 </Routes>
             </Router>
         </div>

@@ -12,13 +12,20 @@ import Camisaf from '../../Img/camisaf.JPG';
 import WhatsApp from '../../Img/whatsapp.png'
 import GradeIcon from '@mui/icons-material/Grade';
 import Address from '../../Modal/Address/address';
+import Azul from '../../Img/azul.png';
+import Branco from '../../Img/branca.png';
+import Rosa from '../../Img/rosa.png';
 
-const Sales = () => {
+const Sales = ({ setLoja, price }) => {
     const [mudaPhoto, setMudaPhoto] = useState(Camisaa);
     const [showAddressModal, setShowAddressModal] = useState(false);
     const [ativar, setAtivar] = useState(false);
-
     const [valorControler, setValorControler] = useState('');
+    const [selectedSize, setSelectedSize] = useState('');
+    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedColorText, setSelectedColorText] = useState('');
+    const [reais, centavos] = (123.45).toFixed(2).split('.');
+    const [val, cent] = (99.99).toFixed(2).split('.');
 
     function subMan() {
         const subman = document.querySelector(".man");
@@ -33,12 +40,18 @@ const Sales = () => {
             window.open("http://localhost:3000/contact");
         }
     }
-    const [reais, centavos] = (123.45).toFixed(2).split('.');
-    const [val, cent] = (99.99).toFixed(2).split('.');
-
-    // ===================================================
-
-
+    const y = (valorControler) => {
+        return (
+            setValorControler(`${y} aqui é 33`)
+        )
+    }
+    const handleSize = (size) => {
+        setSelectedSize(size);
+    }
+    const handleColors = (color, text) => {
+        setSelectedColor(color);
+        setSelectedColorText(text);
+    }
     return (
         <div className="containerSales">
             {!ativar && (
@@ -133,7 +146,6 @@ const Sales = () => {
                     </div>
                 </nav>)
             }
-
             {ativar && <Address ativo={ativar} setAtivo={setAtivar} />}
             <div className={`allSelect ${ativar ? 'hidden' : ''}`}>
                 <section className="container">
@@ -162,11 +174,9 @@ const Sales = () => {
                                     <p>10 opniões</p>
                                 </div>
                             </div>
-                            <p className="valueDesc">RS  {reais}.<span>{centavos}</span></p>
+                            <p className="valueDesc">RS  {reais} <span>{centavos}</span></p>
                             <div className="valueoff">
-
-                                <p className="valueTot">R$ {''} 12   <span>{cent}</span></p>
-
+                                <p className="valueTot">R$  {price}  <span>{cent}</span></p>
                                 <p className='descriptionOff'>15% OFF</p>
                             </div>
                             <div className='descriptionParcelado'>
@@ -186,20 +196,27 @@ const Sales = () => {
                             <p className="saibamais">Saiba mais</p>
                             <div className="descriptionCor">
                                 <p className="cores">Cor:</p>
-                                <p>Braco</p>
+                                <p>{selectedColorText}</p>
                             </div>
                             <div className="gradecor">
-                                <div className="divOne">1</div>
-                                <div className="divTwo">2</div>
-                                <div className="divThree">3</div>
+                                <div className={`divOne colors ${selectedColor === 'Branco' ? 'bold' : ''}`} onClick={() => handleColors('Branco', 'Branco')}><img src={Branco} alt="" /></div>
+                                <div className={`divTwo colors ${selectedColor === 'Azul' ? 'bold' : ''}`} onClick={() => handleColors('Azul', 'Azul')}><img src={Azul} alt="" /></div>
+                                <div className={`divThree colors ${selectedColor === 'Rosa' ? 'bold' : ''}`} onClick={() => handleColors('Rosa', 'Rosa')}><img src={Rosa} alt="" /></div>
                             </div>
                             <p className="estoque">Tamanho:</p>
                             <div className="gradeTamanho">
-                                <div className="size">38</div>
-                                <div className="size">40</div>
-                                <div className="size">42</div>
-                                <div className="size">44</div>
-                                <div className="size">46</div>
+                                <div className={`size ${selectedSize === '38' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('38')}>38</div>
+                                <div className={`size ${selectedSize === '40' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('40')}>40</div>
+                                <div className={`size ${selectedSize === '42' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('42')}>42</div>
+                                <div className={`size ${selectedSize === '44' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('44')}>44</div>
+                                <div className={`size ${selectedSize === '46' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('46')}>46</div>
+                                <div className={`size ${selectedSize === '48' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('48')}>48</div>
                             </div>
                             <div className="guia">
                                 <span className="material-symbols-outlined  iconSubMenu">

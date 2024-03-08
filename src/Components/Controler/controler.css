@@ -7,54 +7,76 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 450px;
-    background-color: antiquewhite;
+    height: 100%;
+    background-color: rgb(34, 34, 34, .7);
 }
 .painel h1 {
-    background-color: cadetblue;
+    background-color: rgba(0, 0, 0, 0.547);
     width: 100%;   
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #aea7a7d2;
 }
 .containerControler {
     padding: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 750px;   
+    grid-template-columns: 7% 10% 50% 10% 15%;
+    width: 90%;   
     height: 100px; 
     margin-left: 50%;
     border: 1px solid #222;
-    background-color: #ccc;
-   
+    background-color: #ccc;   
     justify-content: center;
     transform: translate(-50%);
     margin-top: 50px;
     grid-gap: 20px;
+    border-radius: 4px;
 }
-
-.labelProd {
+.labelId {
     display: block;
-   
+    font-size: 12px;    
 }
-.selectProd {
+input {
+    border-bottom: 1px solid #222;
+    border-right: 1px solid #222;
+    border-left: 1px solid #a9a4a4;
+    border-top: 1px solid  #a9a4a4;;
+    border-radius: 4px;
+    background-color:  rgba(255, 255, 0, 0.241);   
+}
+.inputId {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+    color: #6e6b6b;
     margin-top: 5px;
     width: 100%;
     height: 35px;
+    text-indent: 10px;
+    outline: none;
+    font-size: small;
+    border-bottom: 1px solid #222;
+    border-right: 1px solid #222;
+    border-left: 1px solid #a9a4a4;
+    border-top: 1px solid  #a9a4a4;;
+    border-radius: 4px;
 }
-.labelQuantities {
+.labelDate {
     display: block;
+    font-size: 12px;
 }
-.inputQuantities {
+.inputDate {
     margin-top: 5px;
     width: 100%;
     height: 35px;
     outline: none;
 }
-.inputQuantities:hover {
-    border: 1px solid red;
-}
-   
+.labelProd {
+    display: block;
+    font-size: 12px;   
+} 
 .inputProd {
     margin-top: 5px;
     width: 100%;
@@ -62,34 +84,127 @@
     text-indent: 10px;
     outline: none;
     color: #222;
+    text-transform: capitalize;
 }
 .inputProd:hover {
-    border: 1px solid red;
-
+    border: 1px solid blue;
+}
+.labelQuantities {
+    display: block;
+    font-size: 12px;
+}
+.inputQuantities {
+    margin-top: 5px;
+    width: 100%;
+    height: 35px;
+    outline: none;   
 }
 .labelValue{
     display: block;    
 }
 .cadastro {
+    background-color: rgb(49, 65, 156);
+    color: #d5d2d2;
+    padding: 10px;
+    font-size: larger;
+}
+.cadastro:hover {
+    background-color: #ccc;
+    color: #222;
+}
+.buttonCad {
+    margin-top: 5px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    border: 1px solid #222;
+    padding: 5px;
+    margin-left: 50%;
+    transform: translate(-50%);
+    justify-content: space-around;
+    background-color: #ccc;    
+}
+.save {
+    background-color: green;  
+    color: #d5d2d2;
+    padding: 10px;
+    font-size: larger;
+}
+.save:hover {
+    background-color: #ccc;
+    color: #222;
+   
+}
+table {
+     margin-left: 50%;
+    transform: translate(-50%);
+    width: 90%;  
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+    border-radius: 4px;  
+    margin-top: 20px; 
+    border-collapse: collapse;    
+}
+table th, td {
+    border: 1px solid #222;
+}
+th {
+    height: 40px;
+}
+td {
+    font-size: small;
+    padding: 3px;
+}
+table tr:nth-child(even) {
+    background-color:  rgba(255, 255, 0, 0.241);
+}
+table th:nth-child(1) {
+   width: 10%;
+}
+table th:nth-child(2) {
+    width: 10%;
+}
+table th:nth-child(3) {
+    width: 45%;
+}
+table th:nth-child(4) {
+    width: 10%;
+}
+table th:nth-child(5) {
+    width: 10%;
+}
+table th:nth-child(6) {
+    width: 15%;
+}
+table td:nth-child(1) {
+    text-align: center;
+}
+table td:nth-child(2) {
+    text-align: center;
+}
+table td:nth-child(4) {
+    text-align: center;
+}
+table td:nth-child(5) {
+    text-align: center;
+}
+table td:nth-child(6) {
+    text-align: center;
+    padding: 3px;
+}
+.button {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-size: 20px;
-    text-transform: uppercase;
-    font-family: sans-serif;
-    font-weight: 600;
-    margin-top: 5px;
-    width: 55%;
-    height: 40px;
-    border: 1px solid #222;
-    border-radius: 4px;
-   margin-left: 50%;
-   transform: translate(-50%);
-    background-color: rgb(93, 93, 216,.9);
-   
-
+    grid-gap: 20px;   
 }
-
-
-
+button {
+    width: 30%;
+    font-size: x-small;
+    padding: 2px;
+    border-radius: 3px;
+    border: 1px solid #222;
+    background-color: #d5d2d2;   
+}
