@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../Sales/sales.css'
 import Controler from '../../Controler/controler.jsx';
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import WcIcon from '@mui/icons-material/Wc';
+import CallIcon from '@mui/icons-material/Call';
+import GradeIcon from '@mui/icons-material/Grade';
 
 import Logo from '../../Img/logovetorizadoKZ.png'
 import Camisaa from '../../Img/camisaa.JPG';
@@ -10,22 +17,26 @@ import Camisad from '../../Img/camisad.JPG';
 import Camisae from '../../Img/camisae.JPG';
 import Camisaf from '../../Img/camisaf.JPG';
 import WhatsApp from '../../Img/whatsapp.png'
-import GradeIcon from '@mui/icons-material/Grade';
-import Address from '../../Modal/Address/address';
 import Azul from '../../Img/azul.png';
 import Branco from '../../Img/branca.png';
 import Rosa from '../../Img/rosa.png';
 
-const Sales = ({ setLoja, price }) => {
+import Address from '../../Modal/Address/address';
+import Order from '../../Modal/Order/order.jsx';
+
+const Sales = ({ price }) => {
     const [mudaPhoto, setMudaPhoto] = useState(Camisaa);
-    const [showAddressModal, setShowAddressModal] = useState(false);
     const [ativar, setAtivar] = useState(false);
     const [valorControler, setValorControler] = useState('');
-    const [selectedSize, setSelectedSize] = useState('');
-    const [selectedColor, setSelectedColor] = useState('');
     const [selectedColorText, setSelectedColorText] = useState('');
+    const [selectedSizeText, setSelectedSizeText] = useState('');
     const [reais, centavos] = (123.45).toFixed(2).split('.');
     const [val, cent] = (99.99).toFixed(2).split('.');
+    const [showModal, setShowModal] = useState(false);
+    const [hideAddress, setHideAddress] = useState(false);
+    const [orderData, setOrderData] = useState({});
+    const [selectedSize, setSelectedSize] = useState('');
+    const [selectedColor, setSelectedColor] = useState('');
 
     function subMan() {
         const subman = document.querySelector(".man");
@@ -35,7 +46,6 @@ const Sales = ({ setLoja, price }) => {
     }
     function contato() {
         const contato = document.querySelector(".liContato a");
-
         if (contato) {
             window.open("http://localhost:3000/contact");
         }
@@ -47,10 +57,26 @@ const Sales = ({ setLoja, price }) => {
     }
     const handleSize = (size) => {
         setSelectedSize(size);
+        setSelectedSizeText(size)
     }
-    const handleColors = (color, text) => {
+    const handleColors = (color) => {
+        var collors = document.querySelector('.collors')
         setSelectedColor(color);
-        setSelectedColorText(text);
+        setSelectedColorText(color);
+    };
+    // const handleContinue = () => {
+    //     setShowModal(true);
+    //     setHideAddress(true);
+    //     setOrderData({
+    //         selectedColor: selectedColor,
+    //         selectedSize: selectedSize,
+    //     });
+    // };
+    function collors() {
+        const cores = {
+            selectedColor,
+        }
+        console.log(cores)
     }
     return (
         <div className="containerSales">
@@ -71,7 +97,7 @@ const Sales = ({ setLoja, price }) => {
                             <ul className="divUl">
                                 <li>
                                     <span className="material-symbols-outlined iconMenu">
-                                        home
+                                        <HomeIcon />
                                     </span>
                                     <a href="/">Home</a>
                                 </li>
@@ -80,7 +106,7 @@ const Sales = ({ setLoja, price }) => {
                                 </div>
                                 <li>
                                     <span className="material-symbols-outlined iconMenu">
-                                        local_library
+                                        <LocalLibraryIcon />
                                     </span>
                                     <a href="/">História</a>
                                 </li>
@@ -89,16 +115,16 @@ const Sales = ({ setLoja, price }) => {
                                 </div>
                                 <li>
                                     <span className="material-symbols-outlined iconMenu">
-                                        design_services
+                                        <ShoppingCartIcon />
                                     </span>
-                                    <a href="/">Comprar</a>
+                                    <a href="/">Loja</a>
                                 </li>
                                 <div className="traits">
                                     <p>|</p>
                                 </div>
                                 <li>
                                     <span className="material-symbols-outlined iconMenu">
-                                        wc
+                                        <WcIcon />
                                     </span>
                                     <a href="/">Vestuário</a>
                                     <div className="dropDown-subMenu">
@@ -135,7 +161,7 @@ const Sales = ({ setLoja, price }) => {
                                 </div>
                                 <li className="liContato">
                                     <span className="material-symbols-outlined iconSubMenu">
-                                        phone_in_talk
+                                        <CallIcon />
                                     </span>
                                     <a href="/" onClick={contato}>
                                         Contato
@@ -146,8 +172,20 @@ const Sales = ({ setLoja, price }) => {
                     </div>
                 </nav>)
             }
-            {ativar && <Address ativo={ativar} setAtivo={setAtivar} />}
+            {ativar && <Address
+                ativo={ativar}
+                setAtivo={setAtivar}
+                setOrderData={setOrderData}
+                selectedSize={selectedSize}
+                orderData={orderData}
+            />}
             <div className={`allSelect ${ativar ? 'hidden' : ''}`}>
+                <div className="mCompras">
+                    <p>Minhas compras</p>
+                    <span className="material-symbols-outlined iconSubMenu">
+                        <ShoppingCartIcon />
+                    </span>
+                </div>
                 <section className="container">
                     <section className="sectionLeft">
                         <div className="scrool" onClick={() => setMudaPhoto(Camisaa)} ><img className='imgSales' src={Camisaa} alt="" /></div>
@@ -196,27 +234,39 @@ const Sales = ({ setLoja, price }) => {
                             <p className="saibamais">Saiba mais</p>
                             <div className="descriptionCor">
                                 <p className="cores">Cor:</p>
-                                <p>{selectedColorText}</p>
+                                <p
+                                    className='collors'
+                                    value={selectedColor}
+                                    onChange={e => setSelectedColor(e.target.value)}
+                                >{selectedColorText}</p>
                             </div>
                             <div className="gradecor">
-                                <div className={`divOne colors ${selectedColor === 'Branco' ? 'bold' : ''}`} onClick={() => handleColors('Branco', 'Branco')}><img src={Branco} alt="" /></div>
+                                <div
+                                    className={`divOne colors ${selectedColor === 'Branco' ? 'bold' : ''}`} onClick={() => handleColors('Branco', 'Branco')}><img src={Branco} alt="" /></div>
                                 <div className={`divTwo colors ${selectedColor === 'Azul' ? 'bold' : ''}`} onClick={() => handleColors('Azul', 'Azul')}><img src={Azul} alt="" /></div>
                                 <div className={`divThree colors ${selectedColor === 'Rosa' ? 'bold' : ''}`} onClick={() => handleColors('Rosa', 'Rosa')}><img src={Rosa} alt="" /></div>
                             </div>
-                            <p className="estoque">Tamanho:</p>
+                            <div className="descriptionSize">
+                                <p className="estoque">Tamanho:</p>
+                                <p
+                                    className='sizers'
+                                    value={selectedSize}
+                                    onChange={e => selectedSize(e.target.value)}
+                                >{selectedSizeText}</p>
+                            </div>
                             <div className="gradeTamanho">
-                                <div className={`size ${selectedSize === '38' ? 'bold' : ''}`}
-                                    onClick={() => handleSize('38')}>38</div>
-                                <div className={`size ${selectedSize === '40' ? 'bold' : ''}`}
-                                    onClick={() => handleSize('40')}>40</div>
-                                <div className={`size ${selectedSize === '42' ? 'bold' : ''}`}
-                                    onClick={() => handleSize('42')}>42</div>
-                                <div className={`size ${selectedSize === '44' ? 'bold' : ''}`}
-                                    onClick={() => handleSize('44')}>44</div>
-                                <div className={`size ${selectedSize === '46' ? 'bold' : ''}`}
-                                    onClick={() => handleSize('46')}>46</div>
-                                <div className={`size ${selectedSize === '48' ? 'bold' : ''}`}
-                                    onClick={() => handleSize('48')}>48</div>
+                                <button className={`size ${selectedSize === '38' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('38', '38')}>38</button>
+                                <button className={`size ${selectedSize === '40' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('40')}>40</button>
+                                <button className={`size ${selectedSize === '42' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('42')}>42</button>
+                                <button className={`size ${selectedSize === '44' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('44')}>44</button>
+                                <button className={`size ${selectedSize === '46' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('46')}>46</button>
+                                <button className={`size ${selectedSize === '48' ? 'bold' : ''}`}
+                                    onClick={() => handleSize('48')}>48</button>
                             </div>
                             <div className="guia">
                                 <span className="material-symbols-outlined  iconSubMenu">
@@ -241,6 +291,14 @@ const Sales = ({ setLoja, price }) => {
                     </section>
                 </section >
             </div>
+            {showModal && <Order
+                setShowModal={setShowModal}
+                setHideAddress={setHideAddress}
+                orderData={orderData}
+                selectedColor={selectedColor}
+                selectedSize={selectedSize}
+                selectedColorText={selectedColorText}
+            />}
         </div >
     )
 }

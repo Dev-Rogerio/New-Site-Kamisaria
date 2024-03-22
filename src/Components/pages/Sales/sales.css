@@ -5,6 +5,11 @@
 .hidden{
     display: none;
 } 
+.address-hidden {
+    opacity: 0; /* Torna o componente invisível */
+    pointer-events: none; /* Impede que o componente receba eventos do mouse */
+    transition: opacity 0.3s ease; /* Adiciona uma transição suave para a opacidade */
+}
 .modal-address {
     display: none;
     position: fixed;
@@ -84,6 +89,20 @@
     width: 100%;
     height: 100%;
     background-color: #eaeaea;    
+}
+.mCompras {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-size: large;
+    letter-spacing: .05rem;
+    margin-left: -20px;
+    cursor: pointer;
+    grid-gap: 10px;color: #5d5d5d;
+}
+.mCompras:hover {
+    color: #808080;
 }
 .sectionLeft {   
   width: 10%;
@@ -270,9 +289,19 @@
   font-size: large; 
   margin-top: 25px;
   grid-gap: 5px;
-}
+ }
 .descriptionCor p {
   color: #2229;
+}
+.descriptionSize {
+       display: flex;
+    align-items: center;
+    margin-top: 15px;
+    grid-gap: 10px;   
+}
+.descriptionSize p {
+  color: #2229;
+  margin: 0;
 }
 .gradecor{
   display: flex;
@@ -283,7 +312,7 @@
 }
 .gradecor img{
     margin-top: 3px;
-    width: 80%;    
+    width: 65%;    
 }
 .gradeTamanho{
   display: flex;
@@ -299,10 +328,12 @@
   width: 40px;
   height: 40px;
   border-radius: 6px;
+  background-color: #fff;
+  font-size: small;
 }
 .size:hover {
-    border: 1px solid blue;
-    font-weight: 700;
+    border: 1px solid #222;
+    font-weight: 900;
 }
 .colors:hover {
     border: 1px solid blue;
@@ -348,7 +379,7 @@
   color: #2229;
 }
 .labelCep{
-  margin-top: 25px;
+  margin-top: 20px;
   color: green;
   font-weight: 600;
 }

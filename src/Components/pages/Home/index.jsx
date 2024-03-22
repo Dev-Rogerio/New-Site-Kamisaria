@@ -20,6 +20,7 @@ import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import WcIcon from '@mui/icons-material/Wc';
 import CallIcon from '@mui/icons-material/Call';
 
+
 function home() {
     function iconInsta() {
         const insta = document.querySelector(".insta");
@@ -114,7 +115,7 @@ function home() {
                                 <span className="material-symbols-outlined iconMenu">
                                     <ShoppingCartIcon />
                                 </span>
-                                <a href="/" onClick={comprar}>Comprar</a>
+                                <a href="/" onClick={comprar}>Loja</a>
                             </li>
                             <div className="traits">
                                 <p>|</p>

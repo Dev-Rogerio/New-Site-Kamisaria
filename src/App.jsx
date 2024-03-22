@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+
 import Home from "./Components/Pages/Home/index.jsx";
 import Contact from "./Components/Pages/Contact/index.jsx";
 import ShirtMan from "./Components/Pages/Dropdown/ShirtMan/index.jsx";
@@ -17,11 +18,19 @@ import Store from "./Components/Modal/Store/index.jsx";
 import CustomShirt from "./Components/Pages/CustomShirt/index.jsx";
 import Sales from "./Components/Pages/Sales/sales.jsx";
 import Address from "./Components/Modal/Address/address.jsx";
-import Controler from "./Components/Controler/controler.jsx"
-import Tabela from "./Components/Controler/Tabela/tabela.jsx"
+import Controler from "./Components/Controler/controler.jsx";
+import Tabela from "./Components/Controler/Tabela/tabela.jsx";
+import Order from "./Components/Modal/Order/order.jsx";
+import Return from './Components/Pages/Return/return.jsx';
+import Test from './Components/Pages/Test/test.jsx';
 
 function App() {
-    const [price, setPrice] = useState('1050');
+    const [price, setPrice] = useState('469');
+    const [color, setColor] = useState(false);
+
+    const handleColorChange = (newColor) => {
+        setColor(newColor);
+    }
     return (
         <div>
             <Router>
@@ -45,6 +54,9 @@ function App() {
                     <Route path="/address" element={<Address />} />
                     <Route path="/controler" element={<Controler setPrice={setPrice} />} />
                     <Route path="/tabela" element={<Tabela />} />
+                    <Route path="/order" element={<Order price={price} />} />
+                    <Route path="/test" element={<Test onColorChange={handleColorChange} />} />
+                    <Route path="/return" element={<Return color={color} />} />
                 </Routes>
             </Router>
         </div>
