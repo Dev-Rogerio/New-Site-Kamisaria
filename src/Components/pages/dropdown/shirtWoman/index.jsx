@@ -1,5 +1,5 @@
 import React from "react";
-import "../ShirtWoman/style.css";
+import "../shirtWoman/style.css";
 
 function shirtWoman() {
     return (

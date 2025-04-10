@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-
-import Home from "./Components/Pages/Home/index.jsx";
-import Contact from "./Components/Pages/Contact/index.jsx";
-import ShirtMan from "./Components/Pages/Dropdown/ShirtMan/index.jsx";
-import ShirtWoman from "./Components/Pages/Dropdown/ShirtWoman/index.jsx";
+import Home from "./Components/pages/Home/index.jsx";
+import Contact from "./Components/pages/contact/index.jsx";
+import ShirtMan from "./Components/pages/dropdown/shirtMan/index.jsx";
+import ShirtWoman from "./Components/pages/dropdown/shirtWoman/index.jsx";
 import Sewing from "./Components/Modal/Sewing/index.jsx";
 import Tailor from "./Components/Modal/Tailor/index.jsx";
 import Measure from "./Components/Modal/Measure/index.jsx";
@@ -15,22 +14,24 @@ import Grid from "./Components/Modal/Grid/index.jsx";
 import Embroidery from "./Components/Modal/Embroidery/index.jsx";
 import Custom from "./Components/Modal/Custom/index.jsx";
 import Store from "./Components/Modal/Store/index.jsx";
-import CustomShirt from "./Components/Pages/CustomShirt/index.jsx";
-import Sales from "./Components/Pages/Sales/sales.jsx";
+import CustomShirt from "./Components/pages/CustomShirt/index.jsx";
+import Sales from "./Components/pages/Sales/index.jsx";
 import Address from "./Components/Modal/Address/address.jsx";
 import Controler from "./Components/Controler/controler.jsx";
-import Tabela from "./Components/Controler/Tabela/tabela.jsx";
+import Tabela from "./Components/Modal/Tabela/tabela.jsx";
 import Order from "./Components/Modal/Order/order.jsx";
-import Return from './Components/Pages/Return/return.jsx';
-import Test from './Components/Pages/Test/test.jsx';
+import Return from "./Components/pages/Return/return.jsx";
+import Test from "./Components/pages/Test/test.jsx";
+import Pedido from "./Components/pages/Pedido/pedido.jsx";
+import Pagamento from "./Components/Modal/Pagamento/ModalPagamento.jsx";
 
 function App() {
-    const [price, setPrice] = useState('469');
+    const [price, setPrice] = useState("469");
     const [color, setColor] = useState(false);
 
     const handleColorChange = (newColor) => {
         setColor(newColor);
-    }
+    };
     return (
         <div>
             <Router>
@@ -52,10 +53,19 @@ function App() {
                     <Route path="/customshirt" element={<CustomShirt />} />
                     <Route path="/sales" element={<Sales price={price} />} />
                     <Route path="/address" element={<Address />} />
-                    <Route path="/controler" element={<Controler setPrice={setPrice} />} />
+                    <Route path="/pedido" element={<Pedido />} />
+                    <Route path="/pagamento" element={<Pagamento />} />
+
+                    <Route
+                        path="/controler"
+                        element={<Controler setPrice={setPrice} />}
+                    />
                     <Route path="/tabela" element={<Tabela />} />
                     <Route path="/order" element={<Order price={price} />} />
-                    <Route path="/test" element={<Test onColorChange={handleColorChange} />} />
+                    <Route
+                        path="/test"
+                        element={<Test onColorChange={handleColorChange} />}
+                    />
                     <Route path="/return" element={<Return color={color} />} />
                 </Routes>
             </Router>

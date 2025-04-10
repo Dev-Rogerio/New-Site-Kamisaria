@@ -1,13 +1,10 @@
-import React from 'react'
-import '../Order/order.css'
-import Sales from '../../Pages/Sales/sales'
+import React from "react";
+import axios from "axios";
+import "../Order/order.css";
 
 const Order = ({
-    formataData,
-    setShowModal,
-    setHideAddress,
-    setAtivado,
     nome,
+    cep,
     estado,
     cidade,
     bairro,
@@ -17,67 +14,102 @@ const Order = ({
     observacao,
     telefone,
     local,
-    tamanho,
+    setShowModal,
+    setHideAddress,
+    selectedSize,
+    selectedColor,
 }) => {
-    const handleConfirm = () => {
-        setAtivado(false)
-    }
-    const capitalize = (str) => {
-        return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    const handleClose = () => {
+        setShowModal(false);
+        setHideAddress(false);
     };
-    const [updateData, setUpdateData] = React.useState({
-        descricao: 'Camisa Social T40 MLon Social Slin Importado 100% Alg',
-        modelo: 'Social',
-        tipo: 'Algodão',
-        tamanho: tamanho,
-        valor: '890,00',
-        nome: nome,
-        estado: estado,
-        cidade: cidade,
-        bairro: bairro,
-        endereco: endereco,
-        numero: numero,
-        complemento: complemento,
-        observacao: observacao,
-        telefone: telefone,
-        cartao: 'Visa',
-        banco: 'Safra',
-        agencia: '123-9',
-        contacorrente: '123123123-3',
-        local: local,
-    })
-    console.log("Observação no Address (antes de passar para Order):", observacao);
+
+    const handleFinalizar = () => {
+        // Aqui você pode montar o objeto com todos os dados para enviar ao backend, se desejar
+        const pedido = {
+            nome,
+            cep,
+            estado,
+            cidade,
+            bairro,
+            endereco,
+            numero,
+            complemento,
+            observacao,
+            telefone,
+            local,
+        };
+
+        console.log("Pedido a ser enviado:", pedido);
+        // Aqui você poderia usar axios para enviar ao servidor, por exemplo
+        // axios.post('/api/enviar-pedido', pedido)
+
+        // Fecha a modal após finalizar
+        handleClose();
+    };
+
     return (
-        <div className='order'>
+        <div className="order">
             <div className="orderPage">
                 <div className="dadosCompras">
-                    <p>Descrição: {updateData.descricao}</p>
-                    <p>Modelo: {updateData.modelo}</p>
-                    <p>Tipo: {updateData.tipo}</p>
-                    <sale />
-                    <p>Cor:   </p>
-                    <p>Tamanho: {updateData.tamanho}</p>
-                    <p>Valor: {updateData.valor}</p>
-                    <div className="stripe"></div>
-                    <p>Nome: {capitalize(nome)}</p>
-                    <p>Endereço: {capitalize(endereco)}</p>
-                    <p>Número: {updateData.numero}</p>
-                    <p>Complemento: {capitalize(complemento)}</p>
-                    <p>Bairro: {capitalize(bairro)}</p>
-                    <p>Cidade: {capitalize(cidade)}</p>
-                    <p>Estado: {capitalize(estado)}</p>
-                    <p>Telefone: {updateData.telefone}</p>
-                    <p>Receber: {updateData.local}</p>
-                    <p>Observacao: {capitalize(observacao)}</p>
-                    <div className="stripe"></div>
-                    <p>Cartão: {updateData.cartao}</p>
-                    <p>Banco: {updateData.banco}</p>
-                    <p>Agência: {updateData.agencia}</p>
-                    <p>Conta corrente: {updateData.contacorrente}</p>
-                    <button className='buttonConfirmar' onClick={handleConfirm}>Terminar</button>
+                    <h2>Confirmação do Pedido</h2>
+                    <p>
+                        <strong>Nome:</strong> {nome}
+                    </p>
+                    <p>
+                        <strong>CEP:</strong> {cep}
+                    </p>
+                    <p>
+                        <strong>Estado:</strong> {estado}
+                    </p>
+                    <p>
+                        <strong>Cidade:</strong> {cidade}
+                    </p>
+                    <p>
+                        <strong>Bairro:</strong> {bairro}
+                    </p>
+                    <p>
+                        <strong>Endereço:</strong> {endereco}, Nº {numero}
+                    </p>
+                    {complemento && (
+                        <p>
+                            <strong>Complemento:</strong> {complemento}
+                        </p>
+                    )}
+                    {observacao && (
+                        <p>
+                            <strong>Observação:</strong> {observacao}
+                        </p>
+                    )}
+                    <p>
+                        <strong>Telefone:</strong> {telefone}
+                    </p>
+                    <p>
+                        <strong>Local:</strong> {local}
+                    </p>
+
+                    <p>
+                        <strong>Tamanho:</strong> {selectedSize}
+                    </p>
+                    <p>
+                        <strong>Cor:</strong> {selectedColor}
+                    </p>
+
+                    <div className="botoesModal">
+                        <button
+                            className="buttonConfirmar"
+                            onClick={handleFinalizar}
+                        >
+                            Confirmar
+                        </button>
+                        <button className="buttonCancelar" onClick={""}>
+                            Voltar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
-export default Order
+    );
+};
+
+export default Order;

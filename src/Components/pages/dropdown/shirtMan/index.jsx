@@ -102,34 +102,28 @@ function ShirtMan() {
                         <ul className="divUl">
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    home
+                                    {/* home */}
                                 </span>
                                 <a href="/">Home</a>
                             </li>
-                            <div className="traits">
-                                <p>|</p>
-                            </div>
+                            <div className="traits"></div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    local_library
+                                    {/* local_library */}
                                 </span>
                                 <a href="/">História</a>
                             </li>
-                            <div className="traits">
-                                <p>|</p>
-                            </div>
+                            <div className="traits"></div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    design_services
+                                    {/* design_services */}
                                 </span>
                                 <a href="/">Loja</a>
                             </li>
-                            <div className="traits">
-                                <p>|</p>
-                            </div>
+                            <div className="traits"></div>
                             <li>
                                 <span className="material-symbols-outlined iconMenu">
-                                    wc
+                                    {/* wc */}
                                 </span>
                                 <a href="/">Vestuário</a>
                                 <div className="dropDown-subMenu">
@@ -161,12 +155,10 @@ function ShirtMan() {
                                     </ul>
                                 </div>
                             </li>
-                            <div className="traits">
-                                <p>|</p>
-                            </div>
+                            <div className="traits"></div>
                             <li className="liContato">
                                 <span className="material-symbols-outlined iconSubMenu">
-                                    phone_in_talk
+                                    {/* phone_in_talk */}
                                 </span>
                                 <a href="/" onClick={contato}>
                                     Contato
