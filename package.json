@@ -9,6 +9,8 @@
         "@fortawesome/free-solid-svg-icons": "^6.5.1",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@headlessui/react": "^2.2.1",
+        "@mercadopago/sdk-js": "^0.0.3",
+        "@mercadopago/sdk-react": "^1.0.2",
         "@mui/icons-material": "^5.15.12",
         "@mui/material": "^5.17.1",
         "@mui/styled-engine-sc": "^6.0.0-alpha.16",
@@ -16,7 +18,9 @@
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
         "axios": "^1.8.4",
+        "framer-motion": "^12.7.4",
         "lucide-react": "^0.487.0",
+        "qrcode.react": "^4.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-input-mask": "^2.0.4",
@@ -53,5 +57,10 @@
     "main": "index.js",
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "autoprefixer": "^10.4.21",
+        "postcss": "^8.5.3",
+        "tailwindcss": "^4.1.4"
+    }
 }

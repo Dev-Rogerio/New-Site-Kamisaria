@@ -15,7 +15,7 @@ import Embroidery from "./Components/Modal/Embroidery/index.jsx";
 import Custom from "./Components/Modal/Custom/index.jsx";
 import Store from "./Components/Modal/Store/index.jsx";
 import CustomShirt from "./Components/pages/CustomShirt/index.jsx";
-import Sales from "./Components/pages/Sales/index.jsx";
+import Sales from "./Components/pages/Sales/sales.jsx";
 import Address from "./Components/Modal/Address/address.jsx";
 import Controler from "./Components/Controler/controler.jsx";
 import Tabela from "./Components/Modal/Tabela/tabela.jsx";
@@ -23,10 +23,11 @@ import Order from "./Components/Modal/Order/order.jsx";
 import Return from "./Components/pages/Return/return.jsx";
 import Test from "./Components/pages/Test/test.jsx";
 import Pedido from "./Components/pages/Pedido/pedido.jsx";
-import Pagamento from "./Components/Modal/Pagamento/ModalPagamento.jsx";
-
+import ModalPagamento from "./Components/Modal/Pagamento/ModalPagamento.jsx";
+import GuiaTamanhos from "./Components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
+import CarrinhoCompras from "./Components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
 function App() {
-    const [price, setPrice] = useState("469");
+    const [price, setPrice] = useState("499");
     const [color, setColor] = useState(false);
 
     const handleColorChange = (newColor) => {
@@ -54,7 +55,16 @@ function App() {
                     <Route path="/sales" element={<Sales price={price} />} />
                     <Route path="/address" element={<Address />} />
                     <Route path="/pedido" element={<Pedido />} />
-                    <Route path="/pagamento" element={<Pagamento />} />
+                    <Route path="/guiatamanhos" element={<GuiaTamanhos />} />
+                    <Route
+                        path="/carrinhocompras"
+                        element={<CarrinhoCompras />}
+                    />
+
+                    <Route
+                        path="/modalPagamento"
+                        element={<ModalPagamento />}
+                    />
 
                     <Route
                         path="/controler"

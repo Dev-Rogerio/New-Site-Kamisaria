@@ -1,0 +1,43 @@
+.cartao-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.botao-com-bandeira {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* ou center, se preferir centralizado */
+}
+
+.bandeira-visa {
+    width: 100%;
+}
+.bandeira-visa img {
+    width: 12%;
+}
+
+.cartao-label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.cartao-input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.cartao-input::placeholder {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.cartao-input:focus {
+    border-color: #0070f3;
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+}

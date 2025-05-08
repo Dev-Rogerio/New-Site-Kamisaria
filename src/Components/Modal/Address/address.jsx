@@ -6,7 +6,16 @@ import WorkIcon from "@mui/icons-material/Work";
 import HomeIcon from "@mui/icons-material/Home";
 import InputMask from "react-input-mask";
 
-const Address = ({ ativo, setAtivo, limpar }) => {
+const Address = ({
+    ativo,
+    setAtivo,
+    limpar,
+    selectedSize,
+    selectedColor,
+    quantidade,
+    setQuantidade,
+    valCamisa,
+}) => {
     const [orderData, setOrderData] = useState({});
     const [isChecked, setIsChecked] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -26,17 +35,21 @@ const Address = ({ ativo, setAtivo, limpar }) => {
     const [numeroError, setNumeroError] = useState("");
     const [cepError, setCepError] = useState("");
     const [telefoneError, setTelefoneError] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [cpfError, setCpfError] = useState("");
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [showSize, setShowSize] = useState("");
     // const [cepValid, setCepValid] = useState(true);
     const inputNomeRef = useRef(null);
     const inputNumeroRef = useRef(null);
     const inputCepRef = useRef(null);
     const inputTelefoneRef = useRef(null);
-    const [showSize, setShowSize] = useState("");
+    const cpfInputRef = useRef(null);
+    const emailInputRef = useRef(null);
+    const quantidadeNumerica = Number(quantidade) || 0;
+    const precoTotal = quantidadeNumerica * valCamisa;
 
-    // const validarTelefone = (telefone) => {
-    //     const regexTelefone = /\(\d{2}\) \d{5}-\d{4}/;
-    //     return regexTelefone.test(telefone);
-    // };
     const handleTelefoneChange = (event) => {
         setTelefoneError("");
         let novoTelefone = event.target.value;
@@ -127,6 +140,9 @@ const Address = ({ ativo, setAtivo, limpar }) => {
         if (name === "nome") {
             setNome(value);
             setNomeError("");
+        } else if (name === "cpd") {
+            setNumero(value);
+            setNumeroError("");
         } else if (name === "numero") {
             setNumero(value);
             setNumeroError("");
@@ -150,43 +166,119 @@ const Address = ({ ativo, setAtivo, limpar }) => {
         }
     };
 
-    const handleContinue = () => {
+    const handleContinue = (e) => {
+        e.preventDefault();
+
+        // Regex locais
+        const emailRegexLocal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
+
+        let hasError = false;
+
+        // Nome
         if (!nome.trim()) {
             setNomeError("Por favor, preencha este campo.");
-            inputNomeRef.current.focus();
-            return;
+            hasError = true;
+        } else {
+            setNomeError("");
         }
 
-        if (!cep.trim()) {
-            setCepError("Favor, preencher o campo");
-            inputCepRef.current.focus();
-            return;
+        // CPF
+        if (!cpf.trim()) {
+            setCpfError("Por favor, preencha o CPF.");
+            hasError = true;
+        } else if (!validarCpf(cpf)) {
+            setCpfError("CPF inválido.");
+            hasError = true;
+        } else {
+            setCpfError("");
         }
 
+        // E-mail
+        if (!email.trim() || !emailRegexLocal.test(email)) {
+            setEmailError("E-mail inválido.");
+            hasError = true;
+        } else {
+            setEmailError("");
+        }
+
+        // CEP
+        if (!cep.trim() || cep.length !== 9) {
+            setCepError("CEP inválido.");
+            hasError = true;
+        } else {
+            setCepError("");
+        }
+
+        // Número
         if (!numero.trim()) {
-            setNumeroError("Por favor, preencha este campo");
-            inputNumeroRef.current.focus();
-            return;
+            setNumeroError("Por favor, preencha este campo.");
+            hasError = true;
+        } else {
+            setNumeroError("");
         }
 
-        const regexTelefone = /^\(\d{2}\) \d{5}-\d{4}$/;
+        // Telefone
         if (!telefone.trim()) {
             setTelefoneError("Por favor, preencha o telefone.");
-            inputTelefoneRef.current.focus();
-            return;
-        } else if (!regexTelefone.test(telefone)) {
-            setTelefoneError("Formato inválido. Use: (99) 99999-9999");
-            inputTelefoneRef.current.focus();
-            return;
+            hasError = true;
+        } else if (!telefoneRegex.test(telefone)) {
+            setTelefoneError("Formato inválido. Use: (99) 99999-9999.");
+            hasError = true;
+        } else {
+            setTelefoneError("");
         }
 
-        // Limpa os erros ao passar nas validações
-        setNomeError("");
-        setCepError("");
-        setNumeroError("");
-        setTelefoneError("");
+        // Se houver algum erro, não avança
+        if (hasError) return;
+
+        // Tudo certo → mostra modal e esconde endereço
         setShowModal(true);
         setHideAddress(true);
+    };
+
+    const handleCpfChange = (e) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d)/, "$1.$2");
+        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        setCpf(value);
+    };
+
+    const validarCpf = (cpf) => {
+        cpf = cpf.replace(/[^\d]+/g, "");
+        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+        let soma = 0;
+        for (let i = 0; i < 9; i++) soma += parseInt(cpf.charAt(i)) * (10 - i);
+        let resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.charAt(9))) return false;
+
+        soma = 0;
+        for (let i = 0; i < 10; i++) soma += parseInt(cpf.charAt(i)) * (11 - i);
+        resto = (soma * 10) % 11;
+        if (resto === 10 || resto === 11) resto = 0;
+        if (resto !== parseInt(cpf.charAt(10))) return false;
+
+        return true;
+    };
+
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+
+        // Validação básica de e-mail
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            setEmailError("E-mail inválido.");
+        } else {
+            setEmailError("");
+        }
+    };
+
+    const handleGoBack = () => {
+        setAtivo(false); // Fecha a modal Address
     };
 
     return (
@@ -198,27 +290,67 @@ const Address = ({ ativo, setAtivo, limpar }) => {
                     }`}
                 >
                     <div className="containerModal">
+                        <div className="_field-bt-back">
+                            <button
+                                className="bt_addressVoltar"
+                                onClick={handleGoBack}
+                            >
+                                Voltar
+                            </button>
+                        </div>
+
                         <div className="dados">
                             <p className="pEndereco">Dados para cadastro.</p>
-                            <div className="dadosName res">
-                                <label className="labelFormname" htmlFor="">
-                                    Nome completo
-                                </label>
-                                <input
-                                    ref={inputNomeRef}
-                                    className="inputFormname"
-                                    type="text"
-                                    placeholder="Nome completo:"
-                                    value={nome}
-                                    name="nome"
-                                    required
-                                    onChange={handleChange}
-                                />
-                                <p className="pFormname">
-                                    Como aparecem no seu RG ou CNH.
-                                </p>
-                                <p>{nomeError}</p>
+
+                            <div className="linhaNomeCpf">
+                                <div className="dadosName res">
+                                    <label className="labelFormname" htmlFor="">
+                                        Nome completo
+                                    </label>
+                                    <input
+                                        ref={inputNomeRef}
+                                        className="inputFormname"
+                                        type="text"
+                                        placeholder="Nome completo:"
+                                        value={nome}
+                                        name="nome"
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                    <p className="pFormname">
+                                        Como aparecem no seu RG ou CNH.
+                                    </p>
+                                    <p>{nomeError}</p>
+                                </div>
+
+                                <div className="dadosCpf">
+                                    <label className="labelCpf">CPF</label>
+                                    <input
+                                        className="inputCpf"
+                                        type="text"
+                                        placeholder="000.000.000-00"
+                                        value={cpf}
+                                        name="cpf"
+                                        onChange={handleCpfChange}
+                                        maxLength={14}
+                                        ref={cpfInputRef}
+                                    />
+                                    {cpfError && (
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                fontSize: "12px",
+                                                marginTop: "5px",
+                                            }}
+                                        >
+                                            {cpfError}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
+                            <br />
+
+                            <hr />
                             <div className="dadosCep">
                                 <label className="labelCep" htmlFor="">
                                     CEP
@@ -378,30 +510,60 @@ const Address = ({ ativo, setAtivo, limpar }) => {
                                     <label htmlFor="">Residencia</label>
                                 </div>
                             </div>
-                            <div className="dadosPhone">
-                                <label className="labelPhone" htmlFor="">
-                                    Telefone de contato
-                                </label>
-                                <input
-                                    ref={inputTelefoneRef}
-                                    className="inputPhone"
-                                    placeholder="(xx) 99999-9999"
-                                    type="text"
-                                    name="telefone"
-                                    value={telefone}
-                                    onChange={handleTelefoneChange}
-                                />
-                                {telefoneError && (
-                                    <p
-                                        style={{
-                                            color: "red",
-                                            fontSize: "12px",
-                                        }}
-                                    >
-                                        {telefoneError}
-                                    </p>
-                                )}
+                            <br />
+                            <hr />
+
+                            <div className="_dataContact">
+                                <div className="_dadosPhone">
+                                    <label className="labelPhone" htmlFor="">
+                                        Telefone de contato
+                                    </label>
+                                    <input
+                                        className="inputPhone"
+                                        ref={inputTelefoneRef}
+                                        placeholder="(xx) 99999-9999"
+                                        type="text"
+                                        name="telefone"
+                                        value={telefone}
+                                        onChange={handleTelefoneChange}
+                                    />
+                                    {telefoneError && (
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            {telefoneError}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="_dadosEmail">
+                                    <label className="_labelEmail" htmlFor="">
+                                        Email
+                                    </label>
+                                    <input
+                                        className="inputEmail"
+                                        type="email"
+                                        placeholder="seuemail@exemplo.com.br"
+                                        value={email}
+                                        name="email"
+                                        onChange={handleEmailChange}
+                                    />
+                                    {emailError && (
+                                        <p
+                                            style={{
+                                                color: "red",
+                                                fontSize: "12px",
+                                                marginTop: "5px",
+                                            }}
+                                        >
+                                            {emailError}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
+
                             <div className="dadosAdicionais">
                                 <label className="labelAdicional" htmlFor="">
                                     Informações adicionais deste endereço
@@ -417,11 +579,13 @@ const Address = ({ ativo, setAtivo, limpar }) => {
                                         setObservacao(e.target.value)
                                     }
                                 />
-                                <div className="divButton">
-                                    <button onClick={handleContinue}>
-                                        Continuar
-                                    </button>
-                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div className="divButton">
+                                <button onClick={handleContinue}>
+                                    Continuar
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -445,6 +609,12 @@ const Address = ({ ativo, setAtivo, limpar }) => {
                         orderData={orderData}
                         ativado={showModal}
                         setAtivado={setShowModal}
+                        selectedColor={selectedColor}
+                        selectedSize={selectedSize}
+                        quantidade={quantidade}
+                        valCamisa={valCamisa}
+                        cpf={cpf}
+                        email={email}
                     />
                 )}
             </div>

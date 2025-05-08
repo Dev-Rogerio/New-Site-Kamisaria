@@ -11,12 +11,13 @@
     width: 50%;
     max-width: 500px;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 .orderPage {
     overflow-y: auto;
     max-height: 80vh;
     padding-right: 5px;
+    border-radius: 10px;
 }
 .dadosCompras {
     width: 100%;
@@ -55,8 +56,8 @@
     align-items: center;
     background-color: #ccc;
     text-align: center;
-    width: 20%;
-    height: 25px;
+    width: 30%;
+    height: 35px;
     background-color: blue;
     font-family: Arial;
     font-size: 12px;
@@ -70,7 +71,7 @@
     justify-content: center;
     align-items: center;
     width: 20%;
-    height: 25px;
+    height: 35px;
     background-color: #060606;
     font-family: Arial;
     font-size: 12px;

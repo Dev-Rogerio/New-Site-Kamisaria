@@ -1,9 +1,14 @@
-import React from "react";
-import axios from "axios";
+// src/Order/Order.jsx
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Order/order.css";
+import ModalPagamento from "../Pagamento/ModalPagamento";
+import VisaModal from "../CartaoVisa/ModalCartaoVisa";
 
 const Order = ({
     nome,
+    cpf,
     cep,
     estado,
     cidade,
@@ -18,34 +23,17 @@ const Order = ({
     setHideAddress,
     selectedSize,
     selectedColor,
+    quantidade,
+    valCamisa,
+    email,
 }) => {
-    const handleClose = () => {
+    const [showPagamento, setShowPagamento] = useState(false);
+
+    const handlePagar = () => setShowPagamento(true);
+
+    const handleVoltar = () => {
         setShowModal(false);
         setHideAddress(false);
-    };
-
-    const handleFinalizar = () => {
-        // Aqui você pode montar o objeto com todos os dados para enviar ao backend, se desejar
-        const pedido = {
-            nome,
-            cep,
-            estado,
-            cidade,
-            bairro,
-            endereco,
-            numero,
-            complemento,
-            observacao,
-            telefone,
-            local,
-        };
-
-        console.log("Pedido a ser enviado:", pedido);
-        // Aqui você poderia usar axios para enviar ao servidor, por exemplo
-        // axios.post('/api/enviar-pedido', pedido)
-
-        // Fecha a modal após finalizar
-        handleClose();
     };
 
     return (
@@ -55,6 +43,12 @@ const Order = ({
                     <h2>Confirmação do Pedido</h2>
                     <p>
                         <strong>Nome:</strong> {nome}
+                    </p>
+                    <p>
+                        <strong>Cpf:</strong> {cpf}
+                    </p>
+                    <p>
+                        <strong>Email:</strong> {email}
                     </p>
                     <p>
                         <strong>CEP:</strong> {cep}
@@ -87,27 +81,51 @@ const Order = ({
                     <p>
                         <strong>Local:</strong> {local}
                     </p>
-
                     <p>
                         <strong>Tamanho:</strong> {selectedSize}
                     </p>
                     <p>
                         <strong>Cor:</strong> {selectedColor}
                     </p>
+                    <p>
+                        <strong>Quantidade:</strong> {quantidade}
+                    </p>
+                    <p>
+                        <strong>Valor da Compra:</strong>{" "}
+                        {`R$ ${Number(valCamisa).toFixed(2).replace(".", ",")}`}
+                    </p>
 
                     <div className="botoesModal">
                         <button
                             className="buttonConfirmar"
-                            onClick={handleFinalizar}
+                            onClick={handlePagar}
                         >
-                            Confirmar
+                            Confirma Pedido
                         </button>
-                        <button className="buttonCancelar" onClick={""}>
+                        <button
+                            className="buttonCancelar"
+                            onClick={handleVoltar}
+                        >
                             Voltar
                         </button>
                     </div>
                 </div>
             </div>
+
+            {showPagamento && (
+                <ModalPagamento
+                    descricao="Camisa Personalizada"
+                    valCamisa={valCamisa}
+                    quantidade={quantidade}
+                    selectedSize={selectedSize}
+                    selectedColor={selectedColor}
+                    email={email}
+                    fecharPagamento={() => setShowPagamento(false)}
+                    abrirVisaModal={() => {
+                        setShowPagamento(false);
+                    }}
+                />
+            )}
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "../Controler/controler.css";
-import Sales from "../pages/Sales";
+
 import Tabela from "../Modal/Tabela/tabela";
 
 const Controler = ({ onValueChange, setPrice }) => {

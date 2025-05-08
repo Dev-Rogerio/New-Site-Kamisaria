@@ -1,0 +1,250 @@
+/* ==================== */
+/* 🌈 Paleta de Cores    */
+/* ==================== */
+:root {
+    --primary-color: #f5f5f5;
+    --primary-hover: #27ae60;
+    --secondary-color: #f5f5f5;
+    --text-color: #333;
+    --border-color: #ccc;
+    --background-color: #ffffff;
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --danger-color: #e74c3c;
+    --info-color: #555;
+}
+
+/* ==================== */
+/* 🌙 Tema Escuro        */
+/* ==================== */
+body.dark-mode {
+    --primary-color: #27ae60;
+    --primary-hover: #2ecc71;
+    --secondary-color: #1e1e1e;
+    --text-color: #f5f5f5;
+    --border-color: #555;
+    --background-color: #121212;
+    --overlay-color: rgba(0, 0, 0, 0.85);
+    --danger-color: #e74c3c;
+    --info-color: #bbb;
+}
+
+/* ==================== */
+/* 📦 Containers e Modal */
+/* ==================== */
+.pix-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ==================== */
+/* 📑 Títulos e Textos   */
+/* ==================== */
+.pix-title {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* ==================== */
+/* 📝 Formulário e Inputs */
+/* ==================== */
+.pix-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pix-input {
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.pix-input:focus {
+    outline: none;
+}
+
+/* ==================== */
+/* 🎛️ Botões             */
+/* ==================== */
+.pix-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* opcional — se quiser quebrar em telas pequenas */
+}
+
+.pix-button,
+.pix-card-button,
+.pix-copy-button {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s ease, transform 0.1s ease, opacity 0.4s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0.95;
+}
+
+.pix-button:hover,
+.pix-card-button:hover,
+.pix-copy-button:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--overlay-color);
+    opacity: 1;
+}
+
+.pix-button:active,
+.pix-card-button:active,
+.pix-copy-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.pix-back-button {
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.pix-back-button:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.pix-back-button:focus {
+    outline: none;
+}
+
+/* ==================== */
+/* 📷 Imagens            */
+/* ==================== */
+.imgMasterCard,
+.visa,
+.paypal {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    padding: 15px;
+}
+
+.pix {
+    width: 100%;
+    display: block;
+    padding: 15px;
+}
+
+/* Novo botão para alternar tema */
+.toggle-theme-button {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    transition: all 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 16px;
+}
+
+.toggle-theme-button:hover {
+    background-color: var(--primary-hover);
+    color: white;
+}
+
+.toggle-theme-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.pix-copy-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+/* Modal de Sucesso */
+.modal-sucesso-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-sucesso {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.modal-sucesso h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modal-sucesso button {
+    background-color: #008f5a;
+    color: #ffffff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.modal-sucesso button:hover {
+    background-color: #006c47;
+}
+
+/* Animação fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
