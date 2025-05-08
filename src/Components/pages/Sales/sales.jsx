@@ -60,6 +60,7 @@ const Sales = ({ price }) => {
     const [modalCarrinhoCompras, setModalCarrinhoCompra] = useState(false);
     const [mostrarCarrinho, setMostrarCarrinho] = useState(false);
     const [mostrarModalCarrinho, setMostrarModalCarrinho] = useState(false);
+    const [imagemSelecionada, setImagemSelecionada] = useState(Branco);
 
     // Carrega o carrinho do localStorage quando o componente monta
     useEffect(() => {
@@ -77,7 +78,7 @@ const Sales = ({ price }) => {
     const adicionarAoCarrinho = () => {
         const novoItem = {
             nome: "Camisa Alfaiataria",
-            imagem: mudaPhoto,
+            imagem: imagemSelecionada,
             cor: selectedColor,
             tamanho: selectedSize,
             quantidade: quantidade,
@@ -177,6 +178,20 @@ const Sales = ({ price }) => {
         setSelectedColorText(color);
         setErrorColor("");
         setShowTremerColor(false);
+        // Atualiza a imagem conforme a cor selecionada
+        switch (color) {
+            case "Branco":
+                setImagemSelecionada(Branco);
+                break;
+            case "Azul":
+                setImagemSelecionada(Azul);
+                break;
+            case "Rosa":
+                setImagemSelecionada(Rosa);
+                break;
+            default:
+                setImagemSelecionada(Branco); // fallback
+        }
     };
 
     const handleSelectChange = (e) => {
@@ -566,7 +581,8 @@ const Sales = ({ price }) => {
                                     className={`divThree colors ${
                                         selectedColor === "Rosa" ? "bold" : ""
                                     }`}
-                                    onClick={() => handleColors("Rosa", "Rosa")}
+                                    // onClick={() => handleColors("Rosa", "Rosa")}
+                                    onClick={() => handleColorsChange("Rosa")}
                                 >
                                     <div>
                                         <img src={Rosa} alt="" />
