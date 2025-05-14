@@ -1,82 +1,137 @@
+/* Reset básico */
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal Container */
 .order {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #b2afaf;
-    width: 50%;
-    max-width: 500px;
-    padding: 20px;
-    border-radius: 10px;
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    border: 1px solid #e0e0e0;
 }
+
+/* Área rolável */
 .orderPage {
     overflow-y: auto;
     max-height: 80vh;
     padding-right: 5px;
-    border-radius: 10px;
 }
+
+/* Bloco de dados */
 .dadosCompras {
     width: 100%;
-    display: block;
-    margin-top: 3%;
-    margin-left: 3%;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
+
+.dadosCompras h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .dadosCompras p {
-    padding: 7px;
-    font-size: small;
-    font-family: sans-serif;
+    font-size: 0.95rem;
+    padding: 6px 0;
+    color: #333;
+    line-height: 1.4;
 }
 
+.dadosCompras strong {
+    color: #2c3e50;
+}
+
+/* Separador (opcional) */
 .stripe {
-    width: 95%;
-    display: flex;
-    border-top: 1px solid rgb(144, 142, 142);
-    margin-top: 10px;
-    margin-bottom: 10px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
 }
 
+/* Botões */
 .botoesModal {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 25%;
-    /* background-color: red; */
+    margin-top: 20px;
     gap: 20px;
 }
 
+/* Botão Confirmar */
 .buttonConfirmar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ccc;
-    text-align: center;
-    width: 30%;
-    height: 35px;
-    background-color: blue;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: 100;
-    border: none;
+    flex: 1;
+    padding: 10px;
+    background-color: #007bff;
     color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+.buttonConfirmar:hover {
+    background-color: #0056b3;
+}
+
+/* Botão Voltar */
 .buttonCancelar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20%;
-    height: 35px;
-    background-color: #060606;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: 100;
-    border: none;
+    flex: 1;
+    padding: 10px;
+    background-color: #6c757d;
     color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buttonCancelar:hover {
+    background-color: #495057;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+.valor-total-compra {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border: 2px solid #2d72d9;
+    border-radius: 10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.valor-total-compra span {
+    color: #d92d2d;
+    font-size: 1.6rem;
+    margin-left: 10px;
 }

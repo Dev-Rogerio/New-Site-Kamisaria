@@ -61,6 +61,11 @@ const Sales = ({ price }) => {
     const [mostrarCarrinho, setMostrarCarrinho] = useState(false);
     const [mostrarModalCarrinho, setMostrarModalCarrinho] = useState(false);
     const [imagemSelecionada, setImagemSelecionada] = useState(Branco);
+    const [frete, setFrete] = useState(10);
+
+    useEffect(() => {
+        setFrete(25);
+    }, [setFrete]);
 
     // Carrega o carrinho do localStorage quando o componente monta
     useEffect(() => {
@@ -254,6 +259,11 @@ const Sales = ({ price }) => {
         setCarrinho([]);
     };
 
+    // Função que simula a atualização do valor do frete
+    const handleFreteChange = (novoFrete) => {
+        setFrete(novoFrete); // Atualiza o frete
+    };
+
     return (
         <div className="containerSales">
             {!ativar && (
@@ -344,6 +354,7 @@ const Sales = ({ price }) => {
                     showSize={showSize}
                     valCamisa={valCamisa}
                     cpf={cpf}
+                    frete={frete}
                 />
             )}
             <div className={`allSelect ${ativar ? "hidden" : ""}`}>
@@ -737,6 +748,7 @@ const Sales = ({ price }) => {
                 isOpen={isModalOpen}
                 onClose={closeModal}
                 address={address}
+                frete={frete}
             />
 
             {showModal && (

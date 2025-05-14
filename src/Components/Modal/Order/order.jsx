@@ -26,6 +26,7 @@ const Order = ({
     quantidade,
     valCamisa,
     email,
+    frete,
 }) => {
     const [showPagamento, setShowPagamento] = useState(false);
 
@@ -36,96 +37,127 @@ const Order = ({
         setHideAddress(false);
     };
 
-    return (
-        <div className="order">
-            <div className="orderPage">
-                <div className="dadosCompras">
-                    <h2>Confirmação do Pedido</h2>
-                    <p>
-                        <strong>Nome:</strong> {nome}
-                    </p>
-                    <p>
-                        <strong>Cpf:</strong> {cpf}
-                    </p>
-                    <p>
-                        <strong>Email:</strong> {email}
-                    </p>
-                    <p>
-                        <strong>CEP:</strong> {cep}
-                    </p>
-                    <p>
-                        <strong>Estado:</strong> {estado}
-                    </p>
-                    <p>
-                        <strong>Cidade:</strong> {cidade}
-                    </p>
-                    <p>
-                        <strong>Bairro:</strong> {bairro}
-                    </p>
-                    <p>
-                        <strong>Endereço:</strong> {endereco}, Nº {numero}
-                    </p>
-                    {complemento && (
-                        <p>
-                            <strong>Complemento:</strong> {complemento}
-                        </p>
-                    )}
-                    {observacao && (
-                        <p>
-                            <strong>Observação:</strong> {observacao}
-                        </p>
-                    )}
-                    <p>
-                        <strong>Telefone:</strong> {telefone}
-                    </p>
-                    <p>
-                        <strong>Local:</strong> {local}
-                    </p>
-                    <p>
-                        <strong>Tamanho:</strong> {selectedSize}
-                    </p>
-                    <p>
-                        <strong>Cor:</strong> {selectedColor}
-                    </p>
-                    <p>
-                        <strong>Quantidade:</strong> {quantidade}
-                    </p>
-                    <p>
-                        <strong>Valor da Compra:</strong>{" "}
-                        {`R$ ${Number(valCamisa).toFixed(2).replace(".", ",")}`}
-                    </p>
+    const calcularTotalCompra = () => {
+        const valorProdutos = Number(valCamisa);
+        const valorFrete = frete ? Number(frete) : 0;
+        const total = valorProdutos + valorFrete;
+        return total.toFixed(2).replace(".", ",");
+    };
 
-                    <div className="botoesModal">
-                        <button
-                            className="buttonConfirmar"
-                            onClick={handlePagar}
-                        >
-                            Confirma Pedido
-                        </button>
-                        <button
-                            className="buttonCancelar"
-                            onClick={handleVoltar}
-                        >
-                            Voltar
-                        </button>
+    return (
+        <div className="modal-backdrop">
+            <div className="order">
+                <div className="orderPage">
+                    <div className="dadosCompras">
+                        <h2>Confirmação do Pedido</h2>
+                        <p>
+                            <strong>Nome:</strong> {nome}
+                        </p>
+                        <p>
+                            <strong>Cpf:</strong> {cpf}
+                        </p>
+                        <p>
+                            <strong>Email:</strong> {email}
+                        </p>
+                        <p>
+                            <strong>CEP:</strong> {cep}
+                        </p>
+                        <p>
+                            <strong>Estado:</strong> {estado}
+                        </p>
+                        <p>
+                            <strong>Cidade:</strong> {cidade}
+                        </p>
+                        <p>
+                            <strong>Bairro:</strong> {bairro}
+                        </p>
+                        <p>
+                            <strong>Endereço:</strong> {endereco}, Nº {numero}
+                        </p>
+                        {complemento && (
+                            <p>
+                                <strong>Complemento:</strong> {complemento}
+                            </p>
+                        )}
+                        {observacao && (
+                            <p>
+                                <strong>Observação:</strong> {observacao}
+                            </p>
+                        )}
+                        <p>
+                            <strong>Telefone:</strong> {telefone}
+                        </p>
+                        <p>
+                            <strong>Local:</strong> {local}
+                        </p>
+                        <p>
+                            <strong>
+                                {" "}
+                                Camisa Social Masculina Manga Longa Slim Fit Sem
+                                Bolso
+                            </strong>
+                        </p>
+                        <p>
+                            <strong>Tamanho:</strong> {selectedSize}
+                        </p>
+                        <p>
+                            <strong>Cor:</strong> {selectedColor}
+                        </p>
+                        <p>
+                            <strong>Quantidade:</strong> {quantidade}
+                        </p>
+                        <p>
+                            <strong>Valor da Compra:</strong>{" "}
+                            {`R$ ${Number(valCamisa)
+                                .toFixed(2)
+                                .replace(".", ",")}`}
+                        </p>
+
+                        <p>
+                            <strong>Frete:</strong> R${" "}
+                            {frete
+                                ? Number(frete).toFixed(2).replace(".", ",")
+                                : "Frete Gratis"}
+                        </p>
+
+                        <p className="valor-total-compra">
+                            <strong>
+                                Valor Total da Compra: {calcularTotalCompra()}
+                            </strong>
+                        </p>
+
+                        <div className="botoesModal">
+                            <button
+                                className="buttonConfirmar"
+                                onClick={handlePagar}
+                            >
+                                Confirma Pedido
+                            </button>
+                            <button
+                                className="buttonCancelar"
+                                onClick={handleVoltar}
+                            >
+                                Voltar
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {showPagamento && (
-                <ModalPagamento
-                    descricao="Camisa Personalizada"
-                    valCamisa={valCamisa}
-                    quantidade={quantidade}
-                    selectedSize={selectedSize}
-                    selectedColor={selectedColor}
-                    email={email}
-                    fecharPagamento={() => setShowPagamento(false)}
-                    abrirVisaModal={() => {
-                        setShowPagamento(false);
-                    }}
-                />
-            )}
+                {showPagamento && (
+                    <ModalPagamento
+                        descricao="Camisa Personalizada"
+                        valCamisa={valCamisa}
+                        quantidade={quantidade}
+                        selectedSize={selectedSize}
+                        selectedColor={selectedColor}
+                        email={email}
+                        fecharPagamento={() => setShowPagamento(false)}
+                        abrirVisaModal={() => {
+                            setShowPagamento(false);
+                        }}
+                    />
+                )}
+            </div>
         </div>
     );
 };

@@ -15,6 +15,7 @@ const Address = ({
     quantidade,
     setQuantidade,
     valCamisa,
+    frete,
 }) => {
     const [orderData, setOrderData] = useState({});
     const [isChecked, setIsChecked] = useState(false);
@@ -615,6 +616,7 @@ const Address = ({
                         valCamisa={valCamisa}
                         cpf={cpf}
                         email={email}
+                        frete={frete}
                     />
                 )}
             </div>

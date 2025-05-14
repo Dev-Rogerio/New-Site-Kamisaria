@@ -291,10 +291,10 @@ function home() {
                 </section>
 
                 <a
-                    href="https://wa.me/5511932406348"
-                    target="_blank"
+                    href="https://wa.me/5511973418998"
+                    target="_self"
                     rel="noopener noreferrer"
-                    class="whatsapp-float"
+                    className="whatsapp-float"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

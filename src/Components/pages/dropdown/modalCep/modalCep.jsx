@@ -1,13 +1,24 @@
 import React from "react";
 import "../modalCep/modalCep.css";
+import Order from "../../../Modal/Order/order";
 
-const ModalCep = ({ isOpen, onClose, address }) => {
+const ModalCep = ({ isOpen, onClose, address, frete, onFreteChange }) => {
     if (!isOpen) return null;
+
+    // Função para fechar o modal e passar o frete de volta para o componente pai
+    const handleClose = () => {
+        onFreteChange(frete); // Passa o valor do frete para o componente pai
+        onClose(); // Fecha o modal
+    };
 
     return (
         <div className="modal-overlay">
             <div className="modal-cep">
                 <h2>Valor do Frete</h2>
+                <p>
+                    <strong>Frete:</strong> R${" "}
+                    {Number(frete).toFixed(2).replace(".", ",")}
+                </p>
                 <p>
                     <strong>Cep: {address.cep}</strong>
                 </p>
