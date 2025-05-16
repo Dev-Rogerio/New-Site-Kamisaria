@@ -1,308 +1,257 @@
-body,
-h1,
+/* Reset Básico */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
 ul,
 li,
-p,
-dd,
-dt,
-dl,
+h1,
 h2,
-* {
-    padding: 0;
+p,
+dl,
+dd,
+dt {
     margin: 0;
+    padding: 0;
 }
 
+/* Variáveis */
 :root {
-    --corBeige: beige;
-    --corRodape: #222;
-    --corTittle: orange;
-    --corTextGray: #7f7e7e;
+    --color-beige: beige;
+    --color-dark: #222;
+    --color-orange: orange;
+    --color-text-gray: #7f7e7e;
+    --color-light: #f9f9f9;
+    --color-blue: #0077ff;
+    --color-blue-dark: #005fcc;
 }
 
+/* Container Principal */
 .section-container {
     display: flex;
-    grid-column: 1/4;
-    background-color: rgba(184, 184, 182, 0.6);
-    width: 100%;
-    height: 350px;
-    margin: 0;
-    grid-template-columns: 50% 50%;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 2rem;
+    background: var(--color-light);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.text-tittle {
+/* Texto do Título */
+.text-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.text-subtitle {
     display: flex;
-    justify-content: start;
     align-items: center;
-    letter-spacing: 0.8;
-    color: #222;
-    font-weight: 400;
-    height: 20px;
+    color: var(--color-dark);
     font-size: 15px;
-    font-family: sans-serif;
-    margin: none;
+    font-weight: 400;
+    letter-spacing: 0.8px;
 }
 
-.grid-left {
-    display: flex;
-    width: 35%;
-    height: 100%;
-    justify-content: center;
-    margin: 0;
+/* Grid */
+.grid-left,
+.grid-right {
+    flex: 1;
+    padding: 2rem;
 }
 
 .grid-right {
     display: flex;
-    margin: 0;
     justify-content: center;
     align-items: center;
-    width: 35%;
-    height: 100%;
 }
 
+/* Imagem */
+.img-telefonista {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Formulário */
 .info-login {
-    display: block;
     width: 100%;
     height: 98%;
-    border-radius: 4px;
-    margin: 0;
-}
-
-.secaoEmail {
     display: block;
-    width: 100%;
-    margin: 0;
-    margin-top: 5px;
+    border-radius: 4px;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Campos */
+.form-field {
+    position: relative;
+}
+
+.form-input,
+.form-textarea,
+.input-name,
+.input-email,
+textarea {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.3s;
+    text-transform: capitalize;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.input-name:focus,
+.input-email:focus {
+    border-color: var(--color-blue);
+}
+
+/* Área de texto */
 .area {
-    max-width: 100%;
-    height: 45%;
-    margin: 0;
     margin-top: 18px;
     position: relative;
-    border-radius: 4px;
+    height: 45%;
 }
 
 textarea {
-    width: 99%;
-    height: 95%;
     position: absolute;
-
+    height: 95%;
     text-indent: 10px;
-    text-transform: capitalize;
-    border-radius: 4px;
     border: none;
-
-    outline: none;
 }
 
-.formName {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    height: 45px;
-    margin: 0;
-    margin-top: 4px;
-    border-radius: 4px;
+/* Labels */
+.form-label,
+.label-name,
+.label-email {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 95%;
+    height: 20%;
+    font-size: 0.85rem;
+    color: #ccc;
+    pointer-events: none;
+    border-bottom: 1px solid #fff;
+    transition: all 0.3s ease;
 }
 
-.formEmail {
-    overflow: hidden;
+.label-name::after,
+.label-email::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 105%;
+    border-bottom: 3px solid #070707;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.input-name:focus + .label-name span,
+.input-name:valid + .label-name span,
+.input-email:focus + .label-email span,
+.input-email:valid + .label-email span {
+    transform: translateY(-90%);
+    font-size: 14px;
+    bottom: 10px;
+    color: #070707;
+}
+
+.input-name:focus + .label-name::after,
+.input-name:valid + .label-name::after,
+.input-email:focus + .label-email::after,
+.input-email:valid + .label-email::after {
+    transform: translateX(0%);
+}
+
+.span-name,
+.span-email {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+/* Campos individuais */
+.form-name,
+.form-email {
     position: relative;
-    width: 100%;
     height: 45px;
-    margin: 0;
     margin-top: 10px;
     border-radius: 4px;
+    overflow: hidden;
 }
 
-.info-login input {
-    width: 100%;
-    height: 100%;
-    border-radius: 3px;
-    box-shadow: 7px #222;
-    outline: none;
-
+.input-name,
+.input-email {
+    width: 85%;
+    padding: 1px;
+    border: none;
+    margin-top: 8px;
 }
 
-.required-fild-name {
+.required-field {
     font-size: 10px;
     color: red;
 }
 
-.inputName {
-    color: #070707;
-    font-size: 15px;
-    width: 85%;
-    padding: 1px 1px 1px;
-    border: none;
-    border-radius: 4px;
-    margin: 1;
-    text-transform: capitalize;
-    margin-top: 8px;
-}
-
-.inputEmail {
-    color: #070707;
-    font-size: 15px;
-    width: 85%;
-    padding: 1px 1px 1px;
-    border: none;
-    margin: 0;
-    text-transform: capitalize;
-    margin-top: 8px;
-}
-
-.labelName {
-    color: #ccc;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 95%;
-    height: 20%;
-    pointer-events: none;
-    border-bottom: 1px solid #ffffff;
-    margin: 0;
-}
-
-.labelEmail {
-    color: #ccc;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 95%;
-    height: 20%;
-    pointer-events: none;
-    border-bottom: 1px solid #ffffff;
-    margin: 0;
-}
-
-.spanName {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    font-size: 18px;
-    transition: all 0.3s ease;
-    margin: 0;
-}
-
-.spanEmail {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    font-size: 18px;
-    transition: all 0.3s ease;
-    margin: 0;
-}
-
-.labelName::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    width: 105%;
-    border-bottom: 3px solid #070707;
-    transform: translateX(-100%);
-    transition: all 0.3s ease;
-}
-
-.labelEmail::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    width: 105%;
-    border-bottom: 3px solid #070707;
-    transform: translateX(-100%);
-    transition: all 0.3s ease;
-}
-
-.inputName:focus+label span,
-.inputName:valid+label span {
-    transform: translateY(-90%);
-    font-size: 14px;
-    bottom: 10px;
-    color: #070707;
-}
-
-.inputEmail:focus+label span,
-.inputEmail:valid+label span {
-    transform: translateY(-90%);
-    font-size: 14px;
-    bottom: 10px;
-    color: #070707;
-}
-
-.inputName:focus+label::after,
-.inputName:valid+label::after {
-    transform: translateX(0%);
-}
-
-.inputEmail:focus+label::after,
-.inputEmail:valid+label::after {
-    transform: translateX(0%);
-}
-
-.botton {
+/* Botão */
+.button,
+.botton,
+.form-button {
     display: flex;
-    width: 100%;
-    height: 30px;
-    background-color: #222;
-    border: 1px solid #222;
-    border-radius: 4px;
     justify-content: center;
     align-items: center;
-    color: azure;
-    text-transform: capitalize;
+    padding: 0.8rem 2rem;
+    background-color: var(--color-dark);
+    color: white;
+    border: 1px solid var(--color-dark);
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
     margin-top: 10px;
-    font-size: 15px;
 }
 
-.botton:hover {
+.botton:hover,
+.form-button:hover {
     background-color: #8d8a8a;
 }
 
-.img-telefonista {
-    width: 98%;
-    height: 98%;
-    margin: 0;
-}
-
+/* Responsividade */
 @media screen and (max-width: 600px) {
     .section-container {
-        margin-top: -130px;
-        display: block;
+        flex-direction: column;
         width: 96%;
-        height: 100%;
+        margin-top: -130px;
     }
 
-    .footerContainer {
+    .footer-container {
         margin-top: 30px;
         height: 460px;
     }
 
-    .formName {
-        background-color: yellow;
-    }
-
-    .spanName {
-        background-color: royalblue;
-    }
-
-    .divMenu {
-        background-color: orange;
-        width: 95px;
-    }
-
-    .divLeft {
-        width: 98px;
-        background-color: blue;
-    }
-
     .grid-left {
-        height: 340px;
         width: 100%;
+        height: 340px;
     }
 
     .info-login {
@@ -310,71 +259,78 @@ textarea {
         height: 280px;
     }
 
-    .area {
-        border: none;
-        border: 1px solid #222;
-    }
-
-    .text-tittle {
-        font-size: 8px;
-    }
-
     .grid-right {
-        height: 170px;
         width: 100%;
+        height: 170px;
     }
 
     .img-telefonista {
         width: 340px;
     }
 
+    .area {
+        border: 1px solid var(--color-dark);
+    }
+
+    .text-subtitle {
+        font-size: 8px;
+    }
+
     .botton {
         margin-top: 30px;
     }
 
-    .sectionFooter {
-        margin-top: 10px;
-        display: block;
-        height: 380px;
+    .input-name {
+        width: 58px;
+    }
+
+    .input-email {
+        width: 50px;
+        background-color: orangered;
+        height: 500px;
+    }
+
+    .head-container {
+        display: flex;
         justify-content: center;
+        gap: 5px;
     }
 
-    .divAdress {
-        margin: 0;
+    .section-footer {
+        margin-top: 10px;
+        height: 380px;
+        display: block;
+    }
+
+    .div-address,
+    .div-maps {
         width: 340px;
+        margin-top: 10px;
     }
 
-    .divAdress p {
+    .div-address p {
         margin-left: 7px;
         font-size: 10px;
+    }
+
+    .redes-sociais {
+        height: 80px;
     }
 
     .imgs {
         margin-top: -120px;
     }
 
-    .redesociais {
-        height: 80px;
+    .form-name {
+        background-color: yellow;
     }
 
-    .divMaps {
-        margin-top: 10px;
-        width: 340px;
+    .span-name {
+        background-color: royalblue;
     }
 
-    .inputName {
-        width: 58px;
-    }
-
-    .inputEmail {
-        width: 50px;
-        background-color: orangered;
-        height: 500px;
-    }
-
-    .headContainner {
-        display: flex;
-        justify-content: center;
-        gap: 5px;
+    .div-menu {
+        background-color: orange;
+        width: 95px;
     }
 }

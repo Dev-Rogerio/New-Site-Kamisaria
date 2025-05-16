@@ -49,7 +49,7 @@ const Sales = ({ price }) => {
     const [showTremerColor, setShowTremerColor] = useState(false);
     const [selectedColor, setSelectedColor] = useState("");
     const [quantidade, setQuantidade] = useState(1);
-    const [valCamisa, setValCamisa] = useState(480.0);
+    const [valCamisa, setValCamisa] = useState(476.0);
     const [carrinho, setCarrinho] = useState([]);
     const [selectedSize, setSelectedSize] = useState("");
     const [selectedColorText, setSelectedColorText] = useState("");
@@ -94,7 +94,7 @@ const Sales = ({ price }) => {
     };
 
     useEffect(() => {
-        const total = 480 * quantidade;
+        const total = 476 * quantidade;
         const inteiro = Math.floor(total);
         const decimal = (total % 1).toFixed(2).split(".")[1] || "00";
 
@@ -271,13 +271,13 @@ const Sales = ({ price }) => {
     return (
         <div className="containerSales">
             {!ativar && (
-                <nav className={`divNav-Sales ${ativar ? "hidden" : ""}`}>
-                    <div className="divLeft-Sales"></div>
-                    <div className="divCenter">
+                <nav className={`divNav ${ativar ? "hidden" : ""}`}>
+                    <div className="divLeft"></div>
+                    <div className="divCenter-Sales">
                         <section>
                             <img className="logokz" src={Logo} alt="" />
                         </section>
-                        <article>
+                        <article className="article">
                             <h1>KAMISARIA ZANUTO</h1>
                         </article>
                     </div>
@@ -506,10 +506,14 @@ const Sales = ({ price }) => {
                                     <p>10 opniões</p>
                                 </div>
                             </div>
-                            <p className="valueDesc">
-                                desconto de RS {reais}
-                                <span>{centavos} </span> Por
-                            </p>
+                            <div className="desconto-sales">
+                                <p> Desconto de: </p> RS
+                                <p className="valueDesc">
+                                    {reais}
+                                    <span>{centavos} </span>
+                                </p>
+                                <p className="textPor">Por</p>
+                            </div>
 
                             <div className="valueoff">
                                 <div className="valueTot">

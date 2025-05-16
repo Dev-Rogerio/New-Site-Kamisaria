@@ -62,30 +62,33 @@ function home() {
         const contato = document.querySelector(".liContato a");
 
         if (contato) {
-            window.open("http://localhost:3000/contact");
+            // window.open("http://localhost:3000/contact");
+            window.open(`${window.location.origin}/contact`);
         }
     }
     function subMan() {
         const subman = document.querySelector(".man");
         if (subman) {
-            window.open("http://localhost:3000/man");
+            // window.open("http://localhost:3000/man");
+            window.open(`${window.location.origin}/man`);
         }
     }
     function comprar() {
         const purchase = document.querySelector(".liComprar a");
         if (purchase) {
-            window.open("http://localhost:3000/sales");
+            // window.open("http://localhost:3000/sales");
+            window.open(`${window.location.origin}/sales`);
         }
     }
     return (
         <header className="headContainner">
             <nav className="divNav">
                 <div className="divLeft"></div>
-                <div className="divCenter">
+                <div className="divCenter-Sales">
                     <section>
                         <img className="logokz" src={Logo} alt="" />
                     </section>
-                    <article>
+                    <article className="article">
                         <h1>KAMISARIA ZANUTO</h1>
                     </article>
                 </div>
@@ -93,32 +96,24 @@ function home() {
                     <div className="divMenu">
                         <ul className="divUl">
                             <li>
-                                <span className="material-symbols-outlined iconMenu">
-                                    {/* <HomeIcon /> */}
-                                </span>
+                                <span className="material-symbols-outlined iconMenu"></span>
                                 <a href="/">Home</a>
                             </li>
                             <div className="traits"></div>
                             <li>
-                                <span className="material-symbols-outlined iconMenu">
-                                    {/* <LocalLibraryIcon /> */}
-                                </span>
+                                <span className="material-symbols-outlined iconMenu"></span>
                                 <a href="/">História</a>
                             </li>
                             <div className="traits"></div>
                             <li className="liComprar">
-                                <span className="material-symbols-outlined iconMenu">
-                                    {/* <ShoppingCartIcon /> */}
-                                </span>
+                                <span className="material-symbols-outlined iconMenu"></span>
                                 <a href="/" onClick={comprar}>
                                     Loja
                                 </a>
                             </li>
                             <div className="traits"></div>
                             <li>
-                                <span className="material-symbols-outlined iconMenu">
-                                    {/* <WcIcon /> */}
-                                </span>
+                                <span className="material-symbols-outlined iconMenu"></span>
                                 <a href="/">Vestuário</a>
                                 <div className="dropDown-subMenu">
                                     <ul>

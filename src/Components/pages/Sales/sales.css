@@ -33,6 +33,7 @@
 }
 .divLeft-Sales {
     margin-left: 20px;
+    /* background-color: green; */
 }
 .information:nth-child(1) {
     margin-top: 5px;
@@ -54,21 +55,53 @@
     display: grid;
     width: 100vw;
     height: 18vh;
-    grid-template-columns: 42% 16% 42%;
+    grid-template-columns: 40% 20% 40%;
     justify-content: center;
     align-items: centers;
     margin: 0;
     z-index: 1;
 }
 .logokz-sales {
-    width: 30%;
+    width: 60%;
+}
+.article {
+    margin: 0;
+    padding: 0;
 }
 .article-sales h1 {
-    font-size: 14px;
-    color: #2229;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    background-color: red;
+    font-size: 25px;
+    color: #222;
+    font-family: arial;
+    margin: 0;
+}
+
+.desconto-sales {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+    gap: 5px;
+}
+.divCenter {
+    width: 100%;
+    /* background-color: green; */
+}
+.textPor {
+    margin-left: 15px;
 }
 .divCenter-Sales {
     display: grid;
+    width: 100%;
+    /* background-color: rebeccapurple; */
+}
+.divRight {
+    width: 100%;
+    /* background-color: orange; */
 }
 .divCenter-Sales section {
     display: flex;
@@ -190,7 +223,7 @@
     width: 100%;
     height: 100%;
     background-color: #eaeaea;
-    margin-top: 130px;
+    margin-top: 10px;
 }
 .mCompras {
     width: 100%;
@@ -274,9 +307,9 @@
     width: 50%;
 }
 .valueDesc {
-    margin-top: 20px;
     color: #222;
     text-decoration: line-through;
+    font-size: 20px;
 }
 .valueDesc span {
     position: absolute;

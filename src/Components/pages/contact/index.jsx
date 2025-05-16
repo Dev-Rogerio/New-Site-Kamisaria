@@ -81,7 +81,7 @@ function contact() {
         <header className="headContainner">
             <nav className="divNav">
                 <div className="divLeft"></div>
-                <div className="divCenter">
+                <div className="divCenter-Sales">
                     <section>
                         <img className="logokz" src={Logo} alt="" />
                     </section>
@@ -155,9 +155,7 @@ function contact() {
                             </li>
                             <div className="traits"></div>
                             <li className="liContato">
-                                <span className="material-symbols-outlined iconSubMenu">
-                                    {/* phone_in_talk */}
-                                </span>
+                                <span className="material-symbols-outlined iconSubMenu"></span>
                                 <a href="/">Contato</a>
                             </li>
                         </ul>
@@ -167,41 +165,51 @@ function contact() {
             <section className="section-container">
                 <div className="grid-left">
                     <section className="info-login">
-                        <p className="text-tittle">Entre em contato conosco</p>
-                        <form className="formName">
-                            <input
-                                className="inputName"
-                                name="name"
-                                autoComplete="off"
-                                required
-                                onBlur={""}
-                            />
-                            <label className="labelName" form="name">
-                                <span className="spanName">Name</span>
-                            </label>
+                        <p className="text-title">Entre em contato conosco</p>
+
+                        <form className="form-group">
+                            <div className="form-field">
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="form-input"
+                                    required
+                                    autoComplete="off"
+                                />
+                                <label className="form-label">Nome</label>
+                            </div>
+
+                            <div className="form-field">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="form-input"
+                                    required
+                                    autoComplete="off"
+                                />
+                                <label className="form-label">E-mail</label>
+                            </div>
+
+                            <div className="form-field">
+                                <textarea
+                                    name="message"
+                                    className="form-textarea"
+                                    rows="5"
+                                    placeholder="Digite sua mensagem..."
+                                ></textarea>
+                            </div>
+
+                            <button className="form-button">Enviar</button>
                         </form>
-                        <p className="required-fild-name"></p>
-                        <form className="formEmail">
-                            <input
-                                className="inputEmail"
-                                name="email"
-                                autoComplete="off"
-                                required
-                                onBlurCapture={""}
-                            />
-                            <label className="labelEmail" form="email">
-                                <span className="spanEmail">E-mail</span>
-                            </label>
-                            <p className="required-fild-name"></p>
-                        </form>
-                        <div className="area">
-                            <textarea rows="5" cols="8"></textarea>
-                        </div>
-                        <button className="botton">enviar</button>
                     </section>
                 </div>
+
                 <div className="grid-right">
-                    <img className="img-telefonista" src={Telefonista} alt="" />
+                    <img
+                        className="img-telefonista"
+                        src={Telefonista}
+                        alt="Atendente"
+                    />
                 </div>
             </section>
 
