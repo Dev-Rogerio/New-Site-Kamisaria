@@ -5,9 +5,9 @@ import "../Controler/controler.css";
 import Tabela from "../Modal/Tabela/tabela";
 
 const Controler = ({ onValueChange, setPrice }) => {
-    const [valor, setValor] = useState("");
-    const [inputValue, setInputValue] = useState("");
-    const [table, setTable] = useState(false);
+    // const [valor, setValor] = useState("");
+    // const [inputValue, setInputValue] = useState("");
+    // const [table, setTable] = useState(false);
     const [atualId, setAtualId] = useState(0);
     const [lojas, setLojas] = useState([]);
     const [loja, setLoja] = useState({

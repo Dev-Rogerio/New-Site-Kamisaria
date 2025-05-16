@@ -190,5 +190,4 @@ const GuiaTamanhosLuxo = ({ isOpen, setIsOpen }) => {
         </div>
     );
 };
-
 export default GuiaTamanhosLuxo;

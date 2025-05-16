@@ -27,7 +27,7 @@ const Sales = ({ price }) => {
     const [ativar, setAtivar] = useState(false);
     const [valorControler, setValorControler] = useState("");
     const [selectedSizeText, setSelectedSizeText] = useState("");
-    const [reais, centavos] = (123.45).toFixed(2).split(".");
+    const [reais, centavos] = (560.0).toFixed(2).split(".");
     const [showModal, setShowModal] = useState(false);
     const [hideAddress, setHideAddress] = useState(false);
     const [orderData, setOrderData] = useState({});
@@ -264,6 +264,10 @@ const Sales = ({ price }) => {
         setFrete(novoFrete); // Atualiza o frete
     };
 
+    if (numberSize) {
+        return <GuiaTamanhosLuxo isOpen={true} setIsOpen={setNumberSize} />;
+    }
+
     return (
         <div className="containerSales">
             {!ativar && (
@@ -342,6 +346,7 @@ const Sales = ({ price }) => {
                     </div>
                 </nav>
             )}
+
             {ativar && (
                 <Address
                     ativo={ativar}
@@ -357,6 +362,7 @@ const Sales = ({ price }) => {
                     frete={frete}
                 />
             )}
+
             <div className={`allSelect ${ativar ? "hidden" : ""}`}>
                 <div className="mCompras">
                     <p>Minhas compras</p>
@@ -501,7 +507,8 @@ const Sales = ({ price }) => {
                                 </div>
                             </div>
                             <p className="valueDesc">
-                                RS {reais} <span>{centavos}</span>
+                                desconto de RS {reais}
+                                <span>{centavos} </span> Por
                             </p>
 
                             <div className="valueoff">
@@ -513,7 +520,7 @@ const Sales = ({ price }) => {
                                 <p className="descriptionOff">15% OFF</p>
                             </div>
 
-                            <div class="descriptionParcelado">
+                            <div className="descriptionParcelado">
                                 <div class="parcelamento icone-cartao">
                                     <span>ou</span>
                                     <strong>3x</strong>
@@ -743,7 +750,7 @@ const Sales = ({ price }) => {
                     </section>
                 </section>
             </div>
-            <GuiaTamanhosLuxo isOpen={numberSize} setIsOpen={setNumberSize} />
+
             <ModalCep
                 isOpen={isModalOpen}
                 onClose={closeModal}
