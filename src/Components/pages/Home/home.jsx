@@ -6,7 +6,7 @@ import One from "../../Img/kz1.jpg";
 import Two from "../../Img/kz2.jpg";
 import Three from "../../Img/kz3.jpg";
 import Four from "../../Img/kz4.jpg";
-import Logo from "../../Img/logovetorizadoKZ.png";
+import Logo from "../../Img/logo_branco.png";
 import Mapa from "../../Img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";

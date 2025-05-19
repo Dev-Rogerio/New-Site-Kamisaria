@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Home/home.css";
 import "../contact/contact.css";
-import Logo from "../../Img/logovetorizadoKZ.png"; // Usa o mesmo logo
+import Logo from "../../Img/logo_branco.png"; // Usa o mesmo logo
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";

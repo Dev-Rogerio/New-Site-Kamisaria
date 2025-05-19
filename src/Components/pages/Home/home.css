@@ -27,6 +27,7 @@ body {
     max-width: 1200px;
     margin: auto;
     position: relative;
+    z-index: 999;
 }
 
 .nav-left {
@@ -421,5 +422,15 @@ body {
 
     .gallery-grid {
         grid-template-columns: 1fr;
+    }
+
+    .cover-section h2 {
+        font-size: 1.5rem; /* ou ajuste conforme desejar */
+        text-align: center; /* opcional, se quiser centralizar */
+    }
+    @media (max-width: 768px) {
+        .logo-title {
+            font-size: 0.85rem; /* ou ajuste conforme preferir */
+        }
     }
 }

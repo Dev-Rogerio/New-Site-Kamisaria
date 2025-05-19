@@ -4,7 +4,7 @@ import "../../Home/home.css";
 import "../shirtMan/man.css";
 
 import Tissue from "../../../Modal/Tissue/index";
-import Logo from "../../../Img/logovetorizadoKZ.png";
+import Logo from "../../../Img/logo_branco.png";
 import ImgTeen from "../../../Img/hz10.jpg";
 import ImgTwelve from "../../../Img/kz12.jpg";
 import ImgThirteen from "../../../Img/kz13.jpg";
