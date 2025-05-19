@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from "./Components/pages/Home/index.jsx";
-import Contact from "./Components/pages/contact/index.jsx";
-import ShirtMan from "./Components/pages/dropdown/shirtMan/index.jsx";
+import Home from "./Components/pages/Home/home.jsx";
+import Contact from "./Components/pages/contact/contact.jsx";
+import ShirtMan from "./Components/pages/dropdown/shirtMan/man.jsx";
 import ShirtWoman from "./Components/pages/dropdown/shirtWoman/index.jsx";
 import Sewing from "./Components/Modal/Sewing/index.jsx";
 import Tailor from "./Components/Modal/Tailor/index.jsx";

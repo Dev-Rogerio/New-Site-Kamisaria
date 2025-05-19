@@ -63,6 +63,12 @@ const Sales = ({ price }) => {
     const [imagemSelecionada, setImagemSelecionada] = useState(Branco);
     const [frete, setFrete] = useState(10);
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
     useEffect(() => {
         setFrete(25);
     }, [setFrete]);
@@ -271,80 +277,78 @@ const Sales = ({ price }) => {
     return (
         <div className="containerSales">
             {!ativar && (
-                <nav className={`divNav ${ativar ? "hidden" : ""}`}>
-                    <div className="divLeft"></div>
-                    <div className="divCenter-Sales">
-                        <section>
-                            <img className="logokz" src={Logo} alt="" />
-                        </section>
-                        <article className="article">
-                            <h1>KAMISARIA ZANUTO</h1>
-                        </article>
-                    </div>
-                    <div className="divRight">
-                        <div className="divMenu">
-                            <ul className="divUl">
+                <header className="headContainer">
+                    <nav className="nav">
+                        <div className="nav-left" />
+                        <div className="nav-center">
+                            <img
+                                className="logo"
+                                src={Logo}
+                                alt="Logo Kamisaria Zanuto"
+                            />
+                            <h1 className="logo-title">KAMISARIA ZANUTO</h1>
+                        </div>
+
+                        <button
+                            className={`hamburger ${menuOpen ? "active" : ""}`}
+                            onClick={toggleMenu}
+                            aria-label="Menu"
+                            aria-expanded={menuOpen}
+                        >
+                            <span />
+                            <span />
+                            <span />
+                        </button>
+
+                        <div className={`nav-right ${menuOpen ? "open" : ""}`}>
+                            <ul className="nav-menu">
                                 <li>
-                                    <span className="material-symbols-outlined iconMenu"></span>
                                     <a href="/">Home</a>
                                 </li>
-                                <div className="traits"></div>
                                 <li>
-                                    <span className="material-symbols-outlined iconMenu"></span>
                                     <a href="/">História</a>
                                 </li>
-                                <div className="traits"></div>
                                 <li>
-                                    <span className="material-symbols-outlined iconMenu"></span>
-                                    <a href="/">Loja</a>
-                                </li>
-                                <div className="traits"></div>
-                                <li>
-                                    <span className="material-symbols-outlined iconMenu"></span>
-                                    <a href="/">Vestuário</a>
-                                    <div className="dropDown-subMenu">
-                                        <ul>
-                                            <li
-                                                className="man"
-                                                onClick={subMan}
-                                            >
-                                                <a href="/">
-                                                    <span className="material-symbols-outlined iconMenu">
-                                                        man_4
-                                                    </span>
-                                                    <h1> Camisa Masc.</h1>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/">
-                                                    <span className="material-symbols-outlined iconSubMenu">
-                                                        woman
-                                                    </span>
-                                                    <h1>Camisa Fem.</h1>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/">
-                                                    <span className="material-symbols-outlined  iconSubMenu">
-                                                        straighten
-                                                    </span>
-                                                    <h1>Medidas</h1>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <div className="traits"></div>
-                                <li className="liContato">
-                                    <span className="material-symbols-outlined iconSubMenu"></span>
-                                    <a href="/" onClick={contato}>
-                                        Contato
+                                    <a href="/sales" className="highlighted">
+                                        Loja
                                     </a>
+                                </li>
+                                <li className="submenu-parent">
+                                    <a href="/">Vestuário</a>
+                                    <ul className="submenu">
+                                        <li>
+                                            <a href="/man">
+                                                <span className="material-symbols-outlined iconMenu">
+                                                    man_4
+                                                </span>
+                                                Camisa Masc.
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/">
+                                                <span className="material-symbols-outlined iconMenu">
+                                                    woman
+                                                </span>
+                                                Camisa Fem.
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/">
+                                                <span className="material-symbols-outlined iconMenu">
+                                                    straighten
+                                                </span>
+                                                Medidas
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/contact">Contato</a>
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
+                </header>
             )}
 
             {ativar && (
