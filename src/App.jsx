@@ -26,6 +26,9 @@ import Pedido from "./Components/pages/Pedido/pedido.jsx";
 import ModalPagamento from "./Components/Modal/Pagamento/ModalPagamento.jsx";
 import GuiaTamanhos from "./Components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
 import CarrinhoCompras from "./Components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
+import Nav from "./Components/common/nav/Nav.jsx";
+import Footer from "./Components/common/footer/Footer.jsx";
+
 function App() {
     const [price, setPrice] = useState("499");
     const [color, setColor] = useState(false);
@@ -60,12 +63,10 @@ function App() {
                         path="/carrinhocompras"
                         element={<CarrinhoCompras />}
                     />
-
                     <Route
                         path="/modalPagamento"
                         element={<ModalPagamento />}
                     />
-
                     <Route
                         path="/controler"
                         element={<Controler setPrice={setPrice} />}
@@ -77,6 +78,8 @@ function App() {
                         element={<Test onColorChange={handleColorChange} />}
                     />
                     <Route path="/return" element={<Return color={color} />} />
+                    <Route path="/nav" element={<Nav />} />
+                    <Route path="/footer" element={<Footer />} />
                 </Routes>
             </Router>
         </div>

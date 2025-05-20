@@ -1,0 +1,75 @@
+/* Footer */
+
+._footer {
+    background-color: #1e1e1e;
+    color: #ccc;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+._social-section p {
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+._social-icons a {
+    margin: 0 0.5rem;
+    color: #ead9a1;
+    font-size: 1.8rem;
+    transition: color 0.3s ease;
+}
+
+._social-icons a:hover {
+    color: #82ee84;
+}
+
+._address-section p {
+    font-size: 0.9rem;
+    max-width: 600px;
+    margin: 1rem auto 2rem;
+    color: #bbb;
+}
+
+/* Mapa */
+._map-section {
+    max-width: 600px;
+    margin: 0 auto 1rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.map-section img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+._click-hint {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: #ff5722;
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    user-select: none;
+}
+
+/* Botão flutuante do WhatsApp */
+._whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+._whatsapp-float:hover {
+    transform: scale(1.1);
+}

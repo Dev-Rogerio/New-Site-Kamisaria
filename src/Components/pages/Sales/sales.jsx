@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+
+import Nav from "../../common/nav/Nav";
+
 import GuiaTamanhosLuxo from "../../Modal/GuiaTamanhos/GuiaTamanhos.jsx";
 import "../Sales/sales.css";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -276,80 +279,7 @@ const Sales = ({ price }) => {
 
     return (
         <div className="containerSales">
-            {!ativar && (
-                <header className="headContainer">
-                    <nav className="nav">
-                        <div className="nav-left" />
-                        <div className="nav-center">
-                            <img
-                                className="logo"
-                                src={Logo}
-                                alt="Logo Kamisaria Zanuto"
-                            />
-                            <h1 className="logo-title">KAMISARIA ZANUTO</h1>
-                        </div>
-
-                        <button
-                            className={`hamburger ${menuOpen ? "active" : ""}`}
-                            onClick={toggleMenu}
-                            aria-label="Menu"
-                            aria-expanded={menuOpen}
-                        >
-                            <span />
-                            <span />
-                            <span />
-                        </button>
-
-                        <div className={`nav-right ${menuOpen ? "open" : ""}`}>
-                            <ul className="nav-menu">
-                                <li>
-                                    <a href="/">Home</a>
-                                </li>
-                                <li>
-                                    <a href="/">História</a>
-                                </li>
-                                <li>
-                                    <a href="/sales" className="highlighted">
-                                        Loja
-                                    </a>
-                                </li>
-                                <li className="submenu-parent">
-                                    <a href="/">Vestuário</a>
-                                    <ul className="submenu">
-                                        <li>
-                                            <a href="/man">
-                                                <span className="material-symbols-outlined iconMenu">
-                                                    man_4
-                                                </span>
-                                                Camisa Masc.
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/">
-                                                <span className="material-symbols-outlined iconMenu">
-                                                    woman
-                                                </span>
-                                                Camisa Fem.
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/">
-                                                <span className="material-symbols-outlined iconMenu">
-                                                    straighten
-                                                </span>
-                                                Medidas
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="/contact">Contato</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </header>
-            )}
+            {!ativar && <Nav />}
 
             {ativar && (
                 <Address
