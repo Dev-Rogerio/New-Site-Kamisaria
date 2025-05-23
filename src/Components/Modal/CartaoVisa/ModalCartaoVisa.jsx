@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputMask from "react-input-mask";
 import { CornerUpLeft } from "lucide-react";
-
-import Visa from "../../Img/visa.png";
-
+import BandeiraVisa from "../CartaoVisa/bandeiraVisa.jsx";
 import "../CartaoVisa/ModalCartaoVisa.css";
 
 const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
@@ -11,25 +9,20 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
     const [expiry, setExpiry] = useState("");
     const [cvv, setCvv] = useState("");
     const [cardBrand, setCardBrand] = useState("");
-    const [emailPagador, setEmailPagador] = useState("");
-    const [nomeCartao, setNomeCartao] = useState("");
+    const [emailPagador, setEmailPagador] = useState(email || "");
+    const [nomeCartao, setNomeCartao] = useState(nome || "");
 
     useEffect(() => {
-        if (email) {
-            setEmailPagador(email);
-        }
+        if (email) setEmailPagador(email);
     }, [email]);
 
-    // sempre que a prop `nome` mudar, atualiza o estado
     useEffect(() => {
-        setNomeCartao(nome);
+        if (nome) setNomeCartao(nome);
     }, [nome]);
 
     const handleConfirmarPagamento = (e) => {
         e.preventDefault();
-        setTimeout(() => {
-            onConfirmarPagamento();
-        }, 500);
+        setTimeout(onConfirmarPagamento, 500);
     };
 
     const detectCardBrand = (number) => {
@@ -49,46 +42,21 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
     return (
         <div className="pix-modal-overlay">
             <div className="pix-modal">
-                <button
-                    onClick={fecharCartao}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        background: "none",
-                        border: "none",
-                        color: "#333",
-                        cursor: "pointer",
-                        fontSize: "15px",
-                        marginBottom: "16px",
-                    }}
-                >
+                <button className="voltar-botao" onClick={fecharCartao}>
                     <CornerUpLeft size={22} /> Voltar
                 </button>
 
-                <div className="bandeira-visa">
-                    <img src={Visa} alt="Visa" />
-                </div>
+                <h3 className="titulo-modal">Pagamento com Cartão</h3>
 
-                <h3
-                    style={{
-                        fontSize: "22px",
-                        marginBottom: "20px",
-                        color: "#222",
-                        fontWeight: "600",
-                        textAlign: "center",
-                    }}
-                >
-                    Pagamento com Cartão
-                </h3>
+                <BandeiraVisa
+                    cardNumber={cardNumber}
+                    nomeCartao={nomeCartao}
+                    expiry={expiry}
+                />
 
                 <form
                     onSubmit={handleConfirmarPagamento}
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "14px",
-                    }}
+                    className="form-cartao"
                 >
                     <InputMask
                         mask="9999 9999 9999 9999"
@@ -97,32 +65,30 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
                         placeholder="Número do Cartão"
                         className="pix-input"
                     />
+
                     {cardBrand && (
-                        <div
-                            style={{
-                                fontSize: "14px",
-                                color: "#555",
-                                textAlign: "left",
-                                paddingLeft: "4px",
-                            }}
-                        >
+                        <div className="bandeira-detectada">
                             Bandeira detectada: <strong>{cardBrand}</strong>
                         </div>
                     )}
-                    <InputMask
-                        mask="99/99"
-                        value={expiry}
-                        onChange={(e) => setExpiry(e.target.value)}
-                        placeholder="Validade (MM/AA)"
-                        className="pix-input"
-                    />
-                    <InputMask
-                        mask={cardBrand === "Amex" ? "9999" : "999"}
-                        value={cvv}
-                        onChange={(e) => setCvv(e.target.value)}
-                        placeholder="CVV"
-                        className="pix-input"
-                    />
+
+                    <div className="input-duplo">
+                        <InputMask
+                            mask="99/99"
+                            value={expiry}
+                            onChange={(e) => setExpiry(e.target.value)}
+                            placeholder="Validade (MM/AA)"
+                            className="pix-input metade"
+                        />
+                        <InputMask
+                            mask={cardBrand === "Amex" ? "9999" : "999"}
+                            value={cvv}
+                            onChange={(e) => setCvv(e.target.value)}
+                            placeholder="CVV"
+                            className="pix-input metade"
+                        />
+                    </div>
+
                     <input
                         type="text"
                         placeholder="Nome impresso no cartão"
@@ -139,29 +105,7 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
                         onChange={(e) => setEmailPagador(e.target.value)}
                     />
 
-                    <button
-                        type="submit"
-                        style={{
-                            background: "#111",
-                            color: "#fff",
-                            padding: "14px 26px",
-                            borderRadius: "8px",
-                            border: "none",
-                            cursor: "pointer",
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            transition: "all 0.3s ease",
-                            marginTop: "18px",
-                            alignSelf: "center",
-                            width: "80%",
-                            maxWidth: "320px",
-                            textAlign: "center",
-                        }}
-                        onMouseOver={(e) =>
-                            (e.target.style.background = "#222")
-                        }
-                        onMouseOut={(e) => (e.target.style.background = "#111")}
-                    >
+                    <button type="submit" className="botao-confirmar">
                         Confirmar Pagamento
                     </button>
                 </form>

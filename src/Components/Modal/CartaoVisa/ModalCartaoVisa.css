@@ -1,43 +1,97 @@
-.cartao-form-group {
+.input-duplo {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-.botao-com-bandeira {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* ou center, se preferir centralizado */
+    gap: 12px;
+    justify-content: space-between;
 }
 
-.bandeira-visa {
-    width: 100%;
-}
-.bandeira-visa img {
-    width: 12%;
+.input-duplo .metade {
+    flex: 1;
 }
 
-.cartao-label {
-    font-size: 14px;
+.voltar-botao {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
     color: #333;
-    margin-bottom: 6px;
-    font-weight: 500;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 16px;
 }
 
-.cartao-input {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    outline: none;
+.titulo-modal {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: 600;
+    text-align: center;
 }
 
-.cartao-input::placeholder {
-    color: #aaa;
+.form-cartao {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.bandeira-detectada {
     font-size: 14px;
+    color: #555;
+    text-align: left;
+    padding-left: 4px;
 }
 
-.cartao-input:focus {
-    border-color: #0070f3;
-    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+.botao-confirmar {
+    background: #111;
+    color: #fff;
+    padding: 14px 26px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 18px;
+    align-self: center;
+    width: 80%;
+    max-width: 320px;
+    text-align: center;
+}
+
+.botao-confirmar:hover {
+    background: #222;
+}
+/* Responsividade para telas pequenas */
+@media (max-width: 600px) {
+    .pix-modal {
+        width: 90%;
+        padding: 20px 16px;
+    }
+
+    .titulo-modal {
+        font-size: 18px;
+    }
+
+    .pix-input,
+    .botao-confirmar {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .input-duplo {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .voltar-botao {
+        font-size: 14px;
+    }
+
+    .botao-confirmar {
+        width: 100%;
+    }
+
+    .form-cartao {
+        gap: 12px;
+    }
 }

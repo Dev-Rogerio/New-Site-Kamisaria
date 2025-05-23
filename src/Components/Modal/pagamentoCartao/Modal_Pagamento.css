@@ -236,6 +236,9 @@ body.dark-mode {
 .modal-sucesso button:hover {
     background-color: #006c47;
 }
+.pix-modal-overlay {
+    width: 100%;
+}
 
 /* Animação fade-in */
 @keyframes fadeIn {
@@ -246,5 +249,27 @@ body.dark-mode {
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+@media (max-width: 768px) {
+    .pix-modal {
+        width: 100% !important;
+    }
+    .pix-modal-overlay {
+        width: 100% !important;
+    }
+    .pix-button-container button {
+        width: 15%;
+        padding: 0;
+    }
+    .pix-button-container button img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .pix-button-container .pix-button img.pix {
+        width: 140%;
+        height: auto;
+        display: block;
     }
 }

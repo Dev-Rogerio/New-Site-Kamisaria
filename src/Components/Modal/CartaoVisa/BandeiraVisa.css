@@ -1,0 +1,45 @@
+.cartao-visual {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto 24px;
+    perspective: 1000px;
+}
+
+.cartao-frente {
+    background: linear-gradient(135deg, #1a1f71, #3b5998);
+    color: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+}
+
+.numero-cartao {
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.nome-e-validade {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.logoBandeiraVisa {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.logoBandeiraVisa img {
+    width: 50px; /* ajuste o tamanho aqui conforme necessário */
+    height: auto;
+}

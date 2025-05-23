@@ -1,5 +1,5 @@
 import React from "react";
-import "../modalCep/modalCep.css";
+import "../modalCep/ModalCep.css";
 import Order from "../../../Modal/Order/order";
 
 const ModalCep = ({ isOpen, onClose, address, frete, onFreteChange }) => {

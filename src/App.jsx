@@ -23,11 +23,13 @@ import Order from "./Components/Modal/Order/order.jsx";
 import Return from "./Components/pages/Return/return.jsx";
 import Test from "./Components/pages/Test/test.jsx";
 import Pedido from "./Components/pages/Pedido/pedido.jsx";
-import ModalPagamento from "./Components/Modal/Pagamento/ModalPagamento.jsx";
+import ModalPagamento from "./Components/Modal/pagamentoCartao/Modal_Pagamento.jsx";
 import GuiaTamanhos from "./Components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
 import CarrinhoCompras from "./Components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
 import Nav from "./Components/common/nav/Nav.jsx";
 import Footer from "./Components/common/footer/Footer.jsx";
+import Cep from "./Components/pages/dropdown/modalCep/ModalCep.jsx";
+import BandeiraVisa from "./Components/Modal/CartaoVisa/bandeiraVisa.jsx";
 
 function App() {
     const [price, setPrice] = useState("499");
@@ -59,6 +61,7 @@ function App() {
                     <Route path="/address" element={<Address />} />
                     <Route path="/pedido" element={<Pedido />} />
                     <Route path="/guiatamanhos" element={<GuiaTamanhos />} />
+                    <Route path="/cep" element={<Cep />} />
                     <Route
                         path="/carrinhocompras"
                         element={<CarrinhoCompras />}
@@ -80,6 +83,7 @@ function App() {
                     <Route path="/return" element={<Return color={color} />} />
                     <Route path="/nav" element={<Nav />} />
                     <Route path="/footer" element={<Footer />} />
+                    <Route path="/bandeiravisa" element={<BandeiraVisa />} />
                 </Routes>
             </Router>
         </div>

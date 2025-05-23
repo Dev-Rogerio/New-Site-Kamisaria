@@ -246,15 +246,7 @@
     background-color: #fff;
     border-radius: 6px;
 }
-/* .scrool {
-    width: 65%;
-    height: 80px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    border-radius: 5px;
-    justify-content: center;
-} */
+
 .imgSales {
     width: 95%;
     height: 65px;
@@ -287,25 +279,40 @@
 }
 .opinion {
     display: flex;
-    margin-top: 30px;
-    grid-gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: #666;
+    background-color: rgb(248, 244, 244);
+    padding: 1rem;
 }
-.opinion span {
-    margin-left: 2px;
-    color: blue;
-    letter-spacing: -6px;
-}
+/* Bloco de estrelas + notas */
 .star {
     display: flex;
-    width: 36%;
-    gap: 20px;
-    justify-content: center;
     align-items: center;
-    font-size: small;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-right: 50px;
 }
-.star:nth-child(2) {
-    width: 50%;
+.blue-star {
+    color: #007bff; /* azul moderno */
+    font-size: 1.4rem;
 }
+.iconSubMenu {
+    color: #f5a623;
+    font-size: 1.3rem;
+}
+
+/* Nota numérica */
+.nota {
+    margin-left: 0.5rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
 .valueDesc {
     color: #222;
     text-decoration: line-through;
@@ -347,36 +354,41 @@
 }
 
 /* 💳 Parcelamento */
+
 .descriptionParcelado {
     display: flex;
-    width: 100%;
-    height: 20px;
-    margin-top: 10px;
-    /* background-color: red; */
-    display: flex;
-    /* width: 100%; */
-    margin-top: 15px;
-    padding: 10px 12px;
-    background-color: #f7f7f7;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    justify-content: start; /* centra em telas grandes */
     align-items: center;
-    gap: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    gap: 1rem;
+    background-color: rgb(248, 244, 244);
+    flex-wrap: wrap; /* deixa quebrar em linha múltipla se precisar */
 }
 
 .parcelamento {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center; /* Garante centralização vertical dos itens internos */
-    gap: 8px;
-    width: 50%;
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    color: #222;
-    gap: 6px;
+    display: inline-flex;
+    justify-content: start;
+    width: 100%;
     align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f8f8f8;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* força todos os elementos na mesma linha */
+}
+.valor-parcelado {
+    font-weight: bold;
+    color: #007b5e;
+    font-size: 1rem;
+}
+
+.sem-juros {
+    font-size: 0.9rem;
+    color: #4caf50;
 }
 
 .parcelamento strong {
@@ -385,22 +397,22 @@
     margin-left: 2%;
 }
 
-.valor-parcelado {
+/* .valor-parcelado {
     margin-left: 2%;
     color: #0e7a0d;
     font-weight: 600;
     font-size: 16px;
     margin-left: 4px;
-}
+} */
 
-.sem-juros {
-    /* background-color: #0e7a0d; */
+/* .sem-juros {
+   
     margin-left: 1%;
     color: #555;
     font-size: 13px;
     margin-left: 4px;
     font-style: italic;
-}
+} */
 
 .icone-cartao {
     display: flex;
@@ -408,16 +420,12 @@
     gap: 8px; /* Isso alinha todos os itens verticalmente ao centro */
 }
 
-.icone-cartao::before {
+.parcelamento::before {
     content: "💳";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-    font-size: 20px;
-    margin-top: -10px;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    line-height: 1;
 }
-
 .card-form {
     position: absolute;
     left: 50%; /* Move para o centro da tela */
@@ -440,6 +448,7 @@
 }
 .pagtos span {
     text-decoration: underline;
+    cursor: pointer;
 }
 .entrega {
     margin-top: 25px;
@@ -463,6 +472,7 @@
     color: blue;
     font-size: small;
     margin-top: 5px;
+    cursor: pointer;
 }
 .prazo {
     color: #2229;
@@ -781,4 +791,234 @@
     padding: 4px;
     border-radius: 5px;
     font-size: 14px;
+}
+
+.center_Collumn_One_Sales {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.section_Photos_Scroll_Left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+}
+
+.scrool {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: border 0.3s;
+}
+
+.scrool:hover {
+    border: 2px solid #999;
+}
+
+.imgSales {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.sectonMain .photo {
+    max-width: 300px;
+    width: 100%;
+}
+
+.sectonMain .photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+/* ========================= RESPONSIVO - MOBILE ========================= */
+@media (max-width: 768px) {
+    .divNav-Sales {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .logokz-sales {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        align-items: center;
+    }
+
+    .section_Wrapper_fild_Left,
+    .sectionRight {
+        width: 100%;
+    }
+
+    .section_Photos_Scroll_Left {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .sectonMain {
+        width: 100%;
+    }
+
+    .sectonMain .photo {
+        width: 90%;
+    }
+
+    .photo img {
+        height: auto;
+        object-fit: cover;
+    }
+
+    .container_below_Left {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    .allSelect {
+        padding: 15px;
+        margin-top: 10px;
+    }
+
+    .mCompras {
+        justify-content: end;
+        margin-left: 0;
+        font-size: 0.75rem;
+    }
+
+    .pDescription {
+        font-size: 1.2rem;
+    }
+
+    .valueTot {
+        font-size: 1.8rem;
+    }
+
+    .descriptionParcelado {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .parcelamento {
+        width: 100%;
+        justify-content: center;
+    }
+    .valor-parcelado {
+        font-size: 0.95rem;
+    }
+    .sem-juros {
+        font-size: 0.85rem;
+    }
+
+    .icone-cartao::before {
+        /* exemplo de ícone via pseudo-elemento */
+        content: "💳";
+        margin-right: 6px;
+        font-size: 1.2rem;
+    }
+
+    .star {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        font-size: 14px;
+        gap: 0.2rem;
+    }
+
+    .bestseller {
+        font-size: 10px;
+        width: 100px;
+        height: 22px;
+    }
+
+    .modal-address {
+        align-items: flex-start;
+        padding-top: 50px;
+    }
+    .center_Collumn_One_Sales {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section_Photos_Scroll_Left {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-height: none;
+        max-width: 100%;
+    }
+
+    .imgSales {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sectonMain .photo {
+        max-width: 100%;
+    }
+    .opinion {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .star {
+        flex-wrap: wrap;
+    }
+
+    .iconSubMenu {
+        font-size: 1.1rem;
+    }
+
+    .nota {
+        font-size: 0.9rem;
+    }
+
+    .opiniao {
+        font-size: 0.8rem;
+    }
+
+    .parcelamento {
+        flex-wrap: wrap; /* Permite melhor adaptação em telas médias */
+        justify-content: center;
+    }
+
+    .valor-parcelado {
+        font-size: 14px;
+    }
+
+    .descriptionParcelado {
+        padding: 1rem;
+    }
+}
+@media (min-width: 769px) and (max-width: 1161px) {
+    .descriptionParcelado {
+        justify-content: flex-start;
+        flex-wrap: nowrap; /* força em uma única linha */
+        gap: 0.75rem;
+    }
 }

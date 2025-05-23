@@ -74,35 +74,11 @@ const tamanhos = [
 ];
 
 const ModalDetalhes = ({ tamanho, onClose }) => {
-    const {
-        colarinho,
-        pala,
-        manga,
-        comprimento,
-        quadril,
-        cintura,
-        torax,
-        punho,
-    } = tamanho;
-
     return (
-        <div className="luxo-modal-overlay">
+        <div className="luxo-modal-overlay" onClick={onClose}>
             <div className="luxo-modal" onClick={(e) => e.stopPropagation()}>
                 <div className="luxo-modal-header">
-                    <button
-                        onClick={onClose}
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            background: "none",
-                            border: "none",
-                            color: "#333",
-                            cursor: "pointer",
-                            fontSize: "15px",
-                            marginBottom: "16px",
-                        }}
-                    >
+                    <button className="luxo-voltar-btn" onClick={onClose}>
                         <CornerUpLeftIcon size={22} /> Voltar
                     </button>
                     <h3 className="luxo-modal-titulo">
@@ -110,34 +86,32 @@ const ModalDetalhes = ({ tamanho, onClose }) => {
                     </h3>
                 </div>
 
-                <div className="luxo-modal-conteudo">
-                    <ul className="luxo-modal-lista">
-                        <li>
-                            <strong>Colarinho:</strong> {colarinho}
-                        </li>
-                        <li>
-                            <strong>Pala:</strong> {pala}
-                        </li>
-                        <li>
-                            <strong>Manga:</strong> {manga}
-                        </li>
-                        <li>
-                            <strong>Comprimento:</strong> {comprimento}
-                        </li>
-                        <li>
-                            <strong>Quadril:</strong> {quadril}
-                        </li>
-                        <li>
-                            <strong>Cintura:</strong> {cintura}
-                        </li>
-                        <li>
-                            <strong>Tórax:</strong> {torax}
-                        </li>
-                        <li>
-                            <strong>Punho:</strong> {punho}
-                        </li>
-                    </ul>
-                </div>
+                <ul className="luxo-modal-lista">
+                    <li>
+                        <strong>Colarinho:</strong> {tamanho.colarinho}
+                    </li>
+                    <li>
+                        <strong>Pala:</strong> {tamanho.pala}
+                    </li>
+                    <li>
+                        <strong>Manga:</strong> {tamanho.manga}
+                    </li>
+                    <li>
+                        <strong>Comprimento:</strong> {tamanho.comprimento}
+                    </li>
+                    <li>
+                        <strong>Quadril:</strong> {tamanho.quadril}
+                    </li>
+                    <li>
+                        <strong>Cintura:</strong> {tamanho.cintura}
+                    </li>
+                    <li>
+                        <strong>Tórax:</strong> {tamanho.torax}
+                    </li>
+                    <li>
+                        <strong>Punho:</strong> {tamanho.punho}
+                    </li>
+                </ul>
 
                 <div className="luxo-modal-imagem">
                     <img
@@ -152,6 +126,7 @@ const ModalDetalhes = ({ tamanho, onClose }) => {
 
 const GuiaTamanhosLuxo = ({ isOpen, setIsOpen }) => {
     const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
+
     if (!isOpen) return null;
 
     return (
@@ -161,12 +136,19 @@ const GuiaTamanhosLuxo = ({ isOpen, setIsOpen }) => {
                 alt="Guia de medidas"
                 className="luxo-imagem"
             />
-            <h2>Verifique a medida que mais se ajusta a você:</h2>
+            <h2 className="luxo-titulo">
+                Verifique a medida que mais se ajusta a você:
+            </h2>
 
             <div className="luxo-botoes">
                 {tamanhos.map((item) => (
                     <button
                         key={item.tamanho}
+                        className={`luxo-botao-tamanho ${
+                            tamanhoSelecionado?.tamanho === item.tamanho
+                                ? "selecionado"
+                                : ""
+                        }`}
                         onClick={() => setTamanhoSelecionado(item)}
                     >
                         {item.tamanho}
@@ -190,4 +172,5 @@ const GuiaTamanhosLuxo = ({ isOpen, setIsOpen }) => {
         </div>
     );
 };
+
 export default GuiaTamanhosLuxo;

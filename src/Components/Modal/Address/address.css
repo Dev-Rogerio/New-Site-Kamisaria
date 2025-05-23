@@ -2,10 +2,10 @@
     padding: 0;
     margin: 0;
 }
-.formularioModal {
+.address-and-order .formularioModal {
     top: 0;
     left: 0;
-    position: relativa;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -452,4 +452,59 @@
     padding: 10px;
     outline: 0;
     cursor: pointer;
+}
+@media (max-width: 768px) {
+    .formularioModal {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .containerModal {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .linhaNomeCpf,
+    .dadosEstado,
+    .dadosEndereco {
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+    }
+
+    .dadosName,
+    .dadosCpf,
+    .divEstado,
+    .divCidade,
+    .divEndereco,
+    .dadosNumero {
+        width: 100%;
+    }
+
+    .inputFormname,
+    .inputCpf,
+    .inputCep,
+    .inputEstado,
+    .inputCidade,
+    .inputBairro:nth-child(2),
+    .inputEndereco,
+    .inputNumero,
+    .inputOpcional,
+    .inputPhone {
+        width: 100% !important;
+    }
+
+    .inputRadio {
+        width: 20px;
+    }
+
+    .pEndereco {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .bt_addressVoltar {
+        justify-content: center;
+    }
 }

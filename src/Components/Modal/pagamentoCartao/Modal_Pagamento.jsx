@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CornerUpLeft } from "lucide-react";
-import "./ModalPagamento.css";
+import "../pagamentoCartao/Modal_Pagamento.css";
 
 import Visa from "../../Img/visa.png";
 import MasterCard from "../../Img/mastercard.png";

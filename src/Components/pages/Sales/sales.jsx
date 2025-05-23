@@ -20,10 +20,11 @@ import Branco from "../../Img/branca.png";
 import Rosa from "../../Img/rosa.png";
 import Address from "../../Modal/Address/address.jsx";
 import Order from "../../Modal/Order/order.jsx";
-import ModalCep from "../dropdown/modalCep/modalCep.jsx";
+import ModalCep from "../dropdown/modalCep/ModalCep.jsx";
 import { useFetcher, useHref } from "react-router-dom";
 import { UsbSharp } from "@mui/icons-material";
 import CarrinhoCompra from "../../Modal/CarrinhoCompra/Carrinho_Compra.jsx";
+import Devolucao from "../../Modal/devolucao/Devolucao.jsx";
 
 const Sales = ({ price }) => {
     const [mudaPhoto, setMudaPhoto] = useState(Camisaa);
@@ -65,6 +66,10 @@ const Sales = ({ price }) => {
     const [mostrarModalCarrinho, setMostrarModalCarrinho] = useState(false);
     const [imagemSelecionada, setImagemSelecionada] = useState(Branco);
     const [frete, setFrete] = useState(10);
+    const [mostrarMais, setMostrarMais] = useState(false);
+    const [mostarModalDevolucao, setMostrarModalDevolucao] = useState(false);
+
+    const [mostrarSaibaMais, setMostrarSaibaMais] = useState(false);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -331,73 +336,38 @@ const Sales = ({ price }) => {
                     <div className="section_Wrapper_fild_Left">
                         <div className="center_Collumn_One_Sales">
                             <section className="section_Photos_Scroll_Left">
-                                <div
-                                    className="scrool"
-                                    onClick={() => setMudaPhoto(Camisaa)}
-                                >
-                                    <img
-                                        className="imgSales"
-                                        src={Camisaa}
-                                        alt=""
-                                    />
-                                </div>
-                                <div
-                                    className="scrool"
-                                    onClick={() => setMudaPhoto(Camisab)}
-                                >
-                                    <img
-                                        className="imgSales"
-                                        src={Camisab}
-                                        alt=""
-                                    />
-                                </div>
-                                <div
-                                    className="scrool"
-                                    onClick={() => setMudaPhoto(Camisac)}
-                                >
-                                    <img
-                                        className="imgSales"
-                                        src={Camisac}
-                                        alt=""
-                                    />
-                                </div>
-                                <div
-                                    className="scrool"
-                                    onClick={() => setMudaPhoto(Camisad)}
-                                >
-                                    <img
-                                        className="imgSales"
-                                        src={Camisad}
-                                        alt=""
-                                    />
-                                </div>
-                                <div
-                                    className="scrool"
-                                    onClick={() => setMudaPhoto(Camisae)}
-                                >
-                                    <img
-                                        className="imgSales"
-                                        src={Camisae}
-                                        alt=""
-                                    />
-                                </div>
-                                <div
-                                    className="scrool"
-                                    onClick={() => setMudaPhoto(Camisaf)}
-                                >
-                                    <img
-                                        className="imgSales"
-                                        src={Camisaf}
-                                        alt=""
-                                    />
-                                </div>
+                                {[
+                                    Camisaa,
+                                    Camisab,
+                                    Camisac,
+                                    Camisad,
+                                    Camisae,
+                                    Camisaf,
+                                ].map((img, i) => (
+                                    <div
+                                        key={i}
+                                        className="scrool"
+                                        onClick={() => setMudaPhoto(img)}
+                                    >
+                                        <img
+                                            className="imgSales"
+                                            src={img}
+                                            alt={`Miniatura ${i + 1}`}
+                                        />
+                                    </div>
+                                ))}
                             </section>
+
                             <section className="sectonMain">
                                 <div className="photo">
-                                    <img src={mudaPhoto} alt="" />
+                                    <img
+                                        src={mudaPhoto}
+                                        alt="Camisa selecionada"
+                                    />
                                 </div>
                             </section>
                         </div>
+
                         <div className="container_below_Left">
                             <p>
                                 Camisa Alfaiataria – Elegância Sob Medida
@@ -433,13 +403,29 @@ const Sales = ({ price }) => {
                             <div className="opinion">
                                 <div className="bestseller">mais vendido </div>
                                 <div className="star">
-                                    <span className="material-symbols-outlined iconSubMenu">
-                                        Grade Grade Grade Grade Grade
-                                    </span>
+                                    <div className="stars">
+                                        <span className="material-symbols-outlined blue-star">
+                                            grade
+                                        </span>
+                                        <span className="material-symbols-outlined blue-star">
+                                            grade
+                                        </span>
+                                        <span className="material-symbols-outlined blue-star">
+                                            grade
+                                        </span>
+                                        <span className="material-symbols-outlined blue-star">
+                                            grade
+                                        </span>
+                                        <span className="material-symbols-outlined blue-star">
+                                            grade
+                                        </span>
+                                    </div>
+
                                     <p>5/0.5</p>
                                     <p>10 opniões</p>
                                 </div>
                             </div>
+
                             <div className="desconto-sales">
                                 <p> Desconto de: </p> RS
                                 <p className="valueDesc">
@@ -459,13 +445,13 @@ const Sales = ({ price }) => {
                             </div>
 
                             <div className="descriptionParcelado">
-                                <div class="parcelamento icone-cartao">
+                                <div className="parcelamento icone-cartao">
                                     <span>ou</span>
                                     <strong>3x</strong>
-                                    <span class="valor-parcelado">
+                                    <span className="valor-parcelado">
                                         {parcela}
                                     </span>
-                                    <span class="sem-juros">sem juros</span>
+                                    <span className="sem-juros">sem juros</span>
                                 </div>
                             </div>
 
@@ -475,27 +461,64 @@ const Sales = ({ price }) => {
                                     <span>Clique aqui</span>{" "}
                                 </p>
                             </div>
+
                             <div className="entrega">
-                                <p>Chegará amanhã</p>
                                 <p>
-                                    {" "}
-                                    por <span> R$ 15,00</span>
+                                    <span className="material-symbols-outlined icon-truck">
+                                        local_shipping
+                                    </span>
+                                    Chegará amanhã
+                                </p>
+                                <p>
+                                    por <span>R$ 15,00</span>
                                 </p>
                             </div>
-                            <p className="fpagto">Mais forma de pagamento</p>
-                            <p className="envio">Envio para todo país</p>
-                            <p className="formasEnvio">
-                                Saiba os prazos de entrega e as formas de envio
-                            </p>
-                            <p className="calcularFrete">
-                                Calcular o prazo de entrega
-                            </p>
-                            <p className="retorno">Devolução grátis</p>
-                            <p className="prazo">
-                                Você tem 30 dias a partir da data de
-                                recebimento.
-                            </p>
-                            <p className="saibamais">Saiba mais</p>
+
+                            <div className="info-pagamento-envio">
+                                <p className="fpagto">
+                                    Mais forma de pagamento
+                                </p>
+                                <p className="envio">Envio para todo país</p>
+                                <p
+                                    className="formasEnvio"
+                                    onClick={() =>
+                                        alert(
+                                            "Mostrar prazos e formas de envio"
+                                        )
+                                    }
+                                >
+                                    Saiba os prazos de entrega e as formas de
+                                    envio
+                                </p>
+                                <p
+                                    className="calcularFrete"
+                                    onClick={() =>
+                                        alert("Calcular prazo de entrega")
+                                    }
+                                >
+                                    Calcular o prazo de entrega
+                                </p>
+                                <p className="retorno">Devolução grátis</p>
+                                <p className="prazo">
+                                    Você tem 7 dias a partir da data de
+                                    recebimento.
+                                </p>
+
+                                <p
+                                    className="saibamais"
+                                    onClick={() => setMostrarSaibaMais(true)}
+                                >
+                                    {mostrarMais ? "fechar ⬏" : "saiba mais  ⬎"}
+                                </p>
+
+                                {/* <p>{item.open ? "fechar ⬏" : "saiba mais ⬎"}</p> */}
+                            </div>
+
+                            <Devolucao
+                                mostrarSaibaMais={mostrarSaibaMais}
+                                setMostrarSaibaMais={setMostrarSaibaMais}
+                            />
+
                             <div className="descriptionCor">
                                 <p className="cores">Cor:</p>
                                 <p
@@ -508,6 +531,7 @@ const Sales = ({ price }) => {
                                     {selectedColorText}
                                 </p>
                             </div>
+
                             <div className="gradecor">
                                 <div
                                     className={`divOne colors ${
@@ -545,6 +569,7 @@ const Sales = ({ price }) => {
                                     </div>
                                 </div>
                             </div>
+
                             {errorColor && (
                                 <p
                                     className={`errorColor ${
@@ -559,6 +584,7 @@ const Sales = ({ price }) => {
                                 <p className="estoque">Tamanho:</p>
                                 <p className="sizers">{selectedSize}</p>
                             </div>
+
                             <div className="gradeTamanho">
                                 <button
                                     className={`size ${
@@ -610,6 +636,7 @@ const Sales = ({ price }) => {
                                     48
                                 </button>
                             </div>
+
                             {errorSize && (
                                 <p
                                     className={`errorSize ${
@@ -635,6 +662,7 @@ const Sales = ({ price }) => {
                                     {/* Adicione mais conforme necessário */}
                                 </select>
                             </div>
+
                             <div className="guia">
                                 <span className="material-symbols-outlined  iconSubMenu">
                                     straighten
@@ -649,6 +677,7 @@ const Sales = ({ price }) => {
 
                             <p className="disponivel">Estoque disponível</p>
                             <p className="labelCep">Calcular o frete:</p>
+
                             <div className="InputCep">
                                 <a href="">Informe o cep</a>
                                 <InputMask
@@ -662,7 +691,7 @@ const Sales = ({ price }) => {
                             </div>
 
                             <p className="freteGratis">
-                                Frete grátis comprando 2 ou mais unidades
+                                🚚 Frete grátis comprando 2 ou mais unidades
                             </p>
 
                             <button
@@ -676,8 +705,9 @@ const Sales = ({ price }) => {
                                 className="buttonAdicionar"
                                 onClick={adicionarAoCarrinho}
                             >
-                                Adicionar ao carrinho
+                                🛒 Adicionar ao carrinho
                             </button>
+
                             <p className="vendidoPor">
                                 Vendido por <span>KAMISARIA ZANUTO</span>
                             </p>

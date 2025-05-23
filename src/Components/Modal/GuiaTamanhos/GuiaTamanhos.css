@@ -1,5 +1,4 @@
-/* GuiaTamanhos.css */
-
+/* CONTAINER PRINCIPAL */
 .luxo-container {
     position: fixed;
     top: 0;
@@ -16,6 +15,7 @@
     animation: fadeIn 0.4s ease-in-out;
 }
 
+/* IMAGEM */
 .luxo-imagem {
     width: 100%;
     max-width: 350px;
@@ -24,37 +24,47 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.luxo-container h2 {
+/* TÍTULO */
+.luxo-titulo {
     font-size: 1.5rem;
     color: #333;
     margin-bottom: 1rem;
     text-align: center;
 }
 
+/* BOTÕES DE TAMANHOS */
 .luxo-botoes {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 2rem;
 }
 
-.luxo-botoes button {
-    padding: 12px 20px;
-    font-size: 16px;
+.luxo-botao-tamanho {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
     background: #111;
     color: white;
-    border: none;
-    border-radius: 10px;
+    font-size: 16px;
+    border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.luxo-botoes button:hover {
-    background-color: #333;
-    transform: translateY(-2px);
+.luxo-botao-tamanho:hover {
+    background: #333;
+    transform: scale(1.05);
 }
 
+.luxo-botao-tamanho.selecionado {
+    background-color: #fff;
+    color: #111;
+    border: 2px solid #111;
+}
+
+/* BOTÃO VOLTAR */
 .botao-voltar-principal {
     padding: 12px 20px;
     background-color: transparent;
@@ -72,7 +82,6 @@
 }
 
 /* MODAL DETALHES */
-
 .luxo-modal-overlay {
     position: fixed;
     top: 0;
@@ -105,6 +114,18 @@
     text-align: left;
 }
 
+.luxo-voltar-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
 .luxo-modal-titulo {
     font-size: 1.6rem;
     color: #111;
@@ -128,7 +149,7 @@
 }
 
 /* RESPONSIVO */
-@media (max-width: 768px) {
+@media (max-width: 468px) {
     .luxo-modal {
         grid-template-columns: 1fr;
     }
@@ -141,9 +162,15 @@
         font-size: 1.2rem;
     }
 
-    .luxo-botoes button,
+    .luxo-botao-tamanho,
     .botao-voltar-principal {
         width: 100%;
+        border-radius: 12px;
+        height: auto;
+    }
+
+    .luxo-botao-tamanho {
+        padding: 10px;
     }
 }
 

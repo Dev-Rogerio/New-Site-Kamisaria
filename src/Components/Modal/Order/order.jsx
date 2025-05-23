@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Order/order.css";
-import ModalPagamento from "../Pagamento/ModalPagamento";
 import VisaModal from "../CartaoVisa/ModalCartaoVisa";
+import ModalPagamento from "../pagamentoCartao/Modal_Pagamento";
 
 const Order = ({
     nome,
