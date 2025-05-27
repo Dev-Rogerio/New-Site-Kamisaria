@@ -1,63 +1,95 @@
 import express from "express";
 import cors from "cors";
-import mercadopago from "mercadopago";
+import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-dotenv.config();
+
+dotenv.config(); // carrega as variáveis do .env
 
 const app = express();
+const PORT = process.env.PORT || 3001;
+
 app.use(cors());
 app.use(express.json());
 
-// Configura o Mercado Pago com seu access token
-mercadopago.configure({
-    access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+app.get("/ping", (req, res) => {
+    res.send("pong");
 });
 
-app.get("/api/status/:id", (req, res) => {
-    const { id } = req.params;
+app.post("/send-email", async (req, res) => {
+    console.log("Dados recebidos no servidor:", req.body);
 
-    // Aqui você consultaria a API de pagamento pelo status real
-    // Exemplo fake:
-    if (id === "123456") {
-        res.json({ status: "approved" });
-    } else {
-        res.json({ status: "pending" });
-    }
-});
+    const {
+        nome,
+        cpf,
+        email,
+        cep,
+        estado,
+        cidade,
+        bairro,
+        endereco,
+        numero,
+        complemento,
+        observacao,
+        telefone,
+        local,
+        tamanho,
+        cor,
+        quantidade,
+        valorCompra,
+        frete,
+        valorTotal,
+    } = req.body;
 
-// Rota para gerar Pix
-app.post("/api/gerar-pix", async (req, res) => {
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: ["roger.ngt@hotmail.com", "adri.ngt@hotmail.com"],
+        subject: "Novo Pedido Recebido - Kamisaria Zanuto",
+        html: `
+      <h2>Pedido Confirmado</h2>
+      <p><strong>Nome:</strong> ${nome}</p>
+      <p><strong>CPF:</strong> ${cpf}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Endereço:</strong> ${endereco}, Nº ${numero}, ${bairro}, ${cidade} - ${estado}</p>
+      ${
+          complemento
+              ? `<p><strong>Complemento:</strong> ${complemento}</p>`
+              : ""
+      }
+      ${observacao ? `<p><strong>Observação:</strong> ${observacao}</p>` : ""}
+      <p><strong>Telefone:</strong> ${telefone}</p>
+      <p><strong>Local de entrega:</strong> ${local}</p>
+      <p><strong>Camisa:</strong> Tamanho ${tamanho}, Cor ${cor}</p>
+      <p><strong>Quantidade:</strong> ${quantidade}</p>
+      <p><strong>Valor da Camisa:</strong> R$ ${valorCompra
+          .toFixed(2)
+          .replace(".", ",")}</p>
+      <p><strong>Frete:</strong> R$ ${frete.toFixed(2).replace(".", ",")}</p>
+      <p><strong>Total:</strong> <b>R$ ${valorTotal
+          .toFixed(2)
+          .replace(".", ",")}</b></p>
+    `,
+    };
+
     try {
-        const { transactionAmount, description, email, firstName, lastName } =
-            req.body;
-
-        const payment_data = {
-            transaction_amount: Number(transactionAmount),
-            description,
-            payment_method_id: "pix",
-            payer: {
-                email,
-                first_name: firstName,
-                last_name: lastName,
-            },
-        };
-
-        const payment = await mercadopago.payment.create(payment_data);
-
-        res.json({
-            qr_code:
-                payment.response.point_of_interaction.transaction_data.qr_code,
-            qr_code_base64:
-                payment.response.point_of_interaction.transaction_data
-                    .qr_code_base64,
+        await transporter.sendMail(mailOptions);
+        console.log("Email enviado com sucesso!");
+        res.status(200).json({
+            message: "Pedido enviado por e-mail com sucesso!",
         });
     } catch (error) {
-        console.error("Erro ao criar pagamento Pix:", error);
-        res.status(500).send("Erro ao gerar Pix");
+        console.error("Erro ao enviar e-mail:", error);
+        res.status(500).json({ error: "Erro ao enviar o e-mail" });
     }
 });
 
-// Inicia o servidor
-app.listen(3001, () => {
-    console.log("✅ Servidor rodando na porta 3001");
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });

@@ -44,6 +44,48 @@ const Order = ({
         return total.toFixed(2).replace(".", ",");
     };
 
+    const enviarPedido = async () => {
+        const pedido = {
+            nome,
+            cpf,
+            email,
+            cep,
+            estado,
+            cidade,
+            bairro,
+            endereco,
+            numero,
+            complemento,
+            observacao,
+            telefone,
+            local,
+            tamanho: selectedSize,
+            cor: selectedColor,
+            quantidade,
+            valorCompra: Number(valCamisa),
+            frete: frete ? Number(frete) : 0,
+            valorTotal: Number(valCamisa) + (frete ? Number(frete) : 0),
+        };
+
+        try {
+            const response = await fetch("http://localhost:3001/send-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(pedido),
+            });
+
+            if (response.ok) {
+                console.log("Pedido enviado com sucesso!");
+            } else {
+                console.error("Erro ao enviar pedido");
+            }
+        } catch (error) {
+            console.error("Erro na requisição:", error);
+        }
+    };
+
     return (
         <div className="modal-backdrop">
             <div className="order">
@@ -129,7 +171,10 @@ const Order = ({
                         <div className="botoesModal">
                             <button
                                 className="buttonConfirmar"
-                                onClick={handlePagar}
+                                onClick={() => {
+                                    handlePagar();
+                                    enviarPedido();
+                                }}
                             >
                                 Confirma Pedido
                             </button>
