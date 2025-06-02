@@ -68,6 +68,11 @@ const Sales = ({ price }) => {
     const [frete, setFrete] = useState(10);
     const [mostrarMais, setMostrarMais] = useState(false);
     const [mostarModalDevolucao, setMostrarModalDevolucao] = useState(false);
+    const [estoque, setEstoque] = useState({
+        Branco: { 38: 5, 40: 3, 42: 2, 44: 4, 46: 1 },
+        Azul: { 38: 4, 40: 5, 42: 3, 44: 2, 46: 0 },
+        Rosa: { 38: 2, 40: 2, 42: 1, 44: 3, 46: 2 },
+    });
 
     const [mostrarSaibaMais, setMostrarSaibaMais] = useState(false);
 
@@ -108,7 +113,8 @@ const Sales = ({ price }) => {
     };
 
     useEffect(() => {
-        const total = 476 * quantidade;
+        // const total = 476 * quantidade;
+        const total = 1 * quantidade;
         const inteiro = Math.floor(total);
         const decimal = (total % 1).toFixed(2).split(".")[1] || "00";
 
@@ -186,6 +192,18 @@ const Sales = ({ price }) => {
         setIsModalOpen(false);
     };
     const handleSizeChange = (size) => {
+        if (!selectedColor) {
+            setErrorColor("Selecione uma cor primeiro");
+            return;
+        }
+
+        const quantidadeDisponivel = estoque[selectedColor]?.[size] || 0;
+
+        if (quantidadeDisponivel <= 0) {
+            alert(" Este tmanho esta fora de estoque");
+            return;
+        }
+
         setSelectedSize(size);
         setErrorSize("");
         setShowPiscar(false);
@@ -389,6 +407,47 @@ const Sales = ({ price }) => {
                                 você.
                             </p>
                         </div>
+
+                        <div className="div-move">
+                            <div className="moveOne">
+                                <div>
+                                    <video width="100%" controls>
+                                        <source
+                                            src="/videos/video1.mp4"
+                                            type="video/mp4"
+                                        />
+                                        Seu navegador não suporta vídeo.
+                                    </video>
+                                </div>
+                                <span>
+                                    Lorem ipsum dolor sit amet consectetur,
+                                    adipisicing elit. Cum, officia nobis. Sequi
+                                    nulla perferendis quas? Expedita nisi
+                                    delectus eaque dolor voluptates consequatur
+                                    et autem distinctio exercitationem nemo
+                                    explicabo, temporibus ad?
+                                </span>
+                            </div>
+                            <div className="moveTwo">
+                                <div>
+                                    <video width="100%" controls>
+                                        <source
+                                            src="/videos/video2.mp4"
+                                            type="video/mp4"
+                                        />
+                                        Seu navegador não suporta vídeo.
+                                    </video>
+                                </div>
+                                <span>
+                                    Lorem ipsum dolor sit amet consectetur,
+                                    adipisicing elit. Cum, officia nobis. Sequi
+                                    nulla perferendis quas? Expedita nisi
+                                    delectus eaque dolor voluptates consequatur
+                                    et autem distinctio exercitationem nemo
+                                    explicabo, temporibus ad?
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
                     <section className="sectionRight">
@@ -462,7 +521,7 @@ const Sales = ({ price }) => {
                                 </p>
                             </div>
 
-                            <div className="entrega">
+                            <div className="delivery">
                                 <p>
                                     <span className="material-symbols-outlined icon-truck">
                                         local_shipping
@@ -591,6 +650,9 @@ const Sales = ({ price }) => {
                                         selectedSize === "38" ? "bold" : ""
                                     }`}
                                     onClick={() => handleSizeChange("38")}
+                                    disabled={
+                                        estoque[selectedColor]?.["38"] <= 0
+                                    }
                                 >
                                     38
                                 </button>
@@ -675,7 +737,26 @@ const Sales = ({ price }) => {
                                 </p>
                             </div>
 
-                            <p className="disponivel">Estoque disponível</p>
+                            {selectedColor && selectedSize && (
+                                <div className="estoqueDisponivel">
+                                    <span className="material-symbols-outlined iconEstoque">
+                                        inventory_2
+                                    </span>
+                                    <p className="disponivel">
+                                        Estoque disponível
+                                    </p>
+                                    <div>
+                                        <span>
+                                            (
+                                            {estoque[selectedColor]?.[
+                                                selectedSize
+                                            ] ?? 0}
+                                            )
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+
                             <p className="labelCep">Calcular o frete:</p>
 
                             <div className="InputCep">
@@ -708,8 +789,11 @@ const Sales = ({ price }) => {
                                 🛒 Adicionar ao carrinho
                             </button>
 
-                            <p className="vendidoPor">
-                                Vendido por <span>KAMISARIA ZANUTO</span>
+                            <p className="to-Sales">
+                                Vendido por{" "}
+                                <span style={{ fontFamily: "Bodoni72" }}>
+                                    KAMISARIA ZANUTO
+                                </span>
                             </p>
                             <div className="garantia">
                                 <p>7 dias de garantia de fábrica</p>

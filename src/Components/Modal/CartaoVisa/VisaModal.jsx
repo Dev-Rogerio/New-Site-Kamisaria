@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import InputMask from "react-input-mask";
 import { CornerUpLeft } from "lucide-react";
 import BandeiraVisa from "../CartaoVisa/bandeiraVisa.jsx";
-import "../CartaoVisa/ModalCartaoVisa.css";
+import "../CartaoVisa/VisaModal.css";
 
-const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
+const VisaModal = ({ fecharCartao, email, nome }) => {
     const [cardNumber, setCardNumber] = useState("");
     const [expiry, setExpiry] = useState("");
     const [cvv, setCvv] = useState("");
     const [cardBrand, setCardBrand] = useState("");
     const [emailPagador, setEmailPagador] = useState(email || "");
     const [nomeCartao, setNomeCartao] = useState(nome || "");
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         if (email) setEmailPagador(email);
@@ -20,11 +21,7 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
         if (nome) setNomeCartao(nome);
     }, [nome]);
 
-    const handleConfirmarPagamento = (e) => {
-        e.preventDefault();
-        setTimeout(onConfirmarPagamento, 500);
-    };
-
+    // Detecta a bandeira do cartão com base nos primeiros dígitos
     const detectCardBrand = (number) => {
         const cleaned = number.replace(/\D/g, "");
         if (/^4/.test(cleaned)) return "Visa";
@@ -37,6 +34,52 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
         const value = e.target.value;
         setCardNumber(value);
         setCardBrand(detectCardBrand(value));
+    };
+
+    const MERCADO_PAGO_EMAIL = "roger.ngt3494@gmail.com"; // substitua pelo e-mail da sua conta Mercado Pago
+
+    const handleConfirmarPagamento = async (e) => {
+        e.preventDefault();
+
+        if (emailPagador.toLowerCase() === MERCADO_PAGO_EMAIL.toLowerCase()) {
+            setMessage(
+                "Erro: O e-mail do pagador não pode ser o mesmo do recebedor."
+            );
+            return;
+        }
+
+        const pagamentoData = {
+            titulo: "Camisa Social",
+            quantidade: 1,
+            valorUnitario: 1.0,
+            emailPagador,
+            nomeCartao,
+        };
+
+        console.log("🔁 Iniciando pagamento:", pagamentoData);
+
+        try {
+            const response = await fetch("http://localhost:3001/checkout_pro", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(pagamentoData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.init_point) {
+                console.log("✅ Preferência criada:", data.init_point);
+                window.location.href = data.init_point;
+            } else {
+                console.error("⚠️ Erro ao criar preferência:", data);
+                setMessage("Erro ao criar pagamento. Tente novamente.");
+            }
+        } catch (error) {
+            console.error("❌ Erro inesperado:", error);
+            setMessage("Erro inesperado ao processar pagamento.");
+        }
     };
 
     return (
@@ -108,6 +151,8 @@ const VisaModal = ({ fecharCartao, onConfirmarPagamento, email, nome }) => {
                     <button type="submit" className="botao-confirmar">
                         Confirmar Pagamento
                     </button>
+
+                    {message && <p className="mensagem-pagamento">{message}</p>}
                 </form>
             </div>
         </div>

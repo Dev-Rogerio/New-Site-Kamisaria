@@ -218,6 +218,52 @@
     text-indent: 10px;
     text-align: justify;
 }
+
+.div-move {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 24px;
+    background-color: #f0f0f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 24px;
+}
+
+.moveOne,
+.moveTwo {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.moveOne:hover,
+.moveTwo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.moveOne video,
+.moveTwo video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.moveOne span,
+.moveTwo span {
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
 .allSelect {
     padding: 30px;
     width: 100%;
@@ -450,13 +496,36 @@
     text-decoration: underline;
     cursor: pointer;
 }
-.entrega {
-    margin-top: 25px;
+
+.delivery {
     display: flex;
-    color: green;
-    font-weight: 600;
-    grid-gap: 5px;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    margin-top: 12px;
 }
+
+.delivery p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #333;
+}
+
+.delivery span.icon-truck {
+    font-size: 20px;
+    color: green;
+}
+
+.delivery p span {
+    font-weight: 500;
+    color: #1e88e5;
+}
+
 .fpagto {
     color: blue;
     font-size: small;
@@ -568,6 +637,7 @@
 
 .tremer {
     animation: tremer 0.4s ease;
+    color: red;
 }
 
 .errorSize {
@@ -769,14 +839,16 @@
     text-align: center;
     border: none;
 }
-.vendidoPor {
+.to-Sales {
     font-size: small;
     margin-top: 25px;
     color: #2229;
 }
-.vendidoPor span {
+.to-Sales span {
     font-size: small;
     color: blue;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
 }
 .garantia {
     font-size: small;
@@ -791,6 +863,29 @@
     padding: 4px;
     border-radius: 5px;
     font-size: 14px;
+}
+
+.estoqueDisponivel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 0;
+    border-radius: 8px;
+    background-color: rgb(248, 244, 244);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+    color: red;
+}
+
+.iconEstoque {
+    color: #388e3c; /* verde principal */
+    font-size: 22px;
+}
+
+.disponivel {
+    margin: 0;
+    font-weight: 500;
 }
 
 .center_Collumn_One_Sales {
@@ -1013,6 +1108,14 @@
 
     .descriptionParcelado {
         padding: 1rem;
+    }
+    .div-move {
+        grid-template-columns: 1fr;
+    }
+
+    .moveOne,
+    .moveTwo {
+        padding: 15px;
     }
 }
 @media (min-width: 769px) and (max-width: 1161px) {

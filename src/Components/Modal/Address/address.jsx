@@ -5,6 +5,7 @@ import Order from "../Order/order";
 import WorkIcon from "@mui/icons-material/Work";
 import HomeIcon from "@mui/icons-material/Home";
 import InputMask from "react-input-mask";
+import axios from "axios";
 
 const Address = ({
     ativo,
@@ -31,7 +32,6 @@ const Address = ({
     const [telefone, setTelefone] = useState("");
     const [local, setLocal] = useState("Trabalho");
     const [observacao, setObservacao] = useState("");
-    const [cep, setCep] = useState("");
     const [nomeError, setNomeError] = useState("");
     const [numeroError, setNumeroError] = useState("");
     const [cepError, setCepError] = useState("");
@@ -50,6 +50,8 @@ const Address = ({
     const emailInputRef = useRef(null);
     const quantidadeNumerica = Number(quantidade) || 0;
     const precoTotal = quantidadeNumerica * valCamisa;
+    const [cep, setCep] = useState("");
+    const [freteInfo, setFreteInfo] = useState(null);
 
     const handleTelefoneChange = (event) => {
         setTelefoneError("");
@@ -301,8 +303,7 @@ const Address = ({
                         </div>
 
                         <div className="dados">
-                            <p className="pEndereco">Dados para cadastro.</p>
-
+                            Chat
                             <div className="linhaNomeCpf">
                                 <div className="dadosName res">
                                     <label className="labelFormname" htmlFor="">
@@ -350,7 +351,6 @@ const Address = ({
                                 </div>
                             </div>
                             <br />
-
                             <hr />
                             <div className="dadosCep">
                                 <label className="labelCep" htmlFor="">
@@ -362,6 +362,7 @@ const Address = ({
                                     type="text"
                                     required
                                     placeholder="99999-99"
+                                    value={cep}
                                     onChange={(e) => {
                                         mcep(e.target.value);
                                         handleCepChange(e);
@@ -387,7 +388,6 @@ const Address = ({
                                     </p>
                                 )}
                             </div>
-
                             <div className="dadosEstado">
                                 <div className="divEstado">
                                     <label className="labelEstado" htmlFor="">
@@ -513,7 +513,6 @@ const Address = ({
                             </div>
                             <br />
                             <hr />
-
                             <div className="_dataContact">
                                 <div className="_dadosPhone">
                                     <label className="labelPhone" htmlFor="">
@@ -564,7 +563,6 @@ const Address = ({
                                     )}
                                 </div>
                             </div>
-
                             <div className="dadosAdicionais">
                                 <label className="labelAdicional" htmlFor="">
                                     Informações adicionais deste endereço
@@ -616,7 +614,8 @@ const Address = ({
                         valCamisa={valCamisa}
                         cpf={cpf}
                         email={email}
-                        frete={frete}
+                        // frete={frete}
+                        frete={freteInfo}
                     />
                 )}
             </div>

@@ -1,0 +1,135 @@
+/* Overlay para centralizar o modal */
+.visa-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Container do modal */
+.visa-modal {
+    background: #fff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    position: relative;
+}
+
+/* Botão voltar */
+.voltar-botao {
+    background: transparent;
+    border: none;
+    color: #0070f3;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    transition: color 0.2s ease;
+}
+.voltar-botao:hover {
+    color: #0051a3;
+}
+
+/* Título modal */
+.titulo-modal {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    color: #111;
+}
+
+/* Informações do pagamento */
+.info-pagamento {
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+    color: #555;
+}
+.info-pagamento p {
+    margin: 6px 0;
+}
+
+/* Bandeira detectada */
+.bandeira-detectada {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #0070f3;
+    text-align: center;
+}
+
+/* Formulário */
+.form-cartao {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Inputs estilo padrão */
+.pix-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+.pix-input:focus {
+    border-color: #0070f3;
+    outline: none;
+}
+
+/* Inputs duplos lado a lado */
+.input-duplo {
+    display: flex;
+    gap: 12px;
+}
+.metade {
+    flex: 1;
+}
+
+/* Botão confirmar */
+.botao-confirmar {
+    background-color: #0070f3;
+    color: white;
+    font-weight: 700;
+    padding: 14px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.25s ease;
+    margin-top: 8px;
+}
+.botao-confirmar:hover {
+    background-color: #0051a3;
+}
+
+/* Mensagem de pagamento */
+.mensagem-pagamento {
+    margin-top: 12px;
+    font-weight: 600;
+    text-align: center;
+    color: #d93025; /* vermelho para erro */
+}
+
+/* Ajuste para mensagem sucesso */
+.mensagem-pagamento:contains("✅") {
+    color: #1a7f37; /* verde para sucesso */
+}

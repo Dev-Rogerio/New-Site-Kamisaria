@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CornerUpLeft } from "lucide-react";
-import "../pagamentoCartao/Modal_Pagamento.css";
+import "../modalPagamento/ModalPagamento.css";
 
 import Visa from "../../Img/visa.png";
 import MasterCard from "../../Img/mastercard.png";
 import Paypal from "../../Img/Paypal.png";
 import Pix from "../../Img/pix.png";
 import PixModal from "../Pix/ModalPix";
-import VisaModal from "../CartaoVisa/ModalCartaoVisa";
+import VisaModal from "../CartaoVisa/VisaModal";
 
 const ModalPagamento = ({
     fecharPagamento,
@@ -187,6 +187,7 @@ const ModalPagamento = ({
                         fecharCartao={fecharCartao}
                         onConfirmarPagamento={handleConfirmarPagamentoVisa}
                         email={email} // aqui está passando o email corretamente!
+                        valor={Number(valCamisa) * Number(quantidade)}
                     />
                 )}
 

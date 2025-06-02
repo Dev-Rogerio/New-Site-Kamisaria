@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Order/order.css";
-import VisaModal from "../CartaoVisa/ModalCartaoVisa";
-import ModalPagamento from "../pagamentoCartao/Modal_Pagamento";
+// import VisaModal from "../CartaoVisa/VisaModal";
+// import ModalPagamento from "../modalPagamento/ModalPagamento";
 
 const Order = ({
     nome,
@@ -28,9 +28,11 @@ const Order = ({
     email,
     frete,
 }) => {
-    const [showPagamento, setShowPagamento] = useState(false);
-
-    const handlePagar = () => setShowPagamento(true);
+    // const [showPagamento, setShowPagamento] = useState(false);
+    // const handlePagar = () => setShowPagamento(true);
+    const [emailPagador, setEmailPagador] = useState("");
+    const [nomeCartao, setNomeCartao] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleVoltar = () => {
         setShowModal(false);
@@ -83,6 +85,38 @@ const Order = ({
             }
         } catch (error) {
             console.error("Erro na requisição:", error);
+        }
+    };
+
+    const handleConfirmarPagamento = async () => {
+        const pagamentoData = {
+            titulo: "Camisa Social",
+            quantidade: 1,
+            valorUnitario: 1.0,
+            valorUnitario: Number(valCamisa),
+            emailPagador: email,
+            emailPagador: "cliente@email.com", // você pode usar um email fixo se não for obrigatório
+            nomeCartao: "Não necessário para checkout_pro",
+        };
+
+        try {
+            const response = await fetch("http://localhost:3001/checkout_pro", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(pagamentoData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.init_point) {
+                window.location.href = data.init_point; // Redireciona direto pro Mercado Pago
+            } else {
+                console.error("Erro ao criar preferência:", data);
+            }
+        } catch (error) {
+            console.error("Erro ao processar pagamento:", error);
         }
     };
 
@@ -169,15 +203,26 @@ const Order = ({
                         </p>
 
                         <div className="botoesModal">
-                            <button
+                            {/* <button
                                 className="buttonConfirmar"
                                 onClick={() => {
-                                    handlePagar();
-                                    enviarPedido();
+                                    // handlePagar();
+                                    // enviarPedido();
                                 }}
                             >
                                 Confirma Pedido
+                            </button> */}
+
+                            <button
+                                className="buttonConfirmar"
+                                onClick={async () => {
+                                    await enviarPedido(); // envia os dados por e-mail
+                                    await handleConfirmarPagamento(); // redireciona direto pro Mercado Pago
+                                }}
+                            >
+                                Confirmar Pedido
                             </button>
+
                             <button
                                 className="buttonCancelar"
                                 onClick={handleVoltar}
@@ -188,7 +233,7 @@ const Order = ({
                     </div>
                 </div>
 
-                {showPagamento && (
+                {/* {showPagamento && (
                     <ModalPagamento
                         descricao="Camisa Personalizada"
                         valCamisa={valCamisa}
@@ -201,7 +246,7 @@ const Order = ({
                             setShowPagamento(false);
                         }}
                     />
-                )}
+                )} */}
             </div>
         </div>
     );
