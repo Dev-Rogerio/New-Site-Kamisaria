@@ -10,7 +10,7 @@ import One from "../../img/kz1.jpg";
 import Two from "../../img/kz2.jpg";
 import Three from "../../img/kz3.jpg";
 import Four from "../../img/kz4.jpg";
-import Logo from "../../img/logo_branco.png";
+// import Logo from "../../img/logo_branco.png";
 import Mapa from "../../img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
