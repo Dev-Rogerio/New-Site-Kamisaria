@@ -5,13 +5,12 @@ import Nav from "../../common/nav/Nav";
 import "./home.css";
 import "../Sales/sales.css";
 
-import Capa from "../../img/capa.jpg";
-import One from "../../img/kz1.jpg";
-import Two from "../../img/kz2.jpg";
-import Three from "../../img/kz3.jpg";
-import Four from "../../img/kz4.jpg";
-// import Logo from "../../img/logo_branco.png";
-import Mapa from "../../img/mapa.jpg";
+import Capa from "../../Img/capa.jpg";
+import One from "../../Img/kz1.jpg";
+import Two from "../../Img/kz2.jpg";
+import Three from "../../Img/kz3.jpg";
+import Four from "../../Img/kz4.jpg";
+import Mapa from "../../Img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
