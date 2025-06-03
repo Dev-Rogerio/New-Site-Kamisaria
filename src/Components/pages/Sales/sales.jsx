@@ -20,7 +20,7 @@ import Branco from "../../Img/branca.png";
 import Rosa from "../../Img/rosa.png";
 import Address from "../../Modal/Address/address.jsx";
 import Order from "../../Modal/Order/order.jsx";
-import ModalCep from "../dropdown/modalCep/ModalCep.jsx";
+import ModalCep from "../dropdown/modalCep/Modal_Cep.jsx";
 import { useFetcher, useHref } from "react-router-dom";
 import { UsbSharp } from "@mui/icons-material";
 import CarrinhoCompra from "../../Modal/CarrinhoCompra/Carrinho_Compra.jsx";

@@ -28,7 +28,7 @@ import GuiaTamanhos from "./Components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
 import CarrinhoCompras from "./Components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
 import Nav from "./Components/common/nav/Nav.jsx";
 import Footer from "./Components/common/footer/Footer.jsx";
-import Cep from "./Components/pages/dropdown/modalCep/ModalCep.jsx";
+import Cep from "./Components/pages/dropdown/modalCep/Modal_Cep.jsx";
 import BandeiraVisa from "./Components/Modal/CartaoVisa/bandeiraVisa.jsx";
 
 function App() {
