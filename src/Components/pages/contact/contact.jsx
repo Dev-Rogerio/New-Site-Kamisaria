@@ -4,7 +4,7 @@ import Footer from "../../common/footer/Footer";
 import Nav from "../../common/nav/Nav";
 import "../Home/home.css";
 import "../contact/contact.css";
-import Logo from "../../Img/Temp";
+import Logo from "../../Img/logo_branco.png";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
