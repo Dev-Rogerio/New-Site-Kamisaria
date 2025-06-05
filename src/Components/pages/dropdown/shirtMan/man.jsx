@@ -3,21 +3,21 @@ import React, { useState } from "react";
 import "../../Home/home.css";
 import "../shirtMan/man.css";
 
-// import Tissue from "../../../Modal/Tissue/index";
-// import Logo from "../../../Img/logo_branco.png";
-// import ImgTeen from "../../../Img/hz10.jpg";
-// import ImgTwelve from "../../../Img/kz12.jpg";
-// import ImgThirteen from "../../../Img/kz13.jpg";
-// import ImgSeventeen from "../../../Img/kz17.jpg";
-// import Mapa from "../../../Img/mapa.jpg";
-// import ImgTwentOne from "../../../Img/kz21.jpg";
-// import ImgTwentTwo from "../../../Img/kz22.jpg";
-// import ImgTwentThree from "../../../Img/kz23.jpg";
-// import ImgTwentFour from "../../../Img/kz24.jpg";
-// import ImgTSixteen from "../../../Img/kz26.jpg";
-// import Model from "../../../Img/man.jpg";
-// import ImgOne from "../../../Img/kz1.jpg";
-// import ImgTwo from "../../../Img/kz3.jpg";
+import Tissue from "../../../Modal/tissue/index";
+import logo from "../../../img/logo_branco.png";
+import imgTeen from "../../../img/hz10.jpg";
+import imgTwelve from "../../../img/kz12.jpg";
+import imgThirteen from "../../../img/kz13.jpg";
+import imgSeventeen from "../../../img/kz17.jpg";
+import mapa from "../../../img/mapa.jpg";
+import imgTwentOne from "../../../img/kz21.jpg";
+import imgTwentTwo from "../../../img/kz22.jpg";
+import imgTwentThree from "../../../img/kz23.jpg";
+import imgTwentFour from "../../../img/kz24.jpg";
+import imgTSixteen from "../../../img/kz26.jpg";
+import Model from "../../../img/man.jpg";
+import imgOne from "../../../img/kz1.jpg";
+import imgTwo from "../../../img/kz3.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -59,7 +59,7 @@ function ShirtMan() {
                     <div className="nav-center">
                         <img
                             className="logo"
-                            src={"Logo"}
+                            src={logo}
                             alt="Logo Kamisaria Zanuto"
                         />
                         <h1 className="logo-title">KAMISARIA ZANUTO</h1>
@@ -128,9 +128,9 @@ function ShirtMan() {
             </header>
             {/* Parte Inicial com 3 imagens */}
             <section className="intro-grid">
-                <img src={"Model"} alt="Modelo" />
-                <img src={"ImgOne"} alt="Imagem 1" />
-                <img src={"ImgTwo"} alt="Imagem 2" />
+                <img src={model} alt="Modelo" />
+                <img src={imgOne} alt="Imagem 1" />
+                <img src={imgTwo} alt="Imagem 2" />
             </section>
 
             <div className="photobook">
@@ -151,55 +151,55 @@ function ShirtMan() {
             <section className="photo-grid">
                 {[
                     {
-                        img: ImgTwelve,
+                        img: imgTwelve,
                         title: "Alfaiatária",
                         modal: () => setTailor(true),
                         open: tailor,
                     },
                     {
-                        img: ImgThirteen,
+                        img: imgThirteen,
                         title: "Alta costura",
                         modal: () => setSewing(true),
                         open: sewing,
                     },
                     {
-                        img: ImgTSixteen,
+                        img: imgTSixteen,
                         title: "Measure",
                         modal: () => setMeasure(true),
                         open: measure,
                     },
                     {
-                        img: ImgSeventeen,
+                        img: imgSeventeen,
                         title: "Abotuaduras",
                         modal: () => setCufflinks(true),
                         open: cufflinks,
                     },
                     {
-                        img: ImgTwentTwo,
+                        img: imgTwentTwo,
                         title: "Tecidos",
                         modal: () => setShowtissue(true),
                         open: showtissue,
                     },
                     {
-                        img: ImgTwentThree,
+                        img: imgTwentThree,
                         title: "Grade",
                         modal: () => setGrid(true),
                         open: grid,
                     },
                     {
-                        img: ImgTwentFour,
+                        img: imgTwentFour,
                         title: "Bordados",
                         modal: () => setEmbroidery(true),
                         open: embroidery,
                     },
                     {
-                        img: ImgTwentOne,
+                        img: imgTwentOne,
                         title: "Personalizada",
                         modal: () => setCustom(true),
                         open: custom,
                     },
                     {
-                        img: ImgTeen,
+                        img: imgTeen,
                         title: "Loja",
                         modal: () => setStore(true),
                         open: store,
@@ -228,35 +228,35 @@ function ShirtMan() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {/* <InstagramIcon /> */}
+                            <InstagramIcon />
                         </a>
                         <a
                             href="https://web.facebook.com/kamisaria"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {/* <FacebookIcon /> */}
+                            <FacebookIcon />
                         </a>
                         <a
                             href="https://www.youtube.com/watch?v=-qwyq3HSuSY"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {/* <YouTubeIcon /> */}
+                            <YouTubeIcon />
                         </a>
                         <a
                             href="https://br.pinterest.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {/* <PinterestIcon /> */}
+                            <PinterestIcon />
                         </a>
                         <a
                             href="https://web.whatsapp.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {/* <WhatsAppIcon /> */}
+                            <WhatsAppIcon />
                         </a>
                     </div>
                 </section>
@@ -290,7 +290,7 @@ function ShirtMan() {
                     aria-label="Abrir localização no mapa"
                 >
                     <span className="click-hint">Clique</span>
-                    <img src={Mapa} alt="Mapa Kamisaria Zanuto" />
+                    <img src={mapa} alt="Mapa Kamisaria Zanuto" />
                 </section>
             </footer>
         </header>
