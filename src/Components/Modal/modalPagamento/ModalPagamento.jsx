@@ -152,7 +152,7 @@ const ModalPagamento = ({
 
                     <div className="pix-button-container">
                         <button type="submit" className="pix-button">
-                            <img src={Pix} alt="Pix" className="pix" />
+                            <img src={"Pix"} alt="Pix" className="pix" />
                         </button>
                         <button
                             type="button"
