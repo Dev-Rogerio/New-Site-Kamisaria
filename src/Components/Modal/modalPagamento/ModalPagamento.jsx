@@ -3,10 +3,10 @@ import axios from "axios";
 import { CornerUpLeft } from "lucide-react";
 import "../modalPagamento/ModalPagamento.css";
 
-import Visa from "../../Img/visa.png";
-import MasterCard from "../../Img/mastercard.png";
-import Paypal from "../../Img/Paypal.png";
-import Pix from "../../Img/pix.png";
+// import Visa from "../../Img/visa.png";
+// import MasterCard from "../../Img/mastercard.png";
+// import Paypal from "../../Img/Paypal.png";
+// import Pix from "../../Img/pix.png";
 import PixModal from "../Pix/ModalPix";
 import VisaModal from "../CartaoVisa/VisaModal";
 
@@ -159,17 +159,17 @@ const ModalPagamento = ({
                             className="pix-card-button"
                             onClick={abrirCartao}
                         >
-                            <img src={Visa} alt="Visa" className="visa" />
+                            <img src="{Visa"} alt="Visa" className="visa" />
                         </button>
                         <button type="button" className="pix-card-button">
                             <img
-                                src={MasterCard}
+                                src={"MasterCard"}
                                 alt="MasterCard"
                                 className="imgMasterCard"
                             />
                         </button>
                         <button type="button" className="pix-card-button">
-                            <img src={Paypal} alt="Paypal" className="paypal" />
+                            <img src={"Paypal"} alt="Paypal" className="paypal" />
                         </button>
                     </div>
                 </form>
