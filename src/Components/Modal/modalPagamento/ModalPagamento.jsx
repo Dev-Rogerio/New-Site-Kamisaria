@@ -159,7 +159,7 @@ const ModalPagamento = ({
                             className="pix-card-button"
                             onClick={abrirCartao}
                         >
-                            <img src="{Visa"} alt="Visa" className="visa" />
+                            <img src={"Visa"} alt="Visa" className="visa" />
                         </button>
                         <button type="button" className="pix-card-button">
                             <img
@@ -169,7 +169,11 @@ const ModalPagamento = ({
                             />
                         </button>
                         <button type="button" className="pix-card-button">
-                            <img src={"Paypal"} alt="Paypal" className="paypal" />
+                            <img
+                                src={"Paypal"}
+                                alt="Paypal"
+                                className="paypal"
+                            />
                         </button>
                     </div>
                 </form>
