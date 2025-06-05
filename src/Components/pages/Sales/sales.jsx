@@ -14,7 +14,7 @@ import Camisac from "../../img/camisac.JPG";
 import Camisad from "../../img/camisad.JPG";
 import Camisae from "../../img/camisae.JPG";
 import Camisaf from "../../img/camisaf.JPG";
-import WhatsApp from "../../Img/whatsapp.png";
+// import WhatsApp from "../../img/whatsapp.png";
 import Azul from "../../img/azul.png";
 import Branco from "../../img/branca.png";
 import Rosa from "../../img/rosa.png";
