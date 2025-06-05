@@ -26,35 +26,35 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <InstagramIcon />
+                        {/* <InstagramIcon /> */}
                     </a>
                     <a
                         href="https://web.facebook.com/kamisaria"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <FacebookIcon />
+                        {/* <FacebookIcon /> */}
                     </a>
                     <a
                         href="https://www.youtube.com/watch?v=-qwyq3HSuSY"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <YouTubeIcon />
+                        {/* <YouTubeIcon /> */}
                     </a>
                     <a
                         href="https://br.pinterest.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <PinterestIcon />
+                        {/* <PinterestIcon /> */}
                     </a>
                     <a
                         href="https://web.whatsapp.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <WhatsAppIcon />
+                        {/* <WhatsAppIcon /> */}
                     </a>
                 </div>
             </section>

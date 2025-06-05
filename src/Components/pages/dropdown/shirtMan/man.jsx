@@ -59,7 +59,7 @@ function ShirtMan() {
                     <div className="nav-center">
                         <img
                             className="logo"
-                            src={Logo}
+                            src={"Logo"}
                             alt="Logo Kamisaria Zanuto"
                         />
                         <h1 className="logo-title">KAMISARIA ZANUTO</h1>
@@ -128,9 +128,9 @@ function ShirtMan() {
             </header>
             {/* Parte Inicial com 3 imagens */}
             <section className="intro-grid">
-                <img src={Model} alt="Modelo" />
-                <img src={ImgOne} alt="Imagem 1" />
-                <img src={ImgTwo} alt="Imagem 2" />
+                <img src={"Model"} alt="Modelo" />
+                <img src={"ImgOne"} alt="Imagem 1" />
+                <img src={"ImgTwo"} alt="Imagem 2" />
             </section>
 
             <div className="photobook">
@@ -228,35 +228,35 @@ function ShirtMan() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <InstagramIcon />
+                            {/* <InstagramIcon /> */}
                         </a>
                         <a
                             href="https://web.facebook.com/kamisaria"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <FacebookIcon />
+                            {/* <FacebookIcon /> */}
                         </a>
                         <a
                             href="https://www.youtube.com/watch?v=-qwyq3HSuSY"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <YouTubeIcon />
+                            {/* <YouTubeIcon /> */}
                         </a>
                         <a
                             href="https://br.pinterest.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <PinterestIcon />
+                            {/* <PinterestIcon /> */}
                         </a>
                         <a
                             href="https://web.whatsapp.com/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <WhatsAppIcon />
+                            {/* <WhatsAppIcon /> */}
                         </a>
                     </div>
                 </section>

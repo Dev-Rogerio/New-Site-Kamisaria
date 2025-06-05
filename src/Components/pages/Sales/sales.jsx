@@ -601,7 +601,7 @@ const Sales = ({ price }) => {
                                     }
                                 >
                                     <div>
-                                        <img src={Branco} alt="" />
+                                        <img src={"Branco"} alt="" />
                                     </div>
                                 </div>
                                 <div
@@ -613,7 +613,7 @@ const Sales = ({ price }) => {
                                     }
                                 >
                                     <div>
-                                        <img src={Azul} alt="Cor Azul" />
+                                        <img src={"Azul"} alt="Cor Azul" />
                                     </div>
                                 </div>
                                 <div
@@ -624,7 +624,7 @@ const Sales = ({ price }) => {
                                     onClick={() => handleColorsChange("Rosa")}
                                 >
                                     <div>
-                                        <img src={Rosa} alt="" />
+                                        <img src={"Rosa"} alt="" />
                                     </div>
                                 </div>
                             </div>
