@@ -9,7 +9,7 @@ import InputMask from "react-input-mask";
 import axios from "axios";
 import Logo from "../../Img/logo_branco.png";
 import Camisaa from "../../Img/camisaa.JPG";
-import Camisab from "../../Img/camisab.JPG";
+import camisab from "../../Img/camisab.JPG";
 import Camisac from "../../Img/camisac.JPG";
 import Camisad from "../../Img/camisad.JPG";
 import Camisae from "../../Img/camisae.JPG";
@@ -356,7 +356,7 @@ const Sales = ({ price }) => {
                             <section className="section_Photos_Scroll_Left">
                                 {[
                                     Camisaa,
-                                    Camisab,
+                                    camisab,
                                     Camisac,
                                     Camisad,
                                     Camisae,
