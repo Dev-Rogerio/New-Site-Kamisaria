@@ -12,8 +12,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 // import Telefonista from "../../Img/telefonista.jpg";
-
-import Mapa from "../../Img/mapa.jpg";
+// import Mapa from "../../Img/mapa.jpg";
 
 function Contact() {
     const [message, setMessage] = useState("");
