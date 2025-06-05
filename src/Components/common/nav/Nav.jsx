@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 
-import Logo from "../../Img/logo_branco.png";
+// import Logo from "../../Img/logo_branco.png";
 
 import "../nav/Nav.css";
 
@@ -20,7 +20,7 @@ const Nav = () => {
                     <div className="_nav-center">
                         <img
                             className="_logo"
-                            src={Logo}
+                            src={"Logo"}
                             alt="Logo Kamisaria Zanuto"
                         />
                         <h1 className="_logo-title">KAMISARIA ZANUTO</h1>

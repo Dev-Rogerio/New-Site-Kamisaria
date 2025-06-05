@@ -87,7 +87,7 @@ const Footer = () => {
                 aria-label="Abrir localização no mapa"
             >
                 <span className="_click-hint">Clique</span>
-                <img src={Mapa} alt="Mapa localização Kamisaria Zanuto" />
+                <img src={"Mapa"} alt="Mapa localização Kamisaria Zanuto" />
             </section>
 
             <a
