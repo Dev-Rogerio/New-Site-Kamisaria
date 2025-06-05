@@ -8,7 +8,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InputMask from "react-input-mask";
 import axios from "axios";
 // import logo from "../../Img/logo_branco.png";
-import Camisaa from "../../Img/camisaa.JPG";
+import camisaa from "../../Img/camisaa.JPG";
 import camisab from "../../Img/camisab.JPG";
 import Camisac from "../../Img/camisac.JPG";
 import Camisad from "../../Img/camisad.JPG";
@@ -27,7 +27,7 @@ import CarrinhoCompra from "../../Modal/CarrinhoCompra/Carrinho_Compra.jsx";
 import Devolucao from "../../Modal/devolucao/Devolucao.jsx";
 
 const Sales = ({ price }) => {
-    const [mudaPhoto, setMudaPhoto] = useState(Camisaa);
+    const [mudaPhoto, setMudaPhoto] = useState(camisaa);
     const [ativar, setAtivar] = useState(false);
     const [valorControler, setValorControler] = useState("");
     const [selectedSizeText, setSelectedSizeText] = useState("");
@@ -355,7 +355,7 @@ const Sales = ({ price }) => {
                         <div className="center_Collumn_One_Sales">
                             <section className="section_Photos_Scroll_Left">
                                 {[
-                                    Camisaa,
+                                    camisaa,
                                     camisab,
                                     Camisac,
                                     Camisad,
