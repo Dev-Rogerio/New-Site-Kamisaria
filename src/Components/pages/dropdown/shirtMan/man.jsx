@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../../Home/home.css";
 import "../shirtMan/man.css";
 
-import Tissue from "../../../Modal/tissue/index";
+import Tissue from "../../../Modal/tissue/tissue.jsx";
 import logo from "../../../img/logo_branco.png";
 import imgTeen from "../../../img/hz10.jpg";
 import imgTwelve from "../../../img/kz12.jpg";
