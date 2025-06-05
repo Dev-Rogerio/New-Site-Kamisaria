@@ -1,6 +1,6 @@
 import React from "react";
 import "./BandeiraVisa.css";
-import Visa from "../../Img/visa.png";
+// import Visa from "../../Img/visa.png";
 
 const BandeiraVisa = ({ cardNumber, nomeCartao, expiry }) => {
     return (
@@ -10,7 +10,7 @@ const BandeiraVisa = ({ cardNumber, nomeCartao, expiry }) => {
                     {cardNumber || "0000 0000 0000 0000"}
                 </div>
                 <div className="logoBandeiraVisa">
-                    <img src={Visa} alt="Visa" />
+                    <img src={"Visa"} alt="Visa" />
                 </div>
                 <div className="nome-e-validade">
                     <span>{nomeCartao || "NOME NO CARTÃO"}</span>
