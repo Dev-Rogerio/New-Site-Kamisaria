@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import "../../Components/pages/Home/style.css";
 
-import Logo from "../Img/logovetorizadoKZ.png";
+// import Logo from "../Img/logovetorizadoKZ.png";
 
 function Navbar() {
     return (
@@ -12,7 +12,7 @@ function Navbar() {
                 <div className="nav-center">
                     <img
                         className="logo"
-                        src={Logo}
+                        src={"Logo"}
                         alt="Logo Kamisaria Zanuto"
                     />
                     <h1 className="logo-title">KAMISARIA ZANUTO</h1>
