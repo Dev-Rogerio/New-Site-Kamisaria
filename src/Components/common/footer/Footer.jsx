@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from "react";
 
-// import InstagramIcon from "@mui/icons-material/Instagram";
-// import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-// import YouTubeIcon from "@mui/icons-material/YouTube";
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import PinterestIcon from "@mui/icons-material/Pinterest";
-// import Mapa from "../../Img/mapa.jpg";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import PinterestIcon from "@mui/icons-material/Pinterest";
+import Mapa from "../../Img/mapa.jpg";
 
 const Footer = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -26,35 +26,35 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {/* <InstagramIcon /> */}
+                        <InstagramIcon />
                     </a>
                     <a
                         href="https://web.facebook.com/kamisaria"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {/* <FacebookIcon /> */}
+                        <FacebookIcon />
                     </a>
                     <a
                         href="https://www.youtube.com/watch?v=-qwyq3HSuSY"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {/* <YouTubeIcon /> */}
+                        <YouTubeIcon />
                     </a>
                     <a
                         href="https://br.pinterest.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {/* <PinterestIcon /> */}
+                        <PinterestIcon />
                     </a>
                     <a
                         href="https://web.whatsapp.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {/* <WhatsAppIcon /> */}
+                        <WhatsAppIcon />
                     </a>
                 </div>
             </section>
@@ -87,7 +87,7 @@ const Footer = () => {
                 aria-label="Abrir localização no mapa"
             >
                 <span className="_click-hint">Clique</span>
-                <img src={"Mapa"} alt="Mapa localização Kamisaria Zanuto" />
+                <img src={Mapa} alt="Mapa localização Kamisaria Zanuto" />
             </section>
 
             <a

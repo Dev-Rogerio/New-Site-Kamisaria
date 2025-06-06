@@ -1,30 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import Nav from "../../common/nav/Nav";
-
 import GuiaTamanhosLuxo from "../../Modal/GuiaTamanhos/GuiaTamanhos.jsx";
 import "../Sales/sales.css";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InputMask from "react-input-mask";
 import axios from "axios";
-// import logo from "../../Img/logo_branco.png";
-import camisaa from "../../img/camisaa.JPG";
-import camisab from "../../img/camisab.JPG";
-import Camisac from "../../img/camisac.JPG";
-import Camisad from "../../img/camisad.JPG";
-import Camisae from "../../img/camisae.JPG";
-import Camisaf from "../../img/camisaf.JPG";
-// import WhatsApp from "../../img/whatsapp.png";
-import Azul from "../../img/azul.png";
-import Branco from "../../img/branca.png";
-import Rosa from "../../img/rosa.png";
+import logo from "../../Img/logo_branco.png";
+import camisaa from "../../Img/camisaa.JPG";
+import camisab from "../../Img/camisab.JPG";
+import camisac from "../../Img/camisac.JPG";
+import camisad from "../../Img/camisad.JPG";
+import camisae from "../../Img/camisae.JPG";
+import camisaf from "../../Img/camisaf.JPG";
+import WhatsApp from "../../Img/whatsapp.png";
+import azul from "../../Img/azul.png";
+import branco from "../../Img/branca.png";
+import rosa from "../../Img/rosa.png";
 import Address from "../../Modal/Address/address.jsx";
 import Order from "../../Modal/Order/order.jsx";
 import ModalCep from "../dropdown/modalCep/Modal_Cep.jsx";
 import { useFetcher, useHref } from "react-router-dom";
 import { UsbSharp } from "@mui/icons-material";
 import CarrinhoCompra from "../../Modal/CarrinhoCompra/Carrinho_Compra.jsx";
-import Devolucao from "../../Modal/devolucao/Devolucao.jsx";
+import Devolucao from "../../Modal/Devolucao/Devolucao.jsx";
+import Nav from "../../common/Nav/nav.jsx";
 
 const Sales = ({ price }) => {
     const [mudaPhoto, setMudaPhoto] = useState(camisaa);
@@ -64,7 +63,7 @@ const Sales = ({ price }) => {
     const [modalCarrinhoCompras, setModalCarrinhoCompra] = useState(false);
     const [mostrarCarrinho, setMostrarCarrinho] = useState(false);
     const [mostrarModalCarrinho, setMostrarModalCarrinho] = useState(false);
-    const [imagemSelecionada, setImagemSelecionada] = useState(Branco);
+    const [imagemSelecionada, setImagemSelecionada] = useState(branco);
     const [frete, setFrete] = useState(10);
     const [mostrarMais, setMostrarMais] = useState(false);
     const [mostarModalDevolucao, setMostrarModalDevolucao] = useState(false);
@@ -200,7 +199,7 @@ const Sales = ({ price }) => {
         const quantidadeDisponivel = estoque[selectedColor]?.[size] || 0;
 
         if (quantidadeDisponivel <= 0) {
-            alert(" Este tmanho esta fora de estoque");
+            alert(" Este tamanho esta fora de estoque");
             return;
         }
 
@@ -218,16 +217,16 @@ const Sales = ({ price }) => {
         // Atualiza a imagem conforme a cor selecionada
         switch (color) {
             case "Branco":
-                setImagemSelecionada(Branco);
+                setImagemSelecionada(branco);
                 break;
             case "Azul":
-                setImagemSelecionada(Azul);
+                setImagemSelecionada(azul);
                 break;
             case "Rosa":
-                setImagemSelecionada(Rosa);
+                setImagemSelecionada(rosa);
                 break;
             default:
-                setImagemSelecionada(Branco); // fallback
+                setImagemSelecionada(branco); // fallback
         }
     };
 
@@ -357,10 +356,10 @@ const Sales = ({ price }) => {
                                 {[
                                     camisaa,
                                     camisab,
-                                    Camisac,
-                                    Camisad,
-                                    Camisae,
-                                    Camisaf,
+                                    camisac,
+                                    camisad,
+                                    camisae,
+                                    camisaf,
                                 ].map((img, i) => (
                                     <div
                                         key={i}
@@ -601,7 +600,7 @@ const Sales = ({ price }) => {
                                     }
                                 >
                                     <div>
-                                        <img src={"Branco"} alt="" />
+                                        <img src={branco} alt="" />
                                     </div>
                                 </div>
                                 <div
@@ -613,7 +612,7 @@ const Sales = ({ price }) => {
                                     }
                                 >
                                     <div>
-                                        <img src={"Azul"} alt="Cor Azul" />
+                                        <img src={azul} alt="Cor Azul" />
                                     </div>
                                 </div>
                                 <div
@@ -624,7 +623,7 @@ const Sales = ({ price }) => {
                                     onClick={() => handleColorsChange("Rosa")}
                                 >
                                     <div>
-                                        <img src={"Rosa"} alt="" />
+                                        <img src={rosa} alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -708,6 +707,23 @@ const Sales = ({ price }) => {
                                     {errorSize}
                                 </p>
                             )}
+                            {selectedColor && selectedSize && (
+                                <div className="estoqueDisponivel">
+                                    <span className="material-symbols-outlined iconEstoque">
+                                        inventory_2
+                                    </span>
+                                    <p className="disponivel">
+                                        Estoque disponível
+                                    </p>
+                                    <div>
+                                        <span>
+                                            {estoque[selectedColor]?.[
+                                                selectedSize
+                                            ] ?? 0}
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="product_unit">
                                 <p>Quantidade</p>
@@ -736,26 +752,6 @@ const Sales = ({ price }) => {
                                     Guia de tamanhos <span>Clique Aqui</span>
                                 </p>
                             </div>
-
-                            {selectedColor && selectedSize && (
-                                <div className="estoqueDisponivel">
-                                    <span className="material-symbols-outlined iconEstoque">
-                                        inventory_2
-                                    </span>
-                                    <p className="disponivel">
-                                        Estoque disponível
-                                    </p>
-                                    <div>
-                                        <span>
-                                            (
-                                            {estoque[selectedColor]?.[
-                                                selectedSize
-                                            ] ?? 0}
-                                            )
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
 
                             <p className="labelCep">Calcular o frete:</p>
 

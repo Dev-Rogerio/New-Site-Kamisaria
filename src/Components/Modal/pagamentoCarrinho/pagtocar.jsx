@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../pagamentoCarrinho/pagtocar.css";
+import "./pagtocar.css";
 
 export default function ModalPagamentoCarrinho({ onClose }) {
     return (

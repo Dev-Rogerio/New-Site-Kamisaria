@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 
-import Footer from "../../common/footer/Footer";
-import Nav from "../../common/nav/Nav";
+import Footer from "../../common/Footer/footer";
+import Nav from "../../common/Nav/nav.jsx";
 import "../Home/home.css";
 import "../contact/contact.css";
-// import Logo from "../../Img/logo_branco.png";
 
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-// import Telefonista from "../../Img/telefonista.jpg";
-// import Mapa from "../../Img/mapa.jpg";
+import Telefonista from "../../Img/telefonista.jpg";
 
 function Contact() {
     const [message, setMessage] = useState("");
@@ -76,7 +69,7 @@ function Contact() {
                     <div className="grid-right">
                         <img
                             className="img-telefonista"
-                            src={"Telefonista"}
+                            src={Telefonista}
                             alt="Atendente"
                         />
                     </div>

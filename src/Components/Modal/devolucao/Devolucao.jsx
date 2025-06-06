@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../Modal/devolucao/Devolucao.css";
+import "./Devolucao.css";
 
 const Devolucao = ({ mostrarSaibaMais, setMostrarSaibaMais }) => {
     useEffect(() => {
