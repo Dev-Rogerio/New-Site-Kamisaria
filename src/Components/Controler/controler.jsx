@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "../Controler/controler.css";
+import "./controler.css";
 
 import Tabela from "../Modal/Tabela/tabela";
 

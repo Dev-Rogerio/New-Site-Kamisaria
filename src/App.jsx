@@ -17,7 +17,7 @@ import Store from "./components/Modal/Store/index.jsx";
 import CustomShirt from "./components/pages/CustomShirt/index.jsx";
 import Sales from "./components/pages/Sales/sales.jsx";
 import Address from "./components/Modal/Address/address.jsx";
-import Controler from "./components/Controler/controler.jsx";
+import Controler from "./components/controler/controler.jsx";
 import Tabela from "./components/Modal/Tabela/tabela.jsx";
 import Order from "./components/Modal/Order/order.jsx";
 import Return from "./components/pages/Return/return.jsx";
