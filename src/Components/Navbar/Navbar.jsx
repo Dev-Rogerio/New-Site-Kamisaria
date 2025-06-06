@@ -1,6 +1,6 @@
 import React from "react";
 import "./Navbar.css";
-import "../../components/pages/Home/style.css";
+import "../pages/home/style.css";
 
 import Logo from "../Img/logovetorizadoKZ.png";
 

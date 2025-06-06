@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "../../Home/home.css";
+import "../../home/home.css";
 import "../shirtMan/man.css";
 
 import Tissue from "../../../Modal/Tissue/tissue.jsx";

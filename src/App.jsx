@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from "./components/pages/Home/home.jsx";
+import Home from "./components/pages/home/home.jsx";
 import Contact from "./components/pages/contact/contact.jsx";
 import ShirtMan from "./components/pages/dropdown/shirtMan/man.jsx";
 import ShirtWoman from "./components/pages/dropdown/shirtWoman/index.jsx";

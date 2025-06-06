@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Footer from "../../common/Footer/footer";
 import Nav from "../../common/Nav/nav.jsx";
-import "../Home/home.css";
+import "../home/home.css";
 import "../contact/contact.css";
 
 import Telefonista from "../../Img/telefonista.jpg";
