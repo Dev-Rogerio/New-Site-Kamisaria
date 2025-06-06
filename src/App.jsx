@@ -23,7 +23,7 @@ import Order from "./Components/Modal/Order/order.jsx";
 import Return from "./Components/pages/Return/return.jsx";
 import Test from "./Components/pages/Test/test.jsx";
 import Pedido from "./Components/pages/Pedido/pedido.jsx";
-import ModalPagamento from "./Components/Modal/ModalPagamento/ModalPagamento.jsx";
+import ModalPagamento from "./Components/Modal/ModalPagamento/modalPagamento.jsx";
 import GuiaTamanhos from "./Components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
 import CarrinhoCompras from "./Components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
 import Nav from "./Components/common/Nav/nav.jsx";

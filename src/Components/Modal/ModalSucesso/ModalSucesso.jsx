@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import "../ModalSucesso/ModalSucesso.css";
+import "./ModalSucesso.css";
 
 const ModalSucesso = ({ onClose }) => {
     return (
