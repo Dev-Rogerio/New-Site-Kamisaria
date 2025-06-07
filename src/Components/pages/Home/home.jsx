@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import Footer from "../../common/Footer/footer";
 import Nav from "../../common/Nav/nav";
-import "./home.css";
+import "./Home.css";
 import "../Sales/sales.css";
 
 import Capa from "../../Img/capaHome.jpg";
