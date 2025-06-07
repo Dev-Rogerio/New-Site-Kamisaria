@@ -17,7 +17,6 @@ import Store from "./components/Modal/Store/index.jsx";
 import CustomShirt from "./components/pages/CustomShirt/index.jsx";
 import Sales from "./components/pages/Sales/sales.jsx";
 import Address from "./components/Modal/Address/address.jsx";
-import Controler from "./components/Controller/controller.jsx";
 import Tabela from "./components/Modal/Tabela/tabela.jsx";
 import Order from "./components/Modal/Order/order.jsx";
 import Return from "./components/pages/Return/return.jsx";
@@ -70,10 +69,7 @@ function App() {
                         path="/modalPagamento"
                         element={<ModalPagamento />}
                     />
-                    <Route
-                        path="/controler"
-                        element={<Controler setPrice={setPrice} />}
-                    />
+
                     <Route path="/tabela" element={<Tabela />} />
                     <Route path="/order" element={<Order price={price} />} />
                     <Route

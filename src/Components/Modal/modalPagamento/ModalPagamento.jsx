@@ -22,7 +22,7 @@ const ModalPagamento = ({
     const [paymentResponse, setPaymentResponse] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [showCartaoModal, setShowCartaoModal] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false); // controle modal de sucesso
+    const [showSuccess, setShowSuccess] = useState(false);
 
     // este setEmail pode vir de algum formulário anterior
 
