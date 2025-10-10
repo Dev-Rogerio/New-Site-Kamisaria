@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import Footer from "../../common/Footer/footer";
-import Nav from "../../common/Nav/nav.jsx";
-import "../home/home.css";
+import Footer from "../../common/footer/Footer.jsx";
+import Nav from "../../common/nav/Nav.jsx";
+import "../Home/home.css";
 import "../contact/contact.css";
 
-import Telefonista from "../../Img/telefonista.jpg";
+import Telefonista from "../../img/telefonista.jpg";
 
 function Contact() {
     const [message, setMessage] = useState("");

@@ -5,7 +5,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-import Mapa from "../../Img/mapa.jpg";
+import Mapa from "../../img/mapa.jpg";
 
 const Footer = () => {
     const [menuOpen, setMenuOpen] = useState(false);

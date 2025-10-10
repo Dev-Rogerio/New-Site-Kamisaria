@@ -1,34 +1,36 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from "../src/components/pages/home/home.jsx";
-import Contact from "./components/pages/contact/contact.jsx";
-import ShirtMan from "./components/pages/dropdown/shirtMan/man.jsx";
-import ShirtWoman from "./components/pages/dropdown/shirtWoman/index.jsx";
-import Sewing from "./components/Modal/Sewing/index.jsx";
-import Tailor from "./components/Modal/Tailor/index.jsx";
-import Measure from "./components/Modal/Measure/index.jsx";
-import Tissue from "./components/Modal/Tissue/tissue.jsx";
-import Cufflinks from "./components/Modal/Cufflinks/index.jsx";
-import Grid from "./components/Modal/Grid/index.jsx";
-import Embroidery from "./components/Modal/Embroidery/index.jsx";
-import Custom from "./components/Modal/Custom/index.jsx";
-import Store from "./components/Modal/Store/index.jsx";
-import CustomShirt from "./components/pages/CustomShirt/index.jsx";
-import Sales from "./components/pages/Sales/sales.jsx";
-import Address from "./components/Modal/Address/address.jsx";
-import Tabela from "./components/Modal/Tabela/tabela.jsx";
-import Order from "./components/Modal/Order/order.jsx";
-import Return from "./components/pages/Return/return.jsx";
-import Test from "./components/pages/Test/test.jsx";
-import Pedido from "./components/pages/Pedido/pedido.jsx";
-import ModalPagamento from "./components/Modal/ModalPagamento/modalPagamento.jsx";
-import GuiaTamanhos from "./components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
-import CarrinhoCompras from "./components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
-import Nav from "./components/common/Nav/nav.jsx";
-import Footer from "./components/common/Footer/footer.jsx";
-import Cep from "./components/pages/dropdown/modalCep/Modal_Cep.jsx";
-import BandeiraVisa from "./components/Modal/CartaoVisa/bandeiraVisa.jsx";
+import Home from "./Components/pages/Home/home.jsx";
+import Contact from "./Components/pages/contact/contact.jsx";
+import ShirtMan from "./Components/pages/dropdown/shirtMan/man.jsx";
+import ShirtWoman from "./Components/pages/dropdown/shirtWoman/index.jsx";
+import Sewing from "./Components/Modal/Sewing/index.jsx";
+import Tailor from "./Components/Modal/Tailor/index.jsx";
+import Measure from "./Components/Modal/Measure/index.jsx";
+import Tissue from "./Components/Modal/Tissue/tissue.jsx";
+import Cufflinks from "./Components/Modal/Cufflinks/index.jsx";
+import Grid from "./Components/Modal/Grid/index.jsx";
+import Embroidery from "./Components/Modal/Embroidery/index.jsx";
+import Custom from "./Components/Modal/Custom/index.jsx";
+import Store from "./Components/Modal/Store/index.jsx";
+import CustomShirt from "./Components/pages/CustomShirt/index.jsx";
+import Sales from "./Components/pages/Sales/sales.jsx";
+import Address from "./Components/Modal/Address/address.jsx";
+import Tabela from "./Components/Modal/Tabela/tabela.jsx";
+import Order from "./Components/Modal/Order/order.jsx";
+import Return from "./Components/pages/Return/return.jsx";
+import Test from "./Components/pages/Test/test.jsx";
+import Pedido from "./Components/pages/Pedido/pedido.jsx";
+import ModalPagamento from "./Components/Modal/modalPagamento/ModalPagamento.jsx";
+import GuiaTamanhos from "./Components/Modal/GuiaTamanhos/GuiaTamanhos.jsx";
+import CarrinhoCompras from "./Components/Modal/CarrinhoCompra/Carrinho_Compra.jsx";
+import Nav from "./Components/common/nav/Nav.jsx";
+import Footer from "./Components/common/footer/Footer.jsx";
+import Cep from "./Components/pages/dropdown/modalCep/Modal_Cep.jsx";
+import BandeiraVisa from "./Components/Modal/CartaoVisa/VisaModal.jsx";
+import Camisa from "./Components/pages/menuStore/camisa/camisa.jsx";
+import MenuStore from "./Components/pages/menuStore/MenuStore.jsx";
 
 function App() {
     const [price, setPrice] = useState("499");
@@ -80,6 +82,8 @@ function App() {
                     <Route path="/nav" element={<Nav />} />
                     <Route path="/footer" element={<Footer />} />
                     <Route path="/bandeiravisa" element={<BandeiraVisa />} />
+                    <Route path="/camisa" element={<Camisa />} />
+                    <Route path="/menustore" element={<MenuStore />} />
                 </Routes>
             </Router>
         </div>

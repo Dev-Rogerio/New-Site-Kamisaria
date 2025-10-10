@@ -1,12 +1,13 @@
 import React, { useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import Logo from "../../Img/logo_branco.png";
+import Logo from "../../img/logo_branco.png";
 
-import "./nav.css";
+import "../nav/Nav.css";
 
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const navigate = useNavigate();
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     const openLink = useCallback((url) => {
@@ -47,9 +48,9 @@ const Nav = () => {
                                 <a href="/">História</a>
                             </li>
                             <li>
-                                <a href="/sales" className="_highlighted">
+                                <Link to="/menustore" className="_highlighted">
                                     Loja
-                                </a>
+                                </Link>
                             </li>
                             <li className="_submenu-parent">
                                 <a href="/">Vestuário</a>

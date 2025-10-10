@@ -1,16 +1,16 @@
 import React, { useState, useCallback } from "react";
 
-import Footer from "../../common/Footer/footer";
-import Nav from "../../common/Nav/nav";
+import Footer from "../../common/footer/Footer.jsx";
+import Nav from "../../common/nav/Nav.jsx";
 import "./home.css";
 import "../Sales/sales.css";
 
-import Capa from "../../Img/capaHome.jpg";
-import One from "../../Img/kz1.jpg";
-import Two from "../../Img/kz2.jpg";
-import Three from "../../Img/kz3.jpg";
-import Four from "../../Img/kz4.jpg";
-import Mapa from "../../Img/mapa.jpg";
+import Capa from "../../img/capahome.jpg";
+import One from "../../img/kz1.jpg";
+import Two from "../../img/kz2.jpg";
+import Three from "../../img/kz3.jpg";
+import Four from "../../img/kz4.jpg";
+import Mapa from "../../img/mapa.jpg";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";

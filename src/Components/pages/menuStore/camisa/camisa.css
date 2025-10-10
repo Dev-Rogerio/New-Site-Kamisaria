@@ -1,0 +1,61 @@
+.modelos-container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.camisas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.camisa-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.camisa-card:hover {
+    transform: translateY(-5px);
+}
+
+.camisa-card.selected {
+    border: 3px solid #ff5722;
+    box-shadow: 0 0 12px rgba(255, 87, 34, 0.5);
+}
+
+.camisa-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.cor-indicador {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 10px auto 0;
+    border: 1px solid #ccc;
+}
+
+.confirmacao {
+    margin-top: 40px;
+}
+
+.btn-confirmar {
+    background: #ff5722;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-confirmar:hover {
+    background: #e64a19;
+}

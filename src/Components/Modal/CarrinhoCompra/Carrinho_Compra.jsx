@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../../Modal/CarrinhoCompra/Carrinho_Compra.css";
-import ModalPagamentoCarrinho from "../PagamentoCarrinho/pagtocar";
+import "../../Modal/CarrinhoCompra/Carrinho_Compra.jsx";
+import ModalPagamentoCarrinho from "../pagamentoCarrinho/pagtocar.jsx";
 
 const CarrinhoCompra = ({
     carrinho = [],
