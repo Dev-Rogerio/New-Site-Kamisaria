@@ -14,7 +14,7 @@ const Gravata = () => {
                 alt="Logo Kamisaria Zanuto"
                 className="construction-logo"
             />
-            <h1>Página de Camisetas em Construção</h1>
+            <h1>Página de gravata em Construção</h1>
             <p>
                 Em breve você poderá conferir nossa linha completa de camisetas
                 exclusivas Kamisaria Zanuto. Aguardem novidades!
