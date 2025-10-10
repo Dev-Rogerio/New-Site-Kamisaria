@@ -10,7 +10,7 @@ const MenuStore = () => {
     const itens = [
         { nome: "Camisa", link: "/sales", icon: "👔" },
         { nome: "Terno", link: "/ternos", icon: "🕴️" },
-        { nome: "Calça", link: "/calcas", icon: "👖" },
+        { nome: "Calca", link: "/calcas", icon: "👖" },
         { nome: "Camisetas", link: "/camisetas", icon: "👕" },
         { nome: "Cintos", link: "/cintos", icon: "🧷" },
         { nome: "Sapatos", link: "/sapatos", icon: "👞" },

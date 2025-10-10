@@ -31,6 +31,13 @@ import Cep from "./Components/pages/dropdown/modalCep/Modal_Cep.jsx";
 import BandeiraVisa from "./Components/Modal/CartaoVisa/VisaModal.jsx";
 import Camisa from "./Components/pages/menuStore/camisa/camisa.jsx";
 import MenuStore from "./Components/pages/menuStore/MenuStore.jsx";
+import Calca from "./Components/pages/menuStore/Calca.jsx";
+import Cinto from "./Components/pages/menuStore/Cinto.jsx";
+import Terno from "./Components/pages/menuStore/Terno.jsx";
+import Camiseta from "./Components/pages/menuStore/Camiseta.jsx";
+import Sapato from "./Components/pages/menuStore/Sapato.jsx";
+import Abotoadura from "./Components/pages/menuStore/Abotoadura.jsx";
+import Gravata from "./Components/pages/menuStore/Gravata.jsx";
 
 function App() {
     const [price, setPrice] = useState("499");
@@ -84,6 +91,13 @@ function App() {
                     <Route path="/bandeiravisa" element={<BandeiraVisa />} />
                     <Route path="/camisa" element={<Camisa />} />
                     <Route path="/menustore" element={<MenuStore />} />
+                    <Route path="/calcas" element={<Calca />} />
+                    <Route path="/cintos" element={<Cinto />} />
+                    <Route path="/ternos" element={<Terno />} />
+                    <Route path="/camisetas" element={<Camiseta />} />
+                    <Route path="/sapatos" element={<Sapato />} />
+                    <Route path="/abotoaduras" element={<Abotoadura />} />
+                    <Route path="/gravatas" element={<Gravata />} />
                 </Routes>
             </Router>
         </div>

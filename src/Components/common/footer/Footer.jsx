@@ -6,6 +6,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import Mapa from "../../img/mapa.jpg";
+import "../footer/Footer.css";
 
 const Footer = () => {
     const [menuOpen, setMenuOpen] = useState(false);
