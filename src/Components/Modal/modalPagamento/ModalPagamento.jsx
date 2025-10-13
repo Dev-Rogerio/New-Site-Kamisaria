@@ -3,10 +3,10 @@ import axios from "axios";
 import { CornerUpLeft } from "lucide-react";
 import "../modalPagamento/ModalPagamento.css";
 
-// import Visa from "../../Img/visa.png";
-// import MasterCard from "../../Img/mastercard.png";
-// import Paypal from "../../Img/Paypal.png";
-// import Pix from "../../Img/pix.png";
+import Visa from "../../img/visa.png";
+import MasterCard from "../../img/mastercard.png";
+import Paypal from "../../img/Paypal.png";
+import Pix from "../../img/pix.png";
 import PixModal from "../Pix/ModalPix";
 import VisaModal from "../CartaoVisa/VisaModal";
 
@@ -152,28 +152,24 @@ const ModalPagamento = ({
 
                     <div className="pix-button-container">
                         <button type="submit" className="pix-button">
-                            <img src={"Pix"} alt="Pix" className="pix" />
+                            <img src={Pix} alt="Pix" className="pix" />
                         </button>
                         <button
                             type="button"
                             className="pix-card-button"
                             onClick={abrirCartao}
                         >
-                            <img src={"Visa"} alt="Visa" className="visa" />
+                            <img src={Visa} alt="Visa" className="visa" />
                         </button>
                         <button type="button" className="pix-card-button">
                             <img
-                                src={"MasterCard"}
+                                src={MasterCard}
                                 alt="MasterCard"
                                 className="imgMasterCard"
                             />
                         </button>
                         <button type="button" className="pix-card-button">
-                            <img
-                                src={"Paypal"}
-                                alt="Paypal"
-                                className="paypal"
-                            />
+                            <img src={Paypal} alt="Paypal" className="paypal" />
                         </button>
                     </div>
                 </form>
