@@ -16,7 +16,7 @@ const WHATSAPP_NUMBER = "5511945599306";
 
 const produto = {
     id: 1,
-    nome: "Camiseta Muscle Fit",
+    nome: "Camiseta Muscle Fit Algodão Egipsio",
     preco: 160.0,
     cores: [
         { nome: "Preta", imagem: Preta, corHex: "#111" },
@@ -427,6 +427,56 @@ const CamisetasDice = () => {
             <p className="dica-tamanho">
                 <strong>Dica de tamanho:</strong> Prefere um caimento menos
                 ajustado? Escolha um tamanho acima do seu habitual.
+            </p>
+
+            <p className="dica-tamanho">
+                <strong>Composição:</strong> 93% algodão egípcio | 7% elastano
+                Gramatura: 150 g/m² Certificações: BCI (Better Cotton
+                Initiative) – Cultivo sustentável, uso eficiente de água e
+                relações de trabalho justas. Algodão ECO3 – Produção 100%
+                autossustentável.
+            </p>
+
+            <p className="dica-tamanho">
+                <strong>✔ Toque sedoso e macio</strong> – Feita com algodão
+                egípcio premium, um dos tecidos mais nobres do mundo.
+            </p>
+            <p className="dica-tamanho">
+                <strong>✔ Caimento perfeito</strong> – 7% de elastano para
+                modelar o corpo sem apertar.
+            </p>
+
+            <p className="dica-tamanho">
+                <strong>✔ Versátil</strong> – Academia, trabalho ou ocasiões
+                sociais, sempre elegante.
+            </p>
+            <p className="dica-tamanho">
+                <strong>✔ Sustentável</strong> – Produção responsável com
+                certificações BCI e Algodão ECO3.
+            </p>
+            <p className="dica-tamanho">
+                <strong>✔ Alta durabilidade</strong> – Mantém a forma e a cor
+                por muito mais tempo.
+            </p>
+
+            <h1>Por que você vai amar essa peça</h1>
+
+            <p className="dica-tamanho">
+                <strong>Estilo sem esforço</strong> – Fica incrível sozinha com
+                calça chino ou jeans.
+            </p>
+
+            <p className="dica-tamanho">
+                <strong>Combina com tudo</strong> – Use com blazer ou jaqueta em
+                dias frios.
+            </p>
+            <p className="dica-tamanho">
+                <strong>Tecido nobre</strong> – Maciez, resistência e acabamento
+                impecável.
+            </p>
+            <p className="dica-tamanho">
+                <strong>Consumo consciente</strong>– Produzida no Brasil, em
+                ateliês familiares, com cadeia justa e responsável.
             </p>
         </div>
     );

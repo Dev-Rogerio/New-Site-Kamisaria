@@ -4,7 +4,13 @@ import { CornerUpLeft } from "lucide-react";
 import BandeiraVisa from "../CartaoVisa/bandeiraVisa.jsx";
 import "../CartaoVisa/VisaModal.css";
 
-const VisaModal = ({ fecharCartao, email, nome }) => {
+const VisaModal = ({
+    fecharCartao,
+    email,
+    nome,
+    valorCamisa = 480,
+    quantidade = 1,
+}) => {
     const [cardNumber, setCardNumber] = useState("");
     const [expiry, setExpiry] = useState("");
     const [cvv, setCvv] = useState("");
