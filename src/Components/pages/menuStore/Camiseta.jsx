@@ -1,3 +1,7 @@
+// -------------------------------------------------
+// ----------PAGINA DE CONSTRUÇÂO DO SITE-----------
+// -------------------------------------------------
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 // import "./camisetas.jsx";

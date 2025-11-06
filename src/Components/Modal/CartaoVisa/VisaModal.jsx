@@ -48,10 +48,14 @@ const VisaModal = ({ fecharCartao, email, nome }) => {
             return;
         }
 
+        const frete = 25.0;
+
+        const valorTotal = valorCamisa + frete;
+
         const pagamentoData = {
             titulo: "Camisa Social",
-            quantidade: 1,
-            valorUnitario: 1.0,
+            quantidade,
+            valorUnitario: valorTotal,
             emailPagador,
             nomeCartao,
         };

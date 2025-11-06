@@ -38,6 +38,7 @@ import Camiseta from "./Components/pages/menuStore/Camiseta.jsx";
 import Sapato from "./Components/pages/menuStore/Sapato.jsx";
 import Abotoadura from "./Components/pages/menuStore/Abotoadura.jsx";
 import Gravata from "./Components/pages/menuStore/Gravata.jsx";
+import CamisetasDice from "./Components/pages/menuStore/camisetasDice.jsx";
 
 function App() {
     const [price, setPrice] = useState("499");
@@ -98,6 +99,7 @@ function App() {
                     <Route path="/sapatos" element={<Sapato />} />
                     <Route path="/abotoaduras" element={<Abotoadura />} />
                     <Route path="/gravatas" element={<Gravata />} />
+                    <Route path="/camisetasdice" element={<CamisetasDice />} />
                 </Routes>
             </Router>
         </div>

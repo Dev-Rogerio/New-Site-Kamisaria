@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import MeasurePersona from "../../Img/MeasurePersona.png";
-// import MeasureMeasure from "../../Img/homemDesenho.png";
+import MeasurePersona from "../../img/MeasurePersona.png";
+import MeasureMeasure from "../../img/homemDesenho.png";
 import "../GuiaTamanhos/GuiaTamanhos.css";
 import { CornerUpLeftIcon } from "lucide-react";
 
@@ -115,7 +115,7 @@ const ModalDetalhes = ({ tamanho, onClose }) => {
 
                 <div className="luxo-modal-imagem">
                     <img
-                        src={"MeasureMeasure"}
+                        src={MeasureMeasure}
                         alt="Medidas do corpo masculino"
                     />
                 </div>
@@ -132,7 +132,7 @@ const GuiaTamanhosLuxo = ({ isOpen, setIsOpen }) => {
     return (
         <div className="luxo-container">
             <img
-                src={"MeasurePersona"}
+                src={MeasurePersona}
                 alt="Guia de medidas"
                 className="luxo-imagem"
             />

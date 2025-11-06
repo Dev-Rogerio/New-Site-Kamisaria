@@ -1,114 +1,119 @@
-/* ==== RESET BÁSICO ==== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Roboto", "Segoe UI", sans-serif;
-}
-/* Remove bordas e marcadores padrão dos li */
-._nav-menu li {
-    list-style: none; /* remove bullet points */
-    border: none; /* remove qualquer borda */
-    padding: 0; /* padroniza o padding */
-    margin: 0; /* padroniza a margem */
+/* ======= CONTAINER ======= */
+.menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: "Poppins", sans-serif;
+    color: #222;
+    background-color: #fff;
 }
 
-/* Remove estilo padrão dos botões dentro do menu */
-._nav-menu li button {
-    border: none; /* sem borda */
-    background: none; /* fundo transparente */
-    padding: 0; /* padroniza padding */
-    margin: 0; /* padroniza margem */
-    font: inherit; /* herda a fonte do menu */
-    cursor: pointer; /* deixa o cursor igual aos links */
-    color: inherit; /* herda cor do menu */
-}
-
-/* ==== BOTÃO VOLTAR ==== */
+/* ======= BOTÃO VOLTAR ======= */
 .home-button {
-    position: absolute; /* tira do fluxo normal do container */
-    top: 20px; /* distância do topo */
-    left: 20px; /* distância da esquerda */
-    padding: 10px 15px;
-    font-size: 1rem;
-    background-color: #ff5722;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
+    background: none;
+    border: 1px solid #000;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    z-index: 100; /* garante que fique acima de outros elementos */
+    transition: all 0.3s;
+    margin-bottom: 25px;
 }
 
 .home-button:hover {
-    background-color: #ff784e;
-}
-
-/* ==== CONTAINER PRINCIPAL ==== */
-.menu-container {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f9f9f9 0%, #ececec 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-}
-
-/* ==== TÍTULO ==== */
-.menu-container h1 {
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #222;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 700;
-    border-bottom: 3px solid #000;
-    padding-bottom: 10px;
-}
-
-/* ==== TEXTO DE INTRODUÇÃO ==== */
-.menu-intro {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-/* ==== GRID DOS CARDS ==== */
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    width: 100%;
-    max-width: 1000px;
-}
-
-/* ==== CADA CARD ==== */
-.menu-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 30px 20px;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.menu-card:hover {
-    transform: translateY(-8px);
-    background: linear-gradient(135deg, #ff5722, #ff8a50);
+    background: #000;
     color: #fff;
 }
 
-/* Ícone do card */
-.icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
+/* ======= CABEÇALHO ======= */
+.menu-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.menu-logo {
+    width: 150px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+.menu-logo:hover {
+    transform: scale(1.05);
+}
+
+.menu-titulo {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+.menu-subtitle {
+    color: #555;
+    font-size: 1rem;
+}
+
+/* ======= GRADE DE PRODUTOS ======= */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+/* ======= CARDS ======= */
+.menu-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #f8f8f8;
+}
+
+.menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* ======= IMAGEM ======= */
+.menu-image {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 320px;
+    transition: transform 0.4s ease;
+}
+
+.menu-card:hover .menu-image {
+    transform: scale(1.07);
+}
+
+/* ======= OVERLAY ======= */
+.menu-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.menu-card:hover .menu-overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* ======= RESPONSIVO ======= */
+@media (max-width: 768px) {
+    .menu-titulo {
+        font-size: 1.8rem;
+    }
+
+    .menu-image {
+        height: 250px;
+    }
 }

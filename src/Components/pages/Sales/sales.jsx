@@ -113,7 +113,7 @@ const Sales = ({ price }) => {
 
     useEffect(() => {
         // const total = 476 * quantidade;
-        const total = 2 * quantidade;
+        const total = 498 * quantidade;
         const inteiro = Math.floor(total);
         const decimal = (total % 1).toFixed(2).split(".")[1] || "00";
 
