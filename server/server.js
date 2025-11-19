@@ -174,6 +174,68 @@ app.post("/send-email", async (req, res) => {
 });
 
 // ==========================================
+// ROTA PARA ENVIAR PEDIDO VIA WHATSAPP
+// ==========================================
+app.post("/send-whatsapp", async (req, res) => {
+    const {
+        nome,
+        cpf,
+        email,
+        cep,
+        estado,
+        cidade,
+        bairro,
+        endereco,
+        numero,
+        complemento,
+        observacao,
+        telefone,
+        local,
+        tamanho,
+        cor,
+        quantidade,
+        valorCompra,
+        frete,
+        valorTotal,
+    } = req.body;
+
+    // WhatsApp do vendedor
+    const numeroWhats = "5511945599306";
+
+    // Mensagem formatada
+    const texto = `📦 *Novo Pedido Kamisaria Zanuto*
+
+👤 *Cliente:* ${nome}
+📞 *Telefone:* ${telefone}
+📧 *Email:* ${email}
+
+📕 *Pedido*
+• Produto: Camisa DICE
+• Cor: ${cor}
+• Tamanho: ${tamanho}
+• Quantidade: ${quantidade}
+• Valor: R$ ${Number(valorCompra).toFixed(2).replace(".", ",")}
+• Frete: R$ ${Number(frete).toFixed(2).replace(".", ",")}
+• *Total:* R$ ${Number(valorTotal).toFixed(2).replace(".", ",")}
+
+🏠 *Endereço:*
+${endereco}, Nº ${numero}
+${bairro}, ${cidade} - ${estado}
+CEP: ${cep}
+
+${complemento ? `📌 Complemento: ${complemento}` : ""}
+${observacao ? `📝 Observação: ${observacao}` : ""}
+
+💬 _Pedido enviado automaticamente pelo sistema_`;
+
+    const url = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${encodeURIComponent(
+        texto
+    )}`;
+
+    return res.json({ url });
+});
+
+// ==========================================
 // INICIAR SERVIDOR
 // ==========================================
 app.listen(PORT, () => {

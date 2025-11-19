@@ -215,13 +215,65 @@ const Order = ({
                             <button
                                 className="buttonConfirmar"
                                 onClick={async () => {
+                                    await enviarPedido(); // envia e-mail
+
+                                    // envia WhatsApp
+                                    const response = await fetch(
+                                        "http://localhost:3001/send-whatsapp",
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+                                            },
+                                            body: JSON.stringify({
+                                                nome,
+                                                cpf,
+                                                email,
+                                                cep,
+                                                estado,
+                                                cidade,
+                                                bairro,
+                                                endereco,
+                                                numero,
+                                                complemento,
+                                                observacao,
+                                                telefone,
+                                                local,
+                                                tamanho: selectedSize,
+                                                cor: selectedColor,
+                                                quantidade,
+                                                valorCompra: Number(valCamisa),
+                                                frete: frete
+                                                    ? Number(frete)
+                                                    : 0,
+                                                valorTotal:
+                                                    Number(valCamisa) +
+                                                    (frete ? Number(frete) : 0),
+                                            }),
+                                        }
+                                    );
+
+                                    const data = await response.json();
+
+                                    if (data.url) {
+                                        window.open(data.url, "_blank");
+                                    }
+                                }}
+                            >
+                                Pagar
+                            </button>
+
+                            {/* <button
+                                className="buttonConfirmar"
+                                onClick={async () => {
                                     await enviarPedido(); // envia os dados por e-mail
                                     setShowPagamento(true);
                                     // await handleConfirmarPagamento();
                                 }}
                             >
-                                Confirmar Pedido
-                            </button>
+                                Pagar
+                            </button> */}
 
                             <button
                                 className="buttonCancelar"
