@@ -18,7 +18,7 @@ const WHATSAPP_NUMBER = "5511945599306";
 const produto = {
     id: 1,
     nome: "Camiseta Muscle Fit Algodão Egípcio",
-    preco: 249.0,
+    preco: 12.0,
     cores: [
         { nome: "Preta", imagem: Preta, corHex: "#111" },
         { nome: "Branca", imagem: Branca, corHex: "#fff" },

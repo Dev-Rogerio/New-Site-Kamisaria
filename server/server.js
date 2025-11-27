@@ -1,34 +1,49 @@
+// server.js
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import mercadopago from "mercadopago";
 import path from "path";
+import { fileURLToPath } from "url";
 
 // ==========================================
-// CONFIGURAÇÕES INICIAIS
+// CONFIG INICIAL
 // ==========================================
 
-// Carregar variáveis de ambiente
-dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+// Corrigir __dirname em ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Carregar .env
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Log básico das variáveis carregadas
-console.log("Variáveis de ambiente carregadas:", {
+// ==========================================
+// LOG DAS VARIÁVEIS DE AMBIENTE
+// ==========================================
+console.log("\n===== VARIÁVEIS CARREGADAS =====");
+console.log({
     PORT,
     EMAIL_USER: process.env.EMAIL_USER,
-    MP_ACCESS_TOKEN: !!process.env.MP_ACCESS_TOKEN, // por segurança, evita exibir o token completo
+    EMAIL_PASS: !!process.env.EMAIL_PASS,
+    MP_ACCESS_TOKEN: !!process.env.MP_ACCESS_TOKEN,
 });
+console.log("=================================\n");
 
-// Configurar Mercado Pago
+// ==========================================
+// CONFIG MERCADO PAGO
+// ==========================================
 mercadopago.configure({
     access_token: process.env.MP_ACCESS_TOKEN,
 });
+
 console.log("Mercado Pago configurado com sucesso!");
 
 // ==========================================
@@ -38,33 +53,67 @@ app.get("/ping", (_, res) => {
     res.send("pong");
 });
 
-// ==========================================
-// ROTA DE PAGAMENTO - MERCADO PAGO
-// ==========================================
-app.post("/checkout_pro", async (req, res) => {
-    const { titulo, quantidade, valorUnitario, emailPagador, nomeCartao } =
-        req.body;
-
-    const MERCADO_PAGO_EMAIL = "roger.ngt3494@gmail.com"; // altere conforme sua conta
-
-    if (!titulo || !quantidade || !valorUnitario || !emailPagador) {
-        return res
-            .status(400)
-            .json({ error: "Dados incompletos para o pagamento" });
-    }
-
-    if (emailPagador.toLowerCase() === MERCADO_PAGO_EMAIL.toLowerCase()) {
-        return res
-            .status(400)
-            .json({ error: "Não é possível pagar para você mesmo." });
-    }
-
+// =======================================================
+// 🔥 1) ROTA USADA PELO SEU COMPONENTE BotaoPagamento.jsx
+// =======================================================
+app.post("/criar-preferencia", async (req, res) => {
     try {
+        const { title, quantity, price } = req.body;
+
+        if (!title || !quantity || !price) {
+            return res.status(400).json({ error: "Dados inválidos." });
+        }
+
         const preference = {
-            payer: {
-                email: emailPagador,
-                name: nomeCartao || "Cliente",
+            items: [
+                {
+                    title,
+                    quantity: Number(quantity),
+                    unit_price: Number(price),
+                },
+            ],
+            back_urls: {
+                success: "https://kamisariazanuto.com.br/sucesso",
+                failure: "https://kamisariazanuto.com.br/falha",
+                pending: "https://kamisariazanuto.com.br/pendente",
             },
+            auto_return: "approved",
+        };
+
+        const mpResponse = await mercadopago.preferences.create(preference);
+
+        console.log("🔥 Preferência criada (BOTÃO MP):", mpResponse.body.id);
+
+        return res.json({ id: mpResponse.body.id });
+    } catch (error) {
+        console.error("❌ Erro ao criar preferência (BOTÃO):", error);
+        res.status(500).json({ error: "Falha ao criar preferência." });
+    }
+});
+
+// =======================================================
+// 🔥 2) ROTA DE PAGAMENTO COMPLETO (SEU CHECKOUT_PRO)
+// =======================================================
+app.post("/checkout_pro", async (req, res) => {
+    try {
+        const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
+
+        if (!titulo || !quantidade || !valorUnitario || !emailPagador) {
+            return res.status(400).json({
+                error: "Dados incompletos para pagamento.",
+            });
+        }
+
+        const EMAIL_VENDEDOR = "roger.ngt3494@gmail.com";
+
+        if (emailPagador.toLowerCase() === EMAIL_VENDEDOR.toLowerCase()) {
+            return res.status(400).json({
+                error: "Você não pode pagar usando o e-mail do vendedor.",
+            });
+        }
+
+        const preference = {
+            payer: { email: emailPagador },
             items: [
                 {
                     title: titulo,
@@ -72,172 +121,150 @@ app.post("/checkout_pro", async (req, res) => {
                     unit_price: Number(valorUnitario),
                 },
             ],
-            payment_methods: {
-                excluded_payment_types: [{ id: "ticket" }], // opcional: exclui boleto
-            },
             back_urls: {
-                success: "https://seusite.com/sucesso",
-                failure: "https://seusite.com/falha",
-                pending: "https://seusite.com/pendente",
+                success: "https://kamisariazanuto.com.br/sucesso",
+                failure: "https://kamisariazanuto.com.br/falha",
+                pending: "https://kamisariazanuto.com.br/pendente",
             },
             auto_return: "approved",
         };
 
-        const response = await mercadopago.preferences.create(preference);
-        res.json({ init_point: response.body.init_point });
+        const mpResponse = await mercadopago.preferences.create(preference);
+
+        console.log(
+            "🔥 Preferência criada (CHECKOUT PRO):",
+            mpResponse.body.id
+        );
+
+        return res.json({ init_point: mpResponse.body.init_point });
     } catch (error) {
-        console.error("Erro ao criar preferência Mercado Pago:", error);
-        res.status(500).json({
-            error: "Erro ao criar preferência Mercado Pago",
-        });
+        console.error("❌ Erro no Mercado Pago:", error);
+        res.status(500).json({ error: "Falha ao criar pagamento." });
     }
 });
 
-// ==========================================
-// ROTA DE ENVIO DE E-MAIL - CONFIRMAÇÃO DO PEDIDO
-// ==========================================
+// =======================================================
+// ENVIO DE E-MAIL - PEDIDO
+// =======================================================
 app.post("/send-email", async (req, res) => {
-    const {
-        nome,
-        cpf,
-        email,
-        cep,
-        estado,
-        cidade,
-        bairro,
-        endereco,
-        numero,
-        complemento,
-        observacao,
-        telefone,
-        local,
-        tamanho,
-        cor,
-        quantidade,
-        valorCompra,
-        frete,
-        valorTotal,
-    } = req.body;
-
-    // Configuração do transporter
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
-
-    // Corpo do e-mail
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: ["roger.ngt@hotmail.com", "adri.ngt@hotmail.com"],
-        subject: "Novo Pedido Recebido - Kamisaria Zanuto",
-        html: `
-      <h2>Pedido Confirmado</h2>
-      <p><strong>Nome:</strong> ${nome}</p>
-      <p><strong>CPF:</strong> ${cpf}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Endereço:</strong> ${endereco}, Nº ${numero}, ${bairro}, ${cidade} - ${estado}</p>
-      ${
-          complemento
-              ? `<p><strong>Complemento:</strong> ${complemento}</p>`
-              : ""
-      }
-      ${observacao ? `<p><strong>Observação:</strong> ${observacao}</p>` : ""}
-      <p><strong>Telefone:</strong> ${telefone}</p>
-      <p><strong>Local de entrega:</strong> ${local}</p>
-      <p><strong>Camisa:</strong> Tamanho ${tamanho}, Cor ${cor}</p>
-      <p><strong>Quantidade:</strong> ${quantidade}</p>
-      <p><strong>Valor da Camisa:</strong> R$ ${Number(valorCompra)
-          .toFixed(2)
-          .replace(".", ",")}</p>
-      <p><strong>Frete:</strong> R$ ${Number(frete)
-          .toFixed(2)
-          .replace(".", ",")}</p>
-      <p><strong>Total:</strong> <b>R$ ${Number(valorTotal)
-          .toFixed(2)
-          .replace(".", ",")}</b></p>
-    `,
-    };
-
     try {
-        await transporter.sendMail(mailOptions);
-        console.log("Email enviado com sucesso!");
-        res.status(200).json({
-            message: "Pedido enviado por e-mail com sucesso!",
+        const dados = req.body;
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
         });
+
+        const html = `
+            <h2>Novo Pedido Recebido</h2>
+            <p><b>Nome:</b> ${dados.nome}</p>
+            <p><b>CPF:</b> ${dados.cpf}</p>
+            <p><b>Email:</b> ${dados.email}</p>
+            <p><b>Telefone:</b> ${dados.telefone}</p>
+            <p><b>Endereço:</b> ${dados.endereco}, Nº ${dados.numero} - ${
+            dados.bairro
+        }</p>
+            <p>${dados.cidade} - ${dados.estado}</p>
+            <p><b>CEP:</b> ${dados.cep}</p>
+            ${
+                dados.complemento
+                    ? `<p><b>Complemento:</b> ${dados.complemento}</p>`
+                    : ""
+            }
+            ${
+                dados.observacao
+                    ? `<p><b>Observação:</b> ${dados.observacao}</p>`
+                    : ""
+            }
+            <hr />
+            <h3>Produto</h3>
+            <p><b>Camisa:</b> ${dados.cor}, Tam: ${dados.tamanho}</p>
+            <p><b>Quantidade:</b> ${dados.quantidade}</p>
+            <p><b>Valor Unitário:</b> R$ ${Number(dados.valorCompra)
+                .toFixed(2)
+                .replace(".", ",")}</p>
+            <p><b>Frete:</b> R$ ${Number(dados.frete)
+                .toFixed(2)
+                .replace(".", ",")}</p>
+            <p><b>Total:</b> <b>R$ ${Number(dados.valorTotal)
+                .toFixed(2)
+                .replace(".", ",")}</b></p>
+        `;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: ["roger.ngt@hotmail.com", "adri.ngt@hotmail.com"],
+            subject: "Novo Pedido - Kamisaria Zanuto",
+            html,
+        });
+
+        return res.json({ message: "E-mail enviado com sucesso!" });
     } catch (error) {
-        console.error("Erro ao enviar e-mail:", error);
-        res.status(500).json({ error: "Erro ao enviar o e-mail" });
+        console.error("❌ Erro ao enviar e-mail:", error);
+        res.status(500).json({ error: "Falha ao enviar e-mail." });
+    }
+});
+
+// =======================================================
+// WHATSAPP - LINK DO PEDIDO
+// =======================================================
+app.post("/send-whatsapp", async (req, res) => {
+    try {
+        const dados = req.body;
+
+        const numeroWhats = "5511945599306";
+
+        const texto = `
+📦 *Novo Pedido - Kamisaria Zanuto*
+
+👤 *${dados.nome}*
+📞 ${dados.telefone}
+📧 ${dados.email}
+
+👕 *Camisa Slim Fit*
+• Cor: ${dados.cor}
+• Tamanho: ${dados.tamanho}
+• Quantidade: ${dados.quantidade}
+• Valor: R$ ${Number(dados.valorCompra).toFixed(2).replace(".", ",")}
+• Frete: R$ ${Number(dados.frete).toFixed(2).replace(".", ",")}
+• *Total:* R$ ${Number(dados.valorTotal).toFixed(2).replace(".", ",")}
+
+🏠 *Endereço*
+${dados.endereco}, Nº ${dados.numero}
+${dados.bairro}, ${dados.cidade} - ${dados.estado}
+CEP: ${dados.cep}
+
+${dados.complemento ? `📌 Complemento: ${dados.complemento}` : ""}
+${dados.observacao ? `📝 Obs: ${dados.observacao}` : ""}
+
+🔗 _Gerado automaticamente_
+        `;
+
+        const url = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${encodeURIComponent(
+            texto
+        )}`;
+
+        return res.json({ url });
+    } catch (error) {
+        console.error("❌ Erro WhatsApp:", error);
+        res.status(500).json({ error: "Falha ao criar link do WhatsApp." });
     }
 });
 
 // ==========================================
-// ROTA PARA ENVIAR PEDIDO VIA WHATSAPP
+// HANDLER GLOBAL DE ERROS
 // ==========================================
-app.post("/send-whatsapp", async (req, res) => {
-    const {
-        nome,
-        cpf,
-        email,
-        cep,
-        estado,
-        cidade,
-        bairro,
-        endereco,
-        numero,
-        complemento,
-        observacao,
-        telefone,
-        local,
-        tamanho,
-        cor,
-        quantidade,
-        valorCompra,
-        frete,
-        valorTotal,
-    } = req.body;
-
-    // WhatsApp do vendedor
-    const numeroWhats = "5511945599306";
-
-    // Mensagem formatada
-    const texto = `📦 *Novo Pedido Kamisaria Zanuto*
-
-👤 *Cliente:* ${nome}
-📞 *Telefone:* ${telefone}
-📧 *Email:* ${email}
-
-📕 *Pedido*
-• Produto: Camisa DICE
-• Cor: ${cor}
-• Tamanho: ${tamanho}
-• Quantidade: ${quantidade}
-• Valor: R$ ${Number(valorCompra).toFixed(2).replace(".", ",")}
-• Frete: R$ ${Number(frete).toFixed(2).replace(".", ",")}
-• *Total:* R$ ${Number(valorTotal).toFixed(2).replace(".", ",")}
-
-🏠 *Endereço:*
-${endereco}, Nº ${numero}
-${bairro}, ${cidade} - ${estado}
-CEP: ${cep}
-
-${complemento ? `📌 Complemento: ${complemento}` : ""}
-${observacao ? `📝 Observação: ${observacao}` : ""}
-
-💬 _Pedido enviado automaticamente pelo sistema_`;
-
-    const url = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${encodeURIComponent(
-        texto
-    )}`;
-
-    return res.json({ url });
+app.use((err, req, res, next) => {
+    console.error("❌ Erro geral:", err);
+    res.status(500).json({ error: "Erro interno no servidor." });
 });
 
 // ==========================================
 // INICIAR SERVIDOR
 // ==========================================
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });

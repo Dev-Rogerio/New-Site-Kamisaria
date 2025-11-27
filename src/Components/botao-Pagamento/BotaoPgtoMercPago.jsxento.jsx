@@ -13,9 +13,9 @@ const BotaoPagamento = () => {
                 }
             );
 
-            const preferenceId = response.data.id;
-            // Redirecionar para o checkout do Mercado Pago
-            window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=${preferenceId}`;
+            const url = response.data.init_point;
+
+            window.location.href = url;
         } catch (error) {
             console.error("Erro ao iniciar pagamento:", error);
             alert("Erro ao iniciar pagamento. Tente novamente.");
