@@ -1,44 +1,44 @@
 // src/Order/Order.jsx
 import React, { useState } from "react";
 import "../Order/order.css";
-import VisaModal from "../CartaoVisa/VisaModal";
 import ModalPagamento from "../modalPagamento/ModalPagamento";
 
-// const API_URL = "https://new-site-kamisaria-1.onrender.com"; // backend no Render
-const API_URL = "http://localhost:3001";
+const API_URL =
+    process.env.REACT_APP_API_URL ||
+    "https://new-site-kamisaria-1.onrender.com";
 
-const Order = ({
-    nome,
-    cpf,
-    cep,
-    estado,
-    cidade,
-    bairro,
-    endereco,
-    numero,
-    complemento,
-    observacao,
-    telefone,
-    local,
-    setShowModal,
-    setHideAddress,
-    selectedSize,
-    selectedColor,
-    quantidade,
-    valCamisa,
-    email,
-    frete,
-}) => {
+const Order = (props) => {
+    const {
+        nome,
+        cpf,
+        cep,
+        estado,
+        cidade,
+        bairro,
+        endereco,
+        numero,
+        complemento,
+        observacao,
+        telefone,
+        local,
+        setShowModal,
+        setHideAddress,
+        selectedSize,
+        selectedColor,
+        quantidade,
+        valCamisa,
+        email,
+        frete,
+    } = props;
+
     const [showPagamento, setShowPagamento] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
 
-    const closeModal = () => {
-        setShowModal(false);
-        setHideAddress(false);
-    };
-
+    // -------------------------------
+    // Funções utilitárias
+    // -------------------------------
     const formatBRL = (v) =>
         `R$ ${Number(v || 0)
             .toFixed(2)
@@ -50,6 +50,14 @@ const Order = ({
         return (valorProdutos + valorFrete).toFixed(2).replace(".", ",");
     };
 
+    const closeModal = () => {
+        setShowModal(false);
+        setHideAddress(false);
+    };
+
+    // -------------------------------
+    // Payload único para API
+    // -------------------------------
     const buildPedidoPayload = () => ({
         nome,
         cpf,
@@ -72,87 +80,81 @@ const Order = ({
         valorTotal: Number(valCamisa) + (frete ? Number(frete) : 0),
     });
 
-    const enviarPedido = async () => {
-        const payload = buildPedidoPayload();
+    // -------------------------------
+    // Requisições API
+    // -------------------------------
+    const apiPost = async (route, payload) => {
         try {
-            const res = await fetch(`${API_URL}/send-email`, {
+            const res = await fetch(`${API_URL}/${route}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
             });
-            if (!res.ok) throw new Error("Erro ao enviar e-mail.");
-            return true;
-        } catch (err) {
-            console.error("enviarPedido:", err);
-            setError("Erro ao enviar pedido. Tente novamente.");
-            return false;
-        }
-    };
 
-    const enviarWhatsApp = async () => {
-        const payload = buildPedidoPayload();
-        try {
-            const res = await fetch(`${API_URL}/send-whatsapp`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-            if (!res.ok) throw new Error("Erro ao criar link do WhatsApp.");
-            const data = await res.json();
-            return data.url;
+            if (!res.ok) throw new Error(`Erro: ${route}`);
+            return await res.json();
         } catch (err) {
-            console.error("enviarWhatsApp:", err);
-            setError("Erro ao preparar mensagem no WhatsApp.");
+            console.error(`apiPost ${route}:`, err);
             return null;
         }
     };
 
+    const enviarPedido = async () => {
+        const ok = await apiPost("send-email", buildPedidoPayload());
+        if (!ok) {
+            setError("Erro ao enviar pedido. Tente novamente.");
+            return false;
+        }
+        return true;
+    };
+
+    const enviarWhatsApp = async () => {
+        const data = await apiPost("send-whatsapp", buildPedidoPayload());
+        if (!data?.url) {
+            setError("Erro ao preparar mensagem no WhatsApp.");
+            return null;
+        }
+        return data.url;
+    };
+
     const checkoutMercadoPago = async () => {
         setLoading(true);
+
         const payload = {
             titulo: "Camisa Social",
             quantidade: quantidade || 1,
-            valorUnitario: Number(valCamisa) || 0,
+            valorUnitario: Number(valCamisa) / Number(quantidade),
             emailPagador: email,
             nomeCartao: "Checkout Pro",
         };
 
-        try {
-            const res = await fetch(`${API_URL}/checkout_pro`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-            const data = await res.json();
-            if (res.ok && data.init_point) {
-                window.location.href = data.init_point;
-                return true;
-            } else {
-                console.error("checkoutMercadoPago:", data);
-                setError("Erro ao iniciar pagamento (Mercado Pago).");
-                return false;
-            }
-        } catch (err) {
-            console.error("checkoutMercadoPago:", err);
-            setError("Erro ao processar pagamento.");
-            return false;
+        const data = await apiPost("checkout_pro", payload);
+
+        setLoading(false);
+
+        if (data?.init_point) {
+            window.location.href = data.init_point;
+            return true;
         }
+
+        setError("Erro ao iniciar pagamento (Mercado Pago).");
+        return false;
     };
 
-    // Handler principal ao clicar em "Pagar" (envia e-mail e abre WhatsApp)
+    // -------------------------------
+    // Handler principal — botão WhatsApp
+    // -------------------------------
     const handlePagar = async () => {
         setError("");
         setSuccessMsg("");
         setLoading(true);
 
-        // 1) envia o pedido por e-mail (backoffice)
         const okEmail = await enviarPedido();
         if (!okEmail) {
             setLoading(false);
             return;
         }
 
-        // 2) cria link do WhatsApp no backend e abre
         const whatsappUrl = await enviarWhatsApp();
         setLoading(false);
 
@@ -162,6 +164,9 @@ const Order = ({
         }
     };
 
+    // -------------------------------
+    // JSX
+    // -------------------------------
     return (
         <div className="modal-backdrop">
             <div className="order" role="dialog" aria-modal="true">
@@ -169,6 +174,7 @@ const Order = ({
                     <div className="dadosCompras">
                         <h2>Confirmação do Pedido</h2>
 
+                        {/** Dados pessoais */}
                         <p>
                             <strong>Nome:</strong> {nome}
                         </p>
@@ -193,6 +199,7 @@ const Order = ({
                         <p>
                             <strong>Endereço:</strong> {endereco}, Nº {numero}
                         </p>
+
                         {complemento && (
                             <p>
                                 <strong>Complemento:</strong> {complemento}
@@ -203,6 +210,7 @@ const Order = ({
                                 <strong>Observação:</strong> {observacao}
                             </p>
                         )}
+
                         <p>
                             <strong>Telefone:</strong> {telefone}
                         </p>
@@ -212,6 +220,7 @@ const Order = ({
 
                         <hr />
 
+                        {/** Produto */}
                         <p>
                             <strong>Produto:</strong> Camisa Social Masculina
                             Manga Longa Slim Fit Sem Bolso
@@ -257,12 +266,12 @@ const Order = ({
                             </p>
                         )}
 
+                        {/** Botões */}
                         <div className="botoesModal" style={{ marginTop: 12 }}>
                             <button
                                 className="buttonConfirmar"
                                 onClick={handlePagar}
                                 disabled={loading}
-                                aria-busy={loading}
                             >
                                 {loading
                                     ? "Processando..."

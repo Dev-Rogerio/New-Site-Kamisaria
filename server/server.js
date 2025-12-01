@@ -1,9 +1,12 @@
-// server.js
+// ==========================================
+// server.js — KAMISARIA ZANUTO (REFATORADO)
+// ==========================================
+
 import express from "express";
 import cors from "cors";
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
 import mercadopago from "mercadopago";
+import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -11,11 +14,11 @@ import { fileURLToPath } from "url";
 // CONFIG INICIAL
 // ==========================================
 
-// Corrigir __dirname em ES Modules
+// __dirname em ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Carregar .env
+// Carregar variáveis do .env
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const app = express();
@@ -47,14 +50,23 @@ mercadopago.configure({
 console.log("Mercado Pago configurado com sucesso!");
 
 // ==========================================
-// ROTA DE TESTE
+// CONFIGURAR NODEMAILER (GLOBAL)
 // ==========================================
-app.get("/ping", (_, res) => {
-    res.send("pong");
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
 });
 
 // =======================================================
-// 🔥 1) ROTA USADA PELO SEU COMPONENTE BotaoPagamento.jsx
+// 1) ROTA DE TESTE
+// =======================================================
+app.get("/ping", (req, res) => res.send("pong"));
+
+// =======================================================
+// 2) ROTA DO BOTÃO DE PAGAMENTO SIMPLES (CHECKOUT MP BOTÃO)
 // =======================================================
 app.post("/criar-preferencia", async (req, res) => {
     try {
@@ -86,32 +98,72 @@ app.post("/criar-preferencia", async (req, res) => {
 
         return res.json({ id: mpResponse.body.id });
     } catch (error) {
-        console.error("❌ Erro ao criar preferência (BOTÃO):", error);
+        console.error("❌ Erro ao criar preferência:", error);
         res.status(500).json({ error: "Falha ao criar preferência." });
     }
 });
 
 // =======================================================
-// 🔥 2) ROTA DE PAGAMENTO COMPLETO (SEU CHECKOUT_PRO)
+// 3) FUNÇÃO — ENVIAR EMAIL SIMPLES DE "ORDER"
+// =======================================================
+async function enviarPedidoEmail({
+    titulo,
+    quantidade,
+    valorUnitario,
+    emailPagador,
+}) {
+    try {
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER,
+            subject: "🛒 Novo pedido iniciado (Mercado Pago)",
+            html: `
+                <h2>Um cliente iniciou um pagamento!</h2>
+                <p><b>Produto:</b> ${titulo}</p>
+                <p><b>Quantidade:</b> ${quantidade}</p>
+                <p><b>Valor unitário:</b> R$ ${valorUnitario}</p>
+                <p><b>Email informado:</b> ${emailPagador}</p>
+                <hr/>
+                <p>⚠ O cliente clicou em "Pagar", mesmo que não finalize o pagamento.</p>
+            `,
+        });
+
+        console.log("📧 Email (Order) enviado com sucesso!");
+    } catch (error) {
+        console.error("❌ Erro ao enviar email:", error);
+    }
+}
+
+// =======================================================
+// 4) ROTA — CHECKOUT PRO (PRINCIPAL)
 // =======================================================
 app.post("/checkout_pro", async (req, res) => {
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
 
         if (!titulo || !quantidade || !valorUnitario || !emailPagador) {
-            return res.status(400).json({
-                error: "Dados incompletos para pagamento.",
-            });
+            return res
+                .status(400)
+                .json({ error: "Dados incompletos para pagamento." });
         }
 
+        // Bloquear pagamento com email do vendedor
         const EMAIL_VENDEDOR = "roger.ngt3494@gmail.com";
-
         if (emailPagador.toLowerCase() === EMAIL_VENDEDOR.toLowerCase()) {
             return res.status(400).json({
                 error: "Você não pode pagar usando o e-mail do vendedor.",
             });
         }
 
+        // Envio de email imediato (mesmo sem finalizar pagamento)
+        await enviarPedidoEmail({
+            titulo,
+            quantidade,
+            valorUnitario,
+            emailPagador,
+        });
+
+        // Criar preferência MP
         const preference = {
             payer: { email: emailPagador },
             items: [
@@ -138,25 +190,17 @@ app.post("/checkout_pro", async (req, res) => {
 
         return res.json({ init_point: mpResponse.body.init_point });
     } catch (error) {
-        console.error("❌ Erro no Mercado Pago:", error);
+        console.error("❌ Erro no Checkout PRO:", error);
         res.status(500).json({ error: "Falha ao criar pagamento." });
     }
 });
 
 // =======================================================
-// ENVIO DE E-MAIL - PEDIDO
+// 5) ROTA — ENVIO DE PEDIDO COMPLETO POR EMAIL
 // =======================================================
 app.post("/send-email", async (req, res) => {
     try {
         const dados = req.body;
-
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
 
         const html = `
             <h2>Novo Pedido Recebido</h2>
@@ -164,34 +208,30 @@ app.post("/send-email", async (req, res) => {
             <p><b>CPF:</b> ${dados.cpf}</p>
             <p><b>Email:</b> ${dados.email}</p>
             <p><b>Telefone:</b> ${dados.telefone}</p>
-            <p><b>Endereço:</b> ${dados.endereco}, Nº ${dados.numero} - ${
-            dados.bairro
-        }</p>
-            <p>${dados.cidade} - ${dados.estado}</p>
+
+            <h3>Endereço</h3>
+            <p>${dados.endereco}, Nº ${dados.numero}</p>
+            <p>${dados.bairro} — ${dados.cidade} / ${dados.estado}</p>
             <p><b>CEP:</b> ${dados.cep}</p>
             ${
                 dados.complemento
-                    ? `<p><b>Complemento:</b> ${dados.complemento}</p>`
+                    ? `<p>Complemento: ${dados.complemento}</p>`
                     : ""
             }
-            ${
-                dados.observacao
-                    ? `<p><b>Observação:</b> ${dados.observacao}</p>`
-                    : ""
-            }
-            <hr />
+            ${dados.observacao ? `<p>Observação: ${dados.observacao}</p>` : ""}
+
+            <hr/>
+
             <h3>Produto</h3>
-            <p><b>Camisa:</b> ${dados.cor}, Tam: ${dados.tamanho}</p>
+            <p><b>Camisa:</b> ${dados.cor}, Tamanho: ${dados.tamanho}</p>
             <p><b>Quantidade:</b> ${dados.quantidade}</p>
-            <p><b>Valor Unitário:</b> R$ ${Number(dados.valorCompra)
-                .toFixed(2)
-                .replace(".", ",")}</p>
-            <p><b>Frete:</b> R$ ${Number(dados.frete)
-                .toFixed(2)
-                .replace(".", ",")}</p>
-            <p><b>Total:</b> <b>R$ ${Number(dados.valorTotal)
-                .toFixed(2)
-                .replace(".", ",")}</b></p>
+            <p><b>Valor unitário:</b> R$ ${Number(dados.valorCompra).toFixed(
+                2
+            )}</p>
+            <p><b>Frete:</b> R$ ${Number(dados.frete).toFixed(2)}</p>
+            <p><b>Total:</b> <b>R$ ${Number(dados.valorTotal).toFixed(
+                2
+            )}</b></p>
         `;
 
         await transporter.sendMail({
@@ -201,15 +241,15 @@ app.post("/send-email", async (req, res) => {
             html,
         });
 
-        return res.json({ message: "E-mail enviado com sucesso!" });
+        res.json({ message: "E-mail enviado com sucesso!" });
     } catch (error) {
-        console.error("❌ Erro ao enviar e-mail:", error);
+        console.error("❌ Erro ao enviar pedido:", error);
         res.status(500).json({ error: "Falha ao enviar e-mail." });
     }
 });
 
 // =======================================================
-// WHATSAPP - LINK DO PEDIDO
+// 6) WHATSAPP — GERAR LINK PARA ATENDIMENTO
 // =======================================================
 app.post("/send-whatsapp", async (req, res) => {
     try {
@@ -228,9 +268,9 @@ app.post("/send-whatsapp", async (req, res) => {
 • Cor: ${dados.cor}
 • Tamanho: ${dados.tamanho}
 • Quantidade: ${dados.quantidade}
-• Valor: R$ ${Number(dados.valorCompra).toFixed(2).replace(".", ",")}
-• Frete: R$ ${Number(dados.frete).toFixed(2).replace(".", ",")}
-• *Total:* R$ ${Number(dados.valorTotal).toFixed(2).replace(".", ",")}
+• Valor: R$ ${Number(dados.valorCompra).toFixed(2)}
+• Frete: R$ ${Number(dados.frete).toFixed(2)}
+• *Total:* R$ ${Number(dados.valorTotal).toFixed(2)}
 
 🏠 *Endereço*
 ${dados.endereco}, Nº ${dados.numero}
@@ -247,24 +287,29 @@ ${dados.observacao ? `📝 Obs: ${dados.observacao}` : ""}
             texto
         )}`;
 
-        return res.json({ url });
+        res.json({ url });
     } catch (error) {
         console.error("❌ Erro WhatsApp:", error);
-        res.status(500).json({ error: "Falha ao criar link do WhatsApp." });
+        res.status(500).json({ error: "Falha ao gerar link" });
     }
 });
 
-// ==========================================
-// HANDLER GLOBAL DE ERROS
-// ==========================================
+// =======================================================
+// ROTA RAIZ
+// =======================================================
+app.get("/", (req, res) => res.send("API rodando OK"));
+
+// =======================================================
+// ERRO GLOBAL
+// =======================================================
 app.use((err, req, res, next) => {
     console.error("❌ Erro geral:", err);
     res.status(500).json({ error: "Erro interno no servidor." });
 });
 
-// ==========================================
-// INICIAR SERVIDOR
-// ==========================================
+// =======================================================
+// START SERVER
+// =======================================================
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });

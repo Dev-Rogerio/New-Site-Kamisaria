@@ -1,21 +1,50 @@
 import React from "react";
 import axios from "axios";
 
-const BotaoPagamento = () => {
+const BotaoPagamento = ({
+    titulo,
+    quantidade,
+    valorUnitario,
+    emailPagador,
+    pedidoPayload, // 👈 payload completo do pedido (nome, endereço, tamanho, etc.)
+}) => {
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
+    // Função genérica de POST
+    const apiPost = async (route, data) => {
+        try {
+            const res = await axios.post(`${API_URL}/${route}`, data);
+            return res.data;
+        } catch (err) {
+            console.error(`Erro na rota ${route}:`, err);
+            return null;
+        }
+    };
+
     const handlePagamento = async () => {
         try {
-            const response = await axios.post(
-                "http://localhost:3001/criar-preferencia",
-                {
-                    title: "Camisa Social Sob Medida",
-                    quantity: 1,
-                    price: 199.9,
-                }
-            );
+            // 1️⃣ Envia o pedido antes (mesmo se não pagar)
+            const emailOk = await apiPost("send-email", pedidoPayload);
+            if (!emailOk) {
+                alert("Erro ao enviar pedido. Tente novamente.");
+                return;
+            }
 
-            const url = response.data.init_point;
+            // 2️⃣ Cria checkout do Mercado Pago
+            const checkout = await apiPost("checkout_pro", {
+                titulo,
+                quantidade,
+                valorUnitario,
+                emailPagador,
+            });
 
-            window.location.href = url;
+            if (!checkout?.init_point) {
+                alert("Erro ao iniciar pagamento.");
+                return;
+            }
+
+            // 3️⃣ Redireciona
+            window.location.href = checkout.init_point;
         } catch (error) {
             console.error("Erro ao iniciar pagamento:", error);
             alert("Erro ao iniciar pagamento. Tente novamente.");
