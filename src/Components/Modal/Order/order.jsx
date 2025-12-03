@@ -3,9 +3,14 @@ import React, { useState } from "react";
 import "../Order/order.css";
 import ModalPagamento from "../modalPagamento/ModalPagamento";
 
+// const API_URL =
+//     process.env.REACT_APP_API_URL ||
+//     "https://new-site-kamisaria-1.onrender.com";
+
 const API_URL =
-    process.env.REACT_APP_API_URL ||
-    "https://new-site-kamisaria-1.onrender.com";
+    window.location.hostname === "localhost"
+        ? "http://localhost:3001"
+        : "https://new-site-kamisaria-1.onrender.com";
 
 const Order = (props) => {
     const {

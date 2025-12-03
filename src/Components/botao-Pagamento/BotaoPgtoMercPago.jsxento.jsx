@@ -8,7 +8,13 @@ const BotaoPagamento = ({
     emailPagador,
     pedidoPayload, // 👈 payload completo do pedido (nome, endereço, tamanho, etc.)
 }) => {
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+    // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
+    // 🔥 Detecta produção x desenvolvimento automaticamente
+    const API_URL =
+        window.location.hostname === "localhost"
+            ? "http://localhost:3001"
+            : "https://new-site-kamisaria-1.onrender.com";
 
     // Função genérica de POST
     const apiPost = async (route, data) => {
