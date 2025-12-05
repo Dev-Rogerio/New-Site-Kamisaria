@@ -19,7 +19,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Carregar variáveis do .env
-dotenv.config({ path: path.resolve(__dirname, ".env") });
+// dotenv.config({ path: path.resolve(__dirname, ".env") });
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -53,7 +54,9 @@ console.log("Mercado Pago configurado com sucesso!");
 // CONFIGURAR NODEMAILER (GLOBAL)
 // ==========================================
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: process.env.EMAIL_HOST, // smtp.gmail.com
+    port: 465, // porta SMTP segura
+    secure: true, // obrigatório no GMAIL SMTP
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
