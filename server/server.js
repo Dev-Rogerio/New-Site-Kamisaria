@@ -54,9 +54,9 @@ console.log("Mercado Pago configurado com sucesso!");
 // CONFIGURAR NODEMAILER (GLOBAL)
 // ==========================================
 const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST, // smtp.gmail.com
-    port: 465, // porta SMTP segura
-    secure: true, // obrigatório no GMAIL SMTP
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT) || 587,
+    secure: false, // obrigatório para porta 587
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
