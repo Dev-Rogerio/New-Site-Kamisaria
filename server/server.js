@@ -20,14 +20,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    })
+);
 app.use(express.json());
 
 console.log("\n===== VARIÁVEIS CARREGADAS =====");
 console.log({
     PORT,
     EMAIL_USER: process.env.EMAIL_USER,
-    SMTP_KEY: !!process.env.SMTP_KEY,
+    EMAIL_PASS: !!process.env.EMAIL_PASS,
     ORDER_TO: process.env.ORDER_TO,
     MP_ACCESS_TOKEN: !!process.env.MP_ACCESS_TOKEN,
 });
@@ -48,8 +53,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: process.env.EMAIL_USER, // correto!
-        pass: process.env.SMTP_KEY, // chave SMTP
+        user: process.env.EMAIL_USER, // CORRETO -> login SMTP da Brevo
+        pass: process.env.EMAIL_PASS, // CORRETO -> chave SMTP
     },
 });
 
@@ -173,14 +178,18 @@ app.post("/checkout_pro", async (req, res) => {
 });
 
 // =======================================================
-// 5) ENVIO DE PEDIDO COMPLETO
+// 5) ENVIO DE PEDIDO COMPLETO (CORRIGIDO)
 // =======================================================
 app.post("/send-email", async (req, res) => {
+    console.log("Payload recebido:", req.body);
+
     try {
         const dados = req.body;
 
         const html = `
             <h2>Novo Pedido Recebido</h2>
+
+            <h3>Dados do Cliente</h3>
             <p><b>Nome:</b> ${dados.nome}</p>
             <p><b>Email:</b> ${dados.email}</p>
             <p><b>Telefone:</b> ${dados.telefone}</p>
@@ -198,15 +207,17 @@ app.post("/send-email", async (req, res) => {
         `;
 
         await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+            from: process.env.EMAIL_USER, // 🔥 BREVO EXIGE QUE SEJA O USER
             to: process.env.ORDER_TO,
-            subject: "Novo Pedido - Kamisaria Zanuto",
+            subject: "🛒 Novo Pedido Recebido",
             html,
         });
 
+        console.log("📧 Email enviado com sucesso!");
+
         res.json({ message: "E-mail enviado com sucesso!" });
     } catch (error) {
-        console.error("❌ Erro:", error);
+        console.error("❌ Erro ao enviar email:", error);
         res.status(500).json({ error: "Falha ao enviar e-mail." });
     }
 });
