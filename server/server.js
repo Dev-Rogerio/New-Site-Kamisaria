@@ -22,10 +22,15 @@ const PORT = process.env.PORT || 3001;
 
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: [
+            "http://localhost:3000",
+            "https://new-site-kamisaria-1.onrender.com",
+            "https://kamisariazanuto.com.br",
+        ],
         methods: ["GET", "POST"],
     })
 );
+
 app.use(express.json());
 
 console.log("\n===== VARIÁVEIS CARREGADAS =====");
