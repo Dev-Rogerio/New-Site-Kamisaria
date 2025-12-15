@@ -4,7 +4,8 @@
 
 import express from "express";
 import cors from "cors";
-import mercadopago from "mercadopago";
+import { MercadoPagoConfig, Preference } from "mercadopago";
+
 import dotenv from "dotenv";
 import { Resend } from "resend";
 
@@ -49,8 +50,8 @@ console.log("\x1b[0m");
 // =======================================================
 // MERCADO PAGO
 // =======================================================
-mercadopago.configure({
-    access_token: process.env.MP_ACCESS_TOKEN,
+const mpClient = new MercadoPagoConfig({
+    accessToken: process.env.MP_ACCESS_TOKEN,
 });
 
 // =======================================================
@@ -136,10 +137,9 @@ app.post("/send-email", async (req, res) => {
 // =======================================================
 // CHECKOUT PRO
 // =======================================================
+
 app.post("/checkout_pro", async (req, res) => {
-    console.log("\x1b[36m[CHECKOUT] Dados recebidos:\x1b[0m", req.body);
-    console.log("🔥🔥🔥 CHEGOU NO CHECKOUT_PRO 🔥🔥🔥");
-    console.log("📦 BODY RECEBIDO:", req.body);
+    console.log("\x1b[36m[CHECKOUT] BODY RECEBIDO:\x1b[0m", req.body);
 
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
@@ -147,63 +147,44 @@ app.post("/checkout_pro", async (req, res) => {
         const qtd = Number(quantidade);
         const unit = Number(valorUnitario);
 
-        if (
-            !titulo ||
-            isNaN(qtd) ||
-            isNaN(unit) ||
-            !emailPagador ||
-            qtd <= 0 ||
-            unit <= 0
-        ) {
-            console.log("\x1b[31m❌ Dados inválidos no checkout.\x1b[0m");
-            return res
-                .status(400)
-                .json({ error: "Dados inválidos para o checkout." });
+        if (!titulo || !emailPagador || qtd <= 0 || unit <= 0) {
+            return res.status(400).json({ error: "Dados inválidos" });
         }
 
-        console.log("\x1b[33m[EMAIL] Notificando pagamento iniciado...\x1b[0m");
+        const preference = new Preference(mpClient);
 
-        await resend.emails.send({
-            from: "Kamisaria Zanuto <onboarding@resend.dev>",
-            to: process.env.ORDER_TO,
-            subject: "🛒 Pagamento Iniciado",
-            html: `
-                <h2>Pagamento iniciado</h2>
-                <p><strong>Produto:</strong> ${titulo}</p>
-                <p><strong>Quantidade:</strong> ${qtd}</p>
-                <p><strong>Valor:</strong> R$ ${unit.toFixed(2)}</p>
-                <p><strong>Email:</strong> ${emailPagador}</p>
-            `,
+        const result = await preference.create({
+            body: {
+                items: [
+                    {
+                        title: titulo,
+                        quantity: qtd,
+                        unit_price: unit,
+                        currency_id: "BRL",
+                    },
+                ],
+                payer: {
+                    email: emailPagador,
+                },
+                back_urls: {
+                    success: "https://kamisariazanuto.com.br/sucesso",
+                    failure: "https://kamisariazanuto.com.br/falha",
+                    pending: "https://kamisariazanuto.com.br/pendente",
+                },
+                auto_return: "approved",
+            },
         });
 
-        console.log("\x1b[32m✔ Notificação enviada para o admin!\x1b[0m");
+        console.log("\x1b[32m✔ Preference criada!\x1b[0m");
 
-        console.log("\x1b[36m[MP] Criando preferência...\x1b[0m");
-
-        const preference = {
-            payer: { email: emailPagador },
-            items: [
-                {
-                    title: titulo,
-                    quantity: qtd,
-                    unit_price: unit,
-                },
-            ],
-            back_urls: {
-                success: "https://kamisariazanuto.com.br/sucesso",
-                failure: "https://kamisariazanuto.com.br/falha",
-                pending: "https://kamisariazanuto.com.br/pendente",
-            },
-            auto_return: "approved",
-        };
-
-        const mpResponse = await mercadopago.preferences.create(preference);
-
-        console.log("\x1b[32m✔ Preference criada com sucesso!\x1b[0m");
-        return res.json({ init_point: mpResponse.body.init_point });
+        return res.json({
+            init_point: result.init_point,
+        });
     } catch (error) {
-        console.log("\x1b[31m❌ Erro no checkout:\x1b[0m", error);
-        res.status(500).json({ error: "Falha no Checkout Pro." });
+        console.error("\x1b[31m❌ ERRO MP:\x1b[0m", error);
+        return res.status(500).json({
+            error: "Erro ao criar pagamento Mercado Pago",
+        });
     }
 });
 
