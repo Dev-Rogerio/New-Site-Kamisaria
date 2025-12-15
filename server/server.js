@@ -23,11 +23,13 @@ app.use(
             "https://new-site-kamisaria-1.onrender.com",
             "https://kamisariazanuto.com.br",
         ],
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
 
-app.use(express.json());
+// 🔥 responder preflight manualmente
+app.options("*", cors());
 
 // ======================
 // VARIÁVEIS

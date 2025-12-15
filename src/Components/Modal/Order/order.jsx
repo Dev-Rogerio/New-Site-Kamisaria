@@ -130,14 +130,18 @@ const Order = (props) => {
     // -------------------------------
     // Mercado Pago — Checkout Pro
     // -------------------------------
+
     const checkoutMercadoPago = async () => {
         setLoading(true);
         setError("");
 
+        const total = Number(String(valCamisa).replace(",", "."));
+        const qtd = Number(quantidade) || 1;
+
         const payload = {
             titulo: "Camisa Social",
-            quantidade: Number(quantidade) || 1,
-            valorUnitario: Number(valCamisa) / Number(quantidade),
+            quantidade: qtd,
+            valorUnitario: Number((total / qtd).toFixed(2)),
             emailPagador: email,
         };
 
@@ -148,11 +152,10 @@ const Order = (props) => {
 
         if (data?.init_point) {
             window.location.href = data.init_point;
-            return true;
+            return;
         }
 
         setError("Erro ao iniciar pagamento (Mercado Pago).");
-        return false;
     };
 
     // -------------------------------
