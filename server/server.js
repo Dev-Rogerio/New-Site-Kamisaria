@@ -136,6 +136,8 @@ app.post("/send-email", async (req, res) => {
 // =======================================================
 app.post("/checkout_pro", async (req, res) => {
     console.log("\x1b[36m[CHECKOUT] Dados recebidos:\x1b[0m", req.body);
+    console.log("🔥🔥🔥 CHEGOU NO CHECKOUT_PRO 🔥🔥🔥");
+    console.log("📦 BODY RECEBIDO:", req.body);
 
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
