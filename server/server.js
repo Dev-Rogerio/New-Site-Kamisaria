@@ -141,52 +141,39 @@ app.post("/send-email", async (req, res) => {
 // =======================================================
 
 app.post("/checkout_pro", async (req, res) => {
-    console.log("\x1b[36m[CHECKOUT] BODY RECEBIDO:\x1b[0m", req.body);
+    console.log("[CHECKOUT]", req.body);
 
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
 
-        const qtd = Number(quantidade);
-        const unit = Number(valorUnitario);
-
-        if (!titulo || !emailPagador || qtd <= 0 || unit <= 0) {
-            return res.status(400).json({ error: "Dados inválidos" });
-        }
-
-        const preference = new Preference(mpClient);
-
-        const result = await preference.create({
-            body: {
-                items: [
-                    {
-                        title: titulo,
-                        quantity: qtd,
-                        unit_price: unit,
-                        currency_id: "BRL",
-                    },
-                ],
-                payer: {
-                    email: emailPagador,
+        const preference = {
+            items: [
+                {
+                    title: titulo,
+                    quantity: Number(quantidade),
+                    unit_price: Number(valorUnitario),
+                    currency_id: "BRL",
                 },
-                back_urls: {
-                    success: "https://kamisariazanuto.com.br/sucesso",
-                    failure: "https://kamisariazanuto.com.br/falha",
-                    pending: "https://kamisariazanuto.com.br/pendente",
-                },
-                auto_return: "approved",
+            ],
+            payer: {
+                email: emailPagador,
             },
-        });
+            back_urls: {
+                success: "https://kamisariazanuto.com.br/sucesso",
+                failure: "https://kamisariazanuto.com.br/falha",
+                pending: "https://kamisariazanuto.com.br/pendente",
+            },
+            auto_return: "approved",
+        };
 
-        console.log("\x1b[32m✔ Preference criada!\x1b[0m");
+        const response = await mercadopago.preferences.create(preference);
 
         return res.json({
-            init_point: result.body.init_point,
+            init_point: response.body.init_point,
         });
-    } catch (error) {
-        console.error("\x1b[31m❌ ERRO MP:\x1b[0m", error);
-        return res.status(500).json({
-            error: "Erro ao criar pagamento Mercado Pago",
-        });
+    } catch (err) {
+        console.error("❌ ERRO MP:", err);
+        res.status(500).json({ error: "Erro Mercado Pago" });
     }
 });
 
