@@ -1,23 +1,28 @@
 // ==========================================
-// server.js — KAMISARIA ZANUTO (TESTE LOCAL OK)
+// server.js — KAMISARIA ZANUTO (PRODUÇÃO)
 // ==========================================
 
 import express from "express";
 import cors from "cors";
-import mercadopago from "mercadopago";
-
 import dotenv from "dotenv";
+import mercadopago from "mercadopago";
 import { Resend } from "resend";
 
 import { gerarTemplatePedido } from "./emailTemplate.js";
 import { gerarTemplateCliente } from "./emailTemplateCliente.js";
 
-const { MercadoPagoConfig, Preference } = mercadopago;
-
+// ==========================================
+// CONFIG
+// ==========================================
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// ==========================================
+// MIDDLEWARES
+// ==========================================
+app.use(express.json());
 
 app.use(
     cors({
@@ -31,12 +36,12 @@ app.use(
     })
 );
 
-// 🔥 responder preflight manualmente
+// Preflight
 app.options("*", cors());
 
-// ======================
-// VARIÁVEIS
-// ======================
+// ==========================================
+// LOG DE VARIÁVEIS (DEBUG SEGURO)
+// ==========================================
 console.log("\x1b[36m");
 console.log("===== VARIÁVEIS CARREGADAS =====");
 console.log({
@@ -49,23 +54,23 @@ console.log({
 console.log("=================================\n");
 console.log("\x1b[0m");
 
-// =======================================================
-// MERCADO PAGO
-// =======================================================
-const mpClient = new MercadoPagoConfig({
-    accessToken: process.env.MP_ACCESS_TOKEN,
+// ==========================================
+// MERCADO PAGO — SDK ANTIGO (CORRETO)
+// ==========================================
+mercadopago.configure({
+    access_token: process.env.MP_ACCESS_TOKEN,
 });
 
-// =======================================================
+// ==========================================
 // RESEND
-// =======================================================
+// ==========================================
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// =======================================================
-// FUNÇÃO DE EMAIL (ADMIN + CLIENTE)
-// =======================================================
+// ==========================================
+// EMAIL — ADMIN + CLIENTE
+// ==========================================
 async function sendOrderEmail(dados) {
-    console.log("\x1b[33m[EMAIL] Enviando e-mails... \x1b[0m");
+    console.log("\x1b[33m[EMAIL] Enviando e-mails...\x1b[0m");
 
     try {
         // ADMIN
@@ -76,7 +81,7 @@ async function sendOrderEmail(dados) {
             html: gerarTemplatePedido(dados),
         });
 
-        console.log("\x1b[32m✔ Email enviado para o ADMIN\x1b[0m");
+        console.log("\x1b[32m✔ Email enviado para ADMIN\x1b[0m");
 
         // CLIENTE
         await resend.emails.send({
@@ -86,65 +91,69 @@ async function sendOrderEmail(dados) {
             html: gerarTemplateCliente(dados),
         });
 
-        console.log("\x1b[32m✔ Email enviado para o CLIENTE\x1b[0m");
+        console.log("\x1b[32m✔ Email enviado para CLIENTE\x1b[0m");
         return true;
     } catch (err) {
-        console.log("\x1b[31m❌ ERRO AO ENVIAR EMAIL:\x1b[0m", err);
+        console.error("\x1b[31m❌ ERRO EMAIL:\x1b[0m", err);
         return false;
     }
 }
 
-// =======================================================
-// ROTA DE TESTE DO RESEND
-// =======================================================
-app.get("/test-resend", async (req, res) => {
-    console.log("\x1b[34m[Teste] Disparando email de teste...\x1b[0m");
+// ==========================================
+// ROTAS
+// ==========================================
 
+// 🔎 Root
+app.get("/", (req, res) => {
+    res.send("API Kamisaria Zanuto rodando OK 🚀");
+});
+
+// 📧 Teste Resend
+app.get("/test-resend", async (req, res) => {
     try {
         await resend.emails.send({
             from: "Kamisaria Zanuto <onboarding@resend.dev>",
             to: process.env.ORDER_TO,
-            subject: "🔥 Teste Resend Funcionando!",
-            html: "<h2>Seu servidor está enviando e-mails com RESEND! 🚀</h2>",
+            subject: "🔥 Teste Resend OK",
+            html: "<h2>Servidor enviando emails corretamente 🚀</h2>",
         });
 
-        console.log("\x1b[32m✔ Teste enviado com sucesso!\x1b[0m");
-        res.send("📧 Teste enviado com sucesso!");
-    } catch (error) {
-        console.log("\x1b[31m❌ Erro teste Resend:\x1b[0m", error);
-        res.status(500).send("Erro ao enviar email de teste.");
+        res.send("📧 Email de teste enviado!");
+    } catch (err) {
+        console.error("❌ Erro Resend:", err);
+        res.status(500).send("Erro ao testar email.");
     }
 });
 
-// =======================================================
-// ROTA REAL /send-email — FORM CLIENTE
-// =======================================================
+// 📦 Enviar Pedido (Email)
 app.post("/send-email", async (req, res) => {
-    console.log("\x1b[35m[ORDER RECEIVED]\x1b[0m", req.body);
+    console.log("\x1b[35m[PEDIDO RECEBIDO]\x1b[0m", req.body);
 
     const ok = await sendOrderEmail(req.body);
 
-    if (ok) {
-        console.log("\x1b[32m✔ Emails enviados com sucesso!\x1b[0m");
-        return res.json({ status: "ok", message: "Email enviado!" });
+    if (!ok) {
+        return res.status(500).json({
+            status: "erro",
+            message: "Falha ao enviar emails",
+        });
     }
 
-    console.log("\x1b[31m❌ Falha ao enviar emails.\x1b[0m");
-    return res.status(500).json({
-        status: "erro",
-        message: "Falha ao enviar email",
+    return res.json({
+        status: "ok",
+        message: "Emails enviados com sucesso!",
     });
 });
 
-// =======================================================
-// CHECKOUT PRO
-// =======================================================
-
+// 💳 Checkout Pro — Mercado Pago
 app.post("/checkout_pro", async (req, res) => {
-    console.log("[CHECKOUT]", req.body);
+    console.log("\x1b[36m[CHECKOUT]\x1b[0m", req.body);
 
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
+
+        if (!titulo || !emailPagador || quantidade <= 0 || valorUnitario <= 0) {
+            return res.status(400).json({ error: "Dados inválidos" });
+        }
 
         const preference = {
             items: [
@@ -168,24 +177,24 @@ app.post("/checkout_pro", async (req, res) => {
 
         const response = await mercadopago.preferences.create(preference);
 
+        console.log("\x1b[32m✔ Preference criada\x1b[0m");
+
         return res.json({
             init_point: response.body.init_point,
         });
     } catch (err) {
-        console.error("❌ ERRO MP:", err);
-        res.status(500).json({ error: "Erro Mercado Pago" });
+        console.error("\x1b[31m❌ ERRO MERCADO PAGO:\x1b[0m", err);
+        return res.status(500).json({
+            error: "Erro ao criar pagamento Mercado Pago",
+        });
     }
 });
 
-// ROOT
-app.get("/", (req, res) => {
-    console.log("\x1b[32m[ROOT] API acessada.\x1b[0m");
-    res.send("API rodando OK — TESTE LOCAL RESEND 🚀");
-});
-
-// START
+// ==========================================
+// START SERVER
+// ==========================================
 app.listen(PORT, () => {
     console.log("\x1b[32m");
-    console.log(`🚀 Servidor rodando na porta ${PORT} — TESTE LOCAL RESEND OK`);
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
     console.log("\x1b[0m");
 });
