@@ -4,13 +4,15 @@
 
 import express from "express";
 import cors from "cors";
-import { MercadoPagoConfig, Preference } from "mercadopago";
+import mercadopago from "mercadopago";
 
 import dotenv from "dotenv";
 import { Resend } from "resend";
 
 import { gerarTemplatePedido } from "./emailTemplate.js";
 import { gerarTemplateCliente } from "./emailTemplateCliente.js";
+
+const { MercadoPagoConfig, Preference } = mercadopago;
 
 dotenv.config();
 
@@ -178,7 +180,7 @@ app.post("/checkout_pro", async (req, res) => {
         console.log("\x1b[32m✔ Preference criada!\x1b[0m");
 
         return res.json({
-            init_point: result.init_point,
+            init_point: result.body.init_point,
         });
     } catch (error) {
         console.error("\x1b[31m❌ ERRO MP:\x1b[0m", error);
