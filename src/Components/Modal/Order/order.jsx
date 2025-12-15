@@ -135,19 +135,30 @@ const Order = (props) => {
         setLoading(true);
         setError("");
 
-        const total = Number(String(valCamisa).replace(",", "."));
-        const qtd = Number(quantidade) || 1;
+        const qtd = Number(quantidade);
+
+        // 🔥 valor total REAL (sem vírgula)
+        const total = Number(String(calcularTotalCompra()).replace(",", "."));
+
+        if (!qtd || !total || total <= 0) {
+            setError("Valor inválido para pagamento.");
+            setLoading(false);
+            return;
+        }
+
+        const valorUnitario = Number((total / qtd).toFixed(2));
 
         const payload = {
-            titulo: "Camisa Social",
+            titulo: "Camisa Social Masculina",
             quantidade: qtd,
-            valorUnitario: Number((total / qtd).toFixed(2)),
+            valorUnitario,
             emailPagador: email,
         };
 
-        console.log("PAYLOAD MP:", payload);
+        console.log("🟢 PAYLOAD MERCADO PAGO:", payload);
 
         const data = await apiPost("checkout_pro", payload);
+
         setLoading(false);
 
         if (data?.init_point) {
@@ -155,6 +166,7 @@ const Order = (props) => {
             return;
         }
 
+        console.error("❌ Resposta Mercado Pago inválida:", data);
         setError("Erro ao iniciar pagamento (Mercado Pago).");
     };
 
