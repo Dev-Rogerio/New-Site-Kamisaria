@@ -1,20 +1,16 @@
 // ==========================================
-// server.js — KAMISARIA ZANUTO (BREVO READY)
+// server.js — KAMISARIA ZANUTO (TESTE LOCAL OK)
 // ==========================================
 
 import express from "express";
 import cors from "cors";
-import nodemailer from "nodemailer";
 import mercadopago from "mercadopago";
 import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
+import { Resend } from "resend";
 
-// PATH
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { gerarTemplatePedido } from "./emailTemplate.js";
+import { gerarTemplateCliente } from "./emailTemplateCliente.js";
 
-// .env
 dotenv.config();
 
 const app = express();
@@ -33,137 +29,160 @@ app.use(
 
 app.use(express.json());
 
-console.log("\n===== VARIÁVEIS CARREGADAS =====");
+// ======================
+// VARIÁVEIS
+// ======================
+console.log("\x1b[36m");
+console.log("===== VARIÁVEIS CARREGADAS =====");
 console.log({
     PORT,
-    EMAIL_USER: process.env.EMAIL_USER,
-    EMAIL_PASS: !!process.env.EMAIL_PASS,
     ORDER_TO: process.env.ORDER_TO,
+    RESEND_API_KEY: !!process.env.RESEND_API_KEY,
     MP_ACCESS_TOKEN: !!process.env.MP_ACCESS_TOKEN,
+    WHATSAPP_NUMBER: process.env.WHATSAPP_NUMBER,
 });
 console.log("=================================\n");
+console.log("\x1b[0m");
 
-// ==========================================
+// =======================================================
 // MERCADO PAGO
-// ==========================================
+// =======================================================
 mercadopago.configure({
     access_token: process.env.MP_ACCESS_TOKEN,
 });
 
-// ==========================================
-// NODEMAILER (BREVO SMTP)
-// ==========================================
-const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.EMAIL_USER, // CORRETO -> login SMTP da Brevo
-        pass: process.env.EMAIL_PASS, // CORRETO -> chave SMTP
-    },
-});
+// =======================================================
+// RESEND
+// =======================================================
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // =======================================================
-// 1) ROTA DE TESTE
+// FUNÇÃO DE EMAIL (ADMIN + CLIENTE)
 // =======================================================
-app.get("/ping", (req, res) => res.send("pong"));
+async function sendOrderEmail(dados) {
+    console.log("\x1b[33m[EMAIL] Enviando e-mails... \x1b[0m");
 
-// =======================================================
-// 2) BOTÃO MERCADO PAGO
-// =======================================================
-app.post("/criar-preferencia", async (req, res) => {
     try {
-        const { title, quantity, price } = req.body;
-
-        if (!title || !quantity || !price) {
-            return res.status(400).json({ error: "Dados inválidos." });
-        }
-
-        const preference = {
-            items: [
-                {
-                    title,
-                    quantity: Number(quantity),
-                    unit_price: Number(price),
-                },
-            ],
-            back_urls: {
-                success: "https://kamisariazanuto.com.br/sucesso",
-                failure: "https://kamisariazanuto.com.br/falha",
-                pending: "https://kamisariazanuto.com.br/pendente",
-            },
-            auto_return: "approved",
-        };
-
-        const mpResponse = await mercadopago.preferences.create(preference);
-        return res.json({ id: mpResponse.body.id });
-    } catch (error) {
-        console.error("❌ Erro:", error);
-        res.status(500).json({ error: "Falha ao criar preferência." });
-    }
-});
-
-// =======================================================
-// 3) EMAIL NOTIFICAÇÃO (INÍCIO CHECKOUT)
-// =======================================================
-async function enviarPedidoEmail({
-    titulo,
-    quantidade,
-    valorUnitario,
-    emailPagador,
-}) {
-    try {
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+        // ADMIN
+        await resend.emails.send({
+            from: "Kamisaria Zanuto <onboarding@resend.dev>",
             to: process.env.ORDER_TO,
-            subject: "🛒 Novo pagamento iniciado",
-            html: `
-                <h2>Um cliente iniciou um pagamento!</h2>
-                <p><b>Produto:</b> ${titulo}</p>
-                <p><b>Quantidade:</b> ${quantidade}</p>
-                <p><b>Valor unitário:</b> R$ ${valorUnitario}</p>
-                <p><b>Email:</b> ${emailPagador}</p>
-            `,
+            subject: "📦 Novo Pedido — Kamisaria Zanuto",
+            html: gerarTemplatePedido(dados),
         });
 
-        console.log("📧 Email enviado!");
-    } catch (error) {
-        console.error("❌ Erro ao enviar email:", error);
+        console.log("\x1b[32m✔ Email enviado para o ADMIN\x1b[0m");
+
+        // CLIENTE
+        await resend.emails.send({
+            from: "Kamisaria Zanuto <onboarding@resend.dev>",
+            to: dados.email,
+            subject: "Seu Pedido foi Recebido - Kamisaria Zanuto",
+            html: gerarTemplateCliente(dados),
+        });
+
+        console.log("\x1b[32m✔ Email enviado para o CLIENTE\x1b[0m");
+        return true;
+    } catch (err) {
+        console.log("\x1b[31m❌ ERRO AO ENVIAR EMAIL:\x1b[0m", err);
+        return false;
     }
 }
 
 // =======================================================
-// 4) CHECKOUT PRO
+// ROTA DE TESTE DO RESEND
+// =======================================================
+app.get("/test-resend", async (req, res) => {
+    console.log("\x1b[34m[Teste] Disparando email de teste...\x1b[0m");
+
+    try {
+        await resend.emails.send({
+            from: "Kamisaria Zanuto <onboarding@resend.dev>",
+            to: process.env.ORDER_TO,
+            subject: "🔥 Teste Resend Funcionando!",
+            html: "<h2>Seu servidor está enviando e-mails com RESEND! 🚀</h2>",
+        });
+
+        console.log("\x1b[32m✔ Teste enviado com sucesso!\x1b[0m");
+        res.send("📧 Teste enviado com sucesso!");
+    } catch (error) {
+        console.log("\x1b[31m❌ Erro teste Resend:\x1b[0m", error);
+        res.status(500).send("Erro ao enviar email de teste.");
+    }
+});
+
+// =======================================================
+// ROTA REAL /send-email — FORM CLIENTE
+// =======================================================
+app.post("/send-email", async (req, res) => {
+    console.log("\x1b[35m[ORDER RECEIVED]\x1b[0m", req.body);
+
+    const ok = await sendOrderEmail(req.body);
+
+    if (ok) {
+        console.log("\x1b[32m✔ Emails enviados com sucesso!\x1b[0m");
+        return res.json({ status: "ok", message: "Email enviado!" });
+    }
+
+    console.log("\x1b[31m❌ Falha ao enviar emails.\x1b[0m");
+    return res.status(500).json({
+        status: "erro",
+        message: "Falha ao enviar email",
+    });
+});
+
+// =======================================================
+// CHECKOUT PRO
 // =======================================================
 app.post("/checkout_pro", async (req, res) => {
+    console.log("\x1b[36m[CHECKOUT] Dados recebidos:\x1b[0m", req.body);
+
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
 
-        if (!titulo || !quantidade || !valorUnitario || !emailPagador) {
-            return res.status(400).json({ error: "Dados incompletos." });
-        }
+        const qtd = Number(quantidade);
+        const unit = Number(valorUnitario);
 
-        const EMAIL_VENDEDOR = "roger.ngt3494@gmail.com";
-        if (emailPagador.toLowerCase() === EMAIL_VENDEDOR.toLowerCase()) {
+        if (
+            !titulo ||
+            isNaN(qtd) ||
+            isNaN(unit) ||
+            !emailPagador ||
+            qtd <= 0 ||
+            unit <= 0
+        ) {
+            console.log("\x1b[31m❌ Dados inválidos no checkout.\x1b[0m");
             return res
                 .status(400)
-                .json({ error: "E-mail do vendedor bloqueado." });
+                .json({ error: "Dados inválidos para o checkout." });
         }
 
-        await enviarPedidoEmail({
-            titulo,
-            quantidade,
-            valorUnitario,
-            emailPagador,
+        console.log("\x1b[33m[EMAIL] Notificando pagamento iniciado...\x1b[0m");
+
+        await resend.emails.send({
+            from: "Kamisaria Zanuto <onboarding@resend.dev>",
+            to: process.env.ORDER_TO,
+            subject: "🛒 Pagamento Iniciado",
+            html: `
+                <h2>Pagamento iniciado</h2>
+                <p><strong>Produto:</strong> ${titulo}</p>
+                <p><strong>Quantidade:</strong> ${qtd}</p>
+                <p><strong>Valor:</strong> R$ ${unit.toFixed(2)}</p>
+                <p><strong>Email:</strong> ${emailPagador}</p>
+            `,
         });
+
+        console.log("\x1b[32m✔ Notificação enviada para o admin!\x1b[0m");
+
+        console.log("\x1b[36m[MP] Criando preferência...\x1b[0m");
 
         const preference = {
             payer: { email: emailPagador },
             items: [
                 {
                     title: titulo,
-                    quantity: Number(quantidade),
-                    unit_price: Number(valorUnitario),
+                    quantity: qtd,
+                    unit_price: unit,
                 },
             ],
             back_urls: {
@@ -175,89 +194,24 @@ app.post("/checkout_pro", async (req, res) => {
         };
 
         const mpResponse = await mercadopago.preferences.create(preference);
+
+        console.log("\x1b[32m✔ Preference criada com sucesso!\x1b[0m");
         return res.json({ init_point: mpResponse.body.init_point });
     } catch (error) {
-        console.error("❌ Erro:", error);
+        console.log("\x1b[31m❌ Erro no checkout:\x1b[0m", error);
         res.status(500).json({ error: "Falha no Checkout Pro." });
     }
 });
 
-// =======================================================
-// 5) ENVIO DE PEDIDO COMPLETO (CORRIGIDO)
-// =======================================================
-app.post("/send-email", async (req, res) => {
-    console.log("Payload recebido:", req.body);
-
-    try {
-        const dados = req.body;
-
-        const html = `
-            <h2>Novo Pedido Recebido</h2>
-
-            <h3>Dados do Cliente</h3>
-            <p><b>Nome:</b> ${dados.nome}</p>
-            <p><b>Email:</b> ${dados.email}</p>
-            <p><b>Telefone:</b> ${dados.telefone}</p>
-
-            <h3>Endereço</h3>
-            <p>${dados.endereco}, Nº ${dados.numero}</p>
-            <p>${dados.bairro} — ${dados.cidade}/${dados.estado}</p>
-            <p>CEP: ${dados.cep}</p>
-
-            <h3>Produto</h3>
-            <p><b>Cor:</b> ${dados.cor}</p>
-            <p><b>Tamanho:</b> ${dados.tamanho}</p>
-            <p><b>Quantidade:</b> ${dados.quantidade}</p>
-            <p><b>Total:</b> R$ ${Number(dados.valorTotal).toFixed(2)}</p>
-        `;
-
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER, // 🔥 BREVO EXIGE QUE SEJA O USER
-            to: process.env.ORDER_TO,
-            subject: "🛒 Novo Pedido Recebido",
-            html,
-        });
-
-        console.log("📧 Email enviado com sucesso!");
-
-        res.json({ message: "E-mail enviado com sucesso!" });
-    } catch (error) {
-        console.error("❌ Erro ao enviar email:", error);
-        res.status(500).json({ error: "Falha ao enviar e-mail." });
-    }
-});
-
-// =======================================================
-// WHATSAPP
-// =======================================================
-app.post("/send-whatsapp", (req, res) => {
-    try {
-        const dados = req.body;
-
-        const numero = process.env.WHATSAPP_NUMBER;
-
-        const texto = `
-Novo Pedido - Kamisaria Zanuto
-
-${dados.nome}
-${dados.telefone}
-Camisa ${dados.cor} - Tam: ${dados.tamanho}
-Total: R$ ${Number(dados.valorTotal).toFixed(2)}
-        `;
-
-        const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(
-            texto
-        )}`;
-
-        res.json({ url });
-    } catch (error) {
-        console.error("❌ Erro WhatsApp:", error);
-        res.status(500).json({ error: "Falha ao gerar link" });
-    }
-});
-
 // ROOT
-app.get("/", (req, res) => res.send("API rodando OK"));
+app.get("/", (req, res) => {
+    console.log("\x1b[32m[ROOT] API acessada.\x1b[0m");
+    res.send("API rodando OK — TESTE LOCAL RESEND 🚀");
+});
 
 // START
-app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
+app.listen(PORT, () => {
+    console.log("\x1b[32m");
+    console.log(`🚀 Servidor rodando na porta ${PORT} — TESTE LOCAL RESEND OK`);
+    console.log("\x1b[0m");
+});

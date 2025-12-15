@@ -3,14 +3,10 @@ import React, { useState } from "react";
 import "../Order/order.css";
 import ModalPagamento from "../modalPagamento/ModalPagamento";
 
-// const API_URL =
-//     process.env.REACT_APP_API_URL ||
-//     "https://new-site-kamisaria-1.onrender.com";
-
-const API_URL =
-    window.location.hostname === "localhost"
-        ? "http://localhost:3001"
-        : "https://new-site-kamisaria-1.onrender.com";
+// =======================================
+// API LOCAL (ambiente de desenvolvimento)
+// =======================================
+const API_URL = "http://localhost:3001";
 
 const Order = (props) => {
     const {
@@ -86,7 +82,7 @@ const Order = (props) => {
     });
 
     // -------------------------------
-    // Requisições API
+    // Requisição POST padrão
     // -------------------------------
     const apiPost = async (route, payload) => {
         try {
@@ -96,14 +92,17 @@ const Order = (props) => {
                 body: JSON.stringify(payload),
             });
 
-            if (!res.ok) throw new Error(`Erro: ${route}`);
+            if (!res.ok) throw new Error(`Erro na rota ${route}`);
             return await res.json();
         } catch (err) {
-            console.error(`apiPost ${route}:`, err);
+            console.error(`❌ Erro na rota ${route}:`, err);
             return null;
         }
     };
 
+    // -------------------------------
+    // Enviar E-MAIL
+    // -------------------------------
     const enviarPedido = async () => {
         const ok = await apiPost("send-email", buildPedidoPayload());
         if (!ok) {
@@ -113,6 +112,9 @@ const Order = (props) => {
         return true;
     };
 
+    // -------------------------------
+    // Enviar WHATSAPP
+    // -------------------------------
     const enviarWhatsApp = async () => {
         const data = await apiPost("send-whatsapp", buildPedidoPayload());
         if (!data?.url) {
@@ -122,19 +124,23 @@ const Order = (props) => {
         return data.url;
     };
 
+    // -------------------------------
+    // Mercado Pago — Checkout Pro
+    // -------------------------------
     const checkoutMercadoPago = async () => {
         setLoading(true);
+        setError("");
 
         const payload = {
             titulo: "Camisa Social",
-            quantidade: quantidade || 1,
+            quantidade: Number(quantidade) || 1,
             valorUnitario: Number(valCamisa) / Number(quantidade),
             emailPagador: email,
-            nomeCartao: "Checkout Pro",
         };
 
-        const data = await apiPost("checkout_pro", payload);
+        console.log("PAYLOAD MP:", payload);
 
+        const data = await apiPost("checkout_pro", payload);
         setLoading(false);
 
         if (data?.init_point) {
@@ -147,15 +153,15 @@ const Order = (props) => {
     };
 
     // -------------------------------
-    // Handler principal — botão WhatsApp
+    // Handler principal (WhatsApp)
     // -------------------------------
     const handlePagar = async () => {
         setError("");
         setSuccessMsg("");
         setLoading(true);
 
-        const okEmail = await enviarPedido();
-        if (!okEmail) {
+        const emailOK = await enviarPedido();
+        if (!emailOK) {
             setLoading(false);
             return;
         }
@@ -179,7 +185,7 @@ const Order = (props) => {
                     <div className="dadosCompras">
                         <h2>Confirmação do Pedido</h2>
 
-                        {/** Dados pessoais */}
+                        {/* Dados pessoais */}
                         <p>
                             <strong>Nome:</strong> {nome}
                         </p>
@@ -225,10 +231,10 @@ const Order = (props) => {
 
                         <hr />
 
-                        {/** Produto */}
+                        {/* Produto */}
                         <p>
                             <strong>Produto:</strong> Camisa Social Masculina
-                            Manga Longa Slim Fit Sem Bolso
+                            Slim Fit
                         </p>
                         <p>
                             <strong>Tamanho:</strong> {selectedSize}
@@ -245,7 +251,7 @@ const Order = (props) => {
                         </p>
                         <p>
                             <strong>Frete:</strong>{" "}
-                            {frete ? formatBRL(frete) : "Frete Grátis"}
+                            {frete ? formatBRL(frete) : "Grátis"}
                         </p>
 
                         <p className="valor-total-compra">
@@ -271,7 +277,7 @@ const Order = (props) => {
                             </p>
                         )}
 
-                        {/** Botões */}
+                        {/* Botões */}
                         <div className="botoesModal" style={{ marginTop: 12 }}>
                             <button
                                 className="buttonConfirmar"

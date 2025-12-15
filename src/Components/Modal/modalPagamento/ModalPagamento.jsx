@@ -7,8 +7,17 @@ import Visa from "../../img/visa.png";
 import MasterCard from "../../img/mastercard.png";
 import Paypal from "../../img/Paypal.png";
 import Pix from "../../img/pix.png";
+
 import PixModal from "../Pix/ModalPix";
 import VisaModal from "../CartaoVisa/VisaModal";
+
+// ======================================
+// CONFIG: URL automática (LOCAL / PROD)
+// ======================================
+const API_URL =
+    window.location.hostname === "localhost"
+        ? "http://localhost:3001"
+        : "https://new-site-kamisaria-1.onrender.com";
 
 const ModalPagamento = ({
     fecharPagamento,
@@ -24,70 +33,69 @@ const ModalPagamento = ({
     const [showCartaoModal, setShowCartaoModal] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
 
-    // este setEmail pode vir de algum formulário anterior
-
+    // ============================
+    // Auto esconder modal sucesso
+    // ============================
     useEffect(() => {
         if (showSuccess) {
-            const timer = setTimeout(() => {
-                setShowSuccess(false);
-            }, 3000);
-
+            const timer = setTimeout(() => setShowSuccess(false), 3000);
             return () => clearTimeout(timer);
         }
     }, [showSuccess]);
 
-    const abrirCartao = () => {
-        setShowCartaoModal(true);
-    };
-
-    const fecharCartao = () => {
-        setShowCartaoModal(false);
-    };
+    // ============================
+    // Handlers
+    // ============================
+    const abrirCartao = () => setShowCartaoModal(true);
+    const fecharCartao = () => setShowCartaoModal(false);
 
     const handleConfirmarPagamentoVisa = () => {
         setShowCartaoModal(false);
         setShowSuccess(true);
-        // ou poderia disparar um alert aqui também
-        // alert("Pagamento realizado com sucesso via Cartão (teste)!");
     };
 
+    // ============================
+    // API: gerar PIX
+    // ============================
     const handlePayment = async (e) => {
         e.preventDefault();
 
         if (!email || !email.includes("@")) {
-            alert("E-mail inválido ou vazio.");
+            alert("E-mail inválido.");
             return;
         }
 
+        const payload = {
+            transactionAmount: Number(valCamisa) * Number(quantidade),
+            description: descricao,
+            email,
+            firstName: "Cliente",
+            lastName: "Kamisaria",
+        };
+
         try {
             const response = await axios.post(
-                "http://localhost:3001/api/gerar-pix",
-                {
-                    transactionAmount: Number(valCamisa) * Number(quantidade),
-                    description: descricao,
-                    email,
-                    firstName: "Cliente",
-                    lastName: "Kamisaria",
-                }
+                `${API_URL}/api/gerar-pix`,
+                payload
             );
 
             if (response.data?.qr_code || response.data?.qr_code_base64) {
                 setPaymentResponse(response.data);
                 setShowModal(true);
             } else {
-                console.error("QR Code não foi gerado.");
-                alert("Erro ao gerar Pix. Verifique o console.");
+                console.error("QR Code não gerado:", response.data);
+                alert("Erro ao gerar Pix.");
             }
         } catch (error) {
             console.error("Erro ao gerar Pix:", error);
-            alert("Erro ao gerar Pix. Verifique o console.");
+            alert("Erro ao gerar Pix.");
         }
     };
 
     const handleCopyClick = () => {
         if (paymentResponse?.qr_code) {
             navigator.clipboard.writeText(paymentResponse.qr_code);
-            alert("Chave Pix copiada com sucesso!");
+            alert("Chave Pix copiada!");
         }
     };
 
@@ -95,27 +103,20 @@ const ModalPagamento = ({
         document.body.classList.toggle("dark-mode");
     };
 
+    // ============================
+    // RENDER
+    // ============================
     return (
         <div className="pix-modal-overlay">
             <div className="pix-modal">
-                <button
-                    onClick={fecharPagamento}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        background: "none",
-                        border: "none",
-                        color: "#333",
-                        cursor: "pointer",
-                        fontSize: "15px",
-                        marginBottom: "16px",
-                    }}
-                >
+                {/* Voltar */}
+                <button onClick={fecharPagamento} className="btn-back">
                     <CornerUpLeft size={22} /> Voltar
                 </button>
+
                 <h2 className="pix-title">Escolha a forma de Pagamento</h2>
 
+                {/* FORM */}
                 <form onSubmit={handlePayment} className="pix-form">
                     <input
                         type="text"
@@ -150,10 +151,12 @@ const ModalPagamento = ({
                         readOnly
                     />
 
+                    {/* OPÇÕES DE PAGAMENTO */}
                     <div className="pix-button-container">
                         <button type="submit" className="pix-button">
                             <img src={Pix} alt="Pix" className="pix" />
                         </button>
+
                         <button
                             type="button"
                             className="pix-card-button"
@@ -161,6 +164,7 @@ const ModalPagamento = ({
                         >
                             <img src={Visa} alt="Visa" className="visa" />
                         </button>
+
                         <button type="button" className="pix-card-button">
                             <img
                                 src={MasterCard}
@@ -168,12 +172,14 @@ const ModalPagamento = ({
                                 className="imgMasterCard"
                             />
                         </button>
+
                         <button type="button" className="pix-card-button">
                             <img src={Paypal} alt="Paypal" className="paypal" />
                         </button>
                     </div>
                 </form>
 
+                {/* MODAL PIX */}
                 <PixModal
                     show={showModal}
                     paymentResponse={paymentResponse}
@@ -182,15 +188,17 @@ const ModalPagamento = ({
                     toggleDarkMode={toggleDarkMode}
                 />
 
+                {/* MODAL VISA */}
                 {showCartaoModal && (
                     <VisaModal
                         fecharCartao={fecharCartao}
                         onConfirmarPagamento={handleConfirmarPagamentoVisa}
-                        email={email} // aqui está passando o email corretamente!
+                        email={email}
                         valor={Number(valCamisa) * Number(quantidade)}
                     />
                 )}
 
+                {/* MODAL SUCESSO */}
                 {showSuccess && (
                     <div className="modal-sucesso-overlay">
                         <div className="modal-sucesso">

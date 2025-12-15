@@ -1,65 +1,81 @@
 import React from "react";
 import axios from "axios";
 
-const BotaoPagamento = ({
-    titulo,
-    quantidade,
-    valorUnitario,
-    emailPagador,
-    pedidoPayload, // 👈 payload completo do pedido (nome, endereço, tamanho, etc.)
-}) => {
-    // const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
-
-    // 🔥 Detecta produção x desenvolvimento automaticamente
+const BotaoPagamento = ({ pedidoPayload }) => {
     const API_URL =
         window.location.hostname === "localhost"
             ? "http://localhost:3001"
             : "https://new-site-kamisaria-1.onrender.com";
 
-    // Função genérica de POST
+    // Função para chamar a API
     const apiPost = async (route, data) => {
         try {
             const res = await axios.post(`${API_URL}/${route}`, data);
             return res.data;
         } catch (err) {
-            console.error(`Erro na rota ${route}:`, err);
+            console.error(
+                `❌ Erro na rota ${route}:`,
+                err.response?.data || err
+            );
             return null;
         }
     };
 
-    const handlePagamento = async () => {
+    // Função para validar campos obrigatórios do pedido
+    const validarPayload = (payload) => {
+        const camposObrigatorios = [
+            "nome",
+            "email",
+            "telefone",
+            "endereco",
+            "numero",
+            "bairro",
+            "cidade",
+            "estado",
+            "cep",
+            "cor",
+            "tamanho",
+            "quantidade",
+            "valorTotal",
+        ];
+        for (let campo of camposObrigatorios) {
+            if (!payload[campo]) return campo;
+        }
+        return null;
+    };
+
+    const handleEnvioEmail = async () => {
         try {
-            // 1️⃣ Envia o pedido antes (mesmo se não pagar)
-            const emailOk = await apiPost("send-email", pedidoPayload);
-            if (!emailOk) {
-                alert("Erro ao enviar pedido. Tente novamente.");
+            // 0️⃣ Valida payload
+            const campoFaltando = validarPayload(pedidoPayload);
+            if (campoFaltando) {
+                alert(`❌ Campo obrigatório faltando: ${campoFaltando}`);
                 return;
             }
 
-            // 2️⃣ Cria checkout do Mercado Pago
-            const checkout = await apiPost("checkout_pro", {
-                titulo,
-                quantidade,
-                valorUnitario,
-                emailPagador,
-            });
+            console.log("📦 Enviando pedido:", pedidoPayload);
 
-            if (!checkout?.init_point) {
-                alert("Erro ao iniciar pagamento.");
-                return;
+            // 1️⃣ Envia email e espera resposta
+            const emailRes = await apiPost("send-email", pedidoPayload);
+
+            if (emailRes?.status === "ok") {
+                console.log("📧 Email enviado com sucesso!");
+                alert(
+                    "✅ Pedido enviado! Verifique seu email para confirmação."
+                );
+            } else {
+                console.warn("⚠️ Falha ao enviar email:", emailRes);
+                alert("❌ Falha ao enviar pedido. Tente novamente.");
             }
-
-            // 3️⃣ Redireciona
-            window.location.href = checkout.init_point;
         } catch (error) {
-            console.error("Erro ao iniciar pagamento:", error);
-            alert("Erro ao iniciar pagamento. Tente novamente.");
+            console.error("🔥 Erro geral ao enviar email:", error);
+            alert("❌ Erro ao enviar pedido. Tente novamente.");
         }
     };
 
     return (
         <button
-            onClick={handlePagamento}
+            onClick={handleEnvioEmail}
             style={{
                 padding: "12px 24px",
                 fontSize: "16px",
@@ -70,7 +86,7 @@ const BotaoPagamento = ({
                 cursor: "pointer",
             }}
         >
-            Pagar com Mercado Pago
+            Enviar Pedido por Email
         </button>
     );
 };
