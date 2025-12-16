@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../Order/order.css";
-import ModalPagamento from "../modalPagamento/ModalPagamento";
 
 // =======================================
 // API (DEV / PROD)
@@ -97,19 +96,18 @@ const Order = (props) => {
                 body: JSON.stringify(payload),
             });
 
-            if (!res.ok) throw new Error(`Erro na rota ${route}`);
-            return await res.json();
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(`❌ API ${route} erro:`, data);
+                return null;
+            }
+
+            return data;
         } catch (err) {
-            console.error(`❌ API ${route}:`, err);
+            console.error(`❌ API ${route} falhou:`, err);
             return null;
         }
-    };
-
-    // =======================================
-    // EMAIL
-    // =======================================
-    const enviarPedido = async () => {
-        return await apiPost("send-email", buildPedidoPayload());
     };
 
     // =======================================
@@ -120,13 +118,16 @@ const Order = (props) => {
         setSuccessMsg("");
         setLoadingWhats(true);
 
-        const emailOK = await enviarPedido();
+        console.log("📨 Enviando pedido por email...");
+        const emailOK = await apiPost("send-email", buildPedidoPayload());
+
         if (!emailOK) {
             setError("Erro ao enviar pedido.");
             setLoadingWhats(false);
             return;
         }
 
+        console.log("📲 Gerando WhatsApp...");
         const data = await apiPost("send-whatsapp", buildPedidoPayload());
         setLoadingWhats(false);
 
@@ -149,7 +150,7 @@ const Order = (props) => {
         const qtd = Number(quantidade);
         const total = Number(String(calcularTotalCompra()).replace(",", "."));
 
-        if (!qtd || !total || total <= 0) {
+        if (!qtd || total <= 0) {
             setError("Valor inválido para pagamento.");
             setLoadingMP(false);
             return;
@@ -162,10 +163,13 @@ const Order = (props) => {
             emailPagador: email,
         };
 
+        console.log("💳 Mercado Pago payload:", payload);
+
         const data = await apiPost("checkout_pro", payload);
         setLoadingMP(false);
 
         if (data?.init_point) {
+            console.log("✅ Redirecionando Mercado Pago");
             window.location.href = data.init_point;
             return;
         }
@@ -178,119 +182,69 @@ const Order = (props) => {
     // =======================================
     return (
         <div className="modal-backdrop">
-            <div className="order" role="dialog" aria-modal="true">
-                <div className="orderPage">
-                    <div className="dadosCompras">
-                        <h2>Confirmação do Pedido</h2>
+            <div className="order">
+                <div className="dadosCompras">
+                    <h2>Confirmação do Pedido</h2>
 
-                        <p>
-                            <strong>Nome:</strong> {nome}
-                        </p>
-                        <p>
-                            <strong>CPF:</strong> {cpf}
-                        </p>
-                        <p>
-                            <strong>Email:</strong> {email}
-                        </p>
-                        <p>
-                            <strong>CEP:</strong> {cep}
-                        </p>
-                        <p>
-                            <strong>Estado:</strong> {estado}
-                        </p>
-                        <p>
-                            <strong>Cidade:</strong> {cidade}
-                        </p>
-                        <p>
-                            <strong>Bairro:</strong> {bairro}
-                        </p>
-                        <p>
-                            <strong>Endereço:</strong> {endereco}, Nº {numero}
-                        </p>
+                    <p>
+                        <strong>Nome:</strong> {nome}
+                    </p>
+                    <p>
+                        <strong>Email:</strong> {email}
+                    </p>
+                    <p>
+                        <strong>Telefone:</strong> {telefone}
+                    </p>
+                    <p>
+                        <strong>Cidade:</strong> {cidade}
+                    </p>
+                    <p>
+                        <strong>Endereço:</strong> {endereco}, Nº {numero}
+                    </p>
 
-                        {complemento && (
-                            <p>
-                                <strong>Complemento:</strong> {complemento}
-                            </p>
-                        )}
-                        {observacao && (
-                            <p>
-                                <strong>Observação:</strong> {observacao}
-                            </p>
-                        )}
+                    <hr />
 
-                        <p>
-                            <strong>Telefone:</strong> {telefone}
-                        </p>
-                        <p>
-                            <strong>Local:</strong> {local}
-                        </p>
+                    <p>
+                        <strong>Produto:</strong> Camisa Social Masculina
+                    </p>
+                    <p>
+                        <strong>Tamanho:</strong> {selectedSize}
+                    </p>
+                    <p>
+                        <strong>Cor:</strong> {selectedColor}
+                    </p>
+                    <p>
+                        <strong>Quantidade:</strong> {quantidade}
+                    </p>
+                    <p>
+                        <strong>Valor Total:</strong> {calcularTotalCompra()}
+                    </p>
 
-                        <hr />
+                    {error && <p style={{ color: "crimson" }}>{error}</p>}
+                    {successMsg && (
+                        <p style={{ color: "green" }}>{successMsg}</p>
+                    )}
 
-                        <p>
-                            <strong>Produto:</strong> Camisa Social Masculina
-                            Slim Fit
-                        </p>
-                        <p>
-                            <strong>Tamanho:</strong> {selectedSize}
-                        </p>
-                        <p>
-                            <strong>Cor:</strong> {selectedColor}
-                        </p>
-                        <p>
-                            <strong>Quantidade:</strong> {quantidade}
-                        </p>
-                        <p>
-                            <strong>Valor da Compra:</strong>{" "}
-                            {formatBRL(valCamisa)}
-                        </p>
-                        <p>
-                            <strong>Frete:</strong>{" "}
-                            {frete ? formatBRL(frete) : "Grátis"}
-                        </p>
+                    <div className="botoesModal">
+                        <button
+                            onClick={handleWhatsApp}
+                            disabled={loadingWhats}
+                        >
+                            {loadingWhats
+                                ? "Processando..."
+                                : "Pagar (WhatsApp)"}
+                        </button>
 
-                        <p className="valor-total-compra">
-                            <strong>
-                                Valor Total da Compra: {calcularTotalCompra()}
-                            </strong>
-                        </p>
+                        <button
+                            onClick={checkoutMercadoPago}
+                            disabled={loadingMP}
+                        >
+                            {loadingMP
+                                ? "Redirecionando..."
+                                : "Pagar com Mercado Pago"}
+                        </button>
 
-                        {error && <p style={{ color: "crimson" }}>{error}</p>}
-                        {successMsg && (
-                            <p style={{ color: "green" }}>{successMsg}</p>
-                        )}
-
-                        <div className="botoesModal" style={{ marginTop: 12 }}>
-                            <button
-                                className="buttonConfirmar"
-                                onClick={handleWhatsApp}
-                                disabled={loadingWhats}
-                            >
-                                {loadingWhats
-                                    ? "Processando..."
-                                    : "Pagar (WhatsApp)"}
-                            </button>
-
-                            <button
-                                className="buttonConfirmar"
-                                onClick={checkoutMercadoPago}
-                                disabled={loadingMP}
-                                style={{ marginLeft: 8 }}
-                            >
-                                {loadingMP
-                                    ? "Redirecionando..."
-                                    : "Pagar com Mercado Pago"}
-                            </button>
-
-                            <button
-                                className="buttonCancelar"
-                                onClick={closeModal}
-                                style={{ marginLeft: 8 }}
-                            >
-                                Voltar
-                            </button>
-                        </div>
+                        <button onClick={closeModal}>Voltar</button>
                     </div>
                 </div>
             </div>

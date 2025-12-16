@@ -1,201 +1,195 @@
-// ==========================================
-// server.js — KAMISARIA ZANUTO (PRODUÇÃO)
-// ==========================================
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mercadopago from "mercadopago";
-import { Resend } from "resend";
 
-import { gerarTemplatePedido } from "./emailTemplate.js";
-import { gerarTemplateCliente } from "./emailTemplateCliente.js";
+import nodemailer from "nodemailer";
 
-// ==========================================
-// CONFIG
-// ==========================================
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-// ==========================================
-// MIDDLEWARES
-// ==========================================
+/* ===============================
+   CONFIGURAÇÕES BÁSICAS
+================================ */
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.use(
     cors({
         origin: [
             "http://localhost:3000",
-            "https://new-site-kamisaria-1.onrender.com",
+            "http://localhost:5173",
             "https://kamisariazanuto.com.br",
+            "https://www.kamisariazanuto.com.br",
         ],
-        methods: ["GET", "POST", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Content-Type"],
     })
 );
 
-// Preflight
-app.options("*", cors());
+const PORT = process.env.PORT || 3001;
 
-// ==========================================
-// LOG DE VARIÁVEIS (DEBUG SEGURO)
-// ==========================================
-console.log("\x1b[36m");
+/* ===============================
+   VALIDAÇÃO DE VARIÁVEIS
+================================ */
+
+const requiredEnvs = [
+    "MP_ACCESS_TOKEN",
+    "EMAIL_HOST",
+    "EMAIL_PORT",
+    "EMAIL_USER",
+    "EMAIL_PASS",
+    "ORDER_TO",
+    "WHATSAPP_NUMBER",
+];
+
+requiredEnvs.forEach((env) => {
+    if (!process.env[env]) {
+        console.error(`❌ Variável de ambiente ausente: ${env}`);
+    }
+});
+
 console.log("===== VARIÁVEIS CARREGADAS =====");
 console.log({
     PORT,
     ORDER_TO: process.env.ORDER_TO,
-    RESEND_API_KEY: !!process.env.RESEND_API_KEY,
     MP_ACCESS_TOKEN: !!process.env.MP_ACCESS_TOKEN,
+    EMAIL_HOST: process.env.EMAIL_HOST,
     WHATSAPP_NUMBER: process.env.WHATSAPP_NUMBER,
 });
-console.log("=================================\n");
-console.log("\x1b[0m");
+console.log("=================================");
 
-// ==========================================
-// MERCADO PAGO — SDK ANTIGO (CORRETO)
-// ==========================================
-mercadopago.configure({
-    access_token: process.env.MP_ACCESS_TOKEN,
+/* ===============================
+   EMAIL (BREVO SMTP)
+================================ */
+
+const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: false,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
 });
 
-// ==========================================
-// RESEND
-// ==========================================
-const resend = new Resend(process.env.RESEND_API_KEY);
+/* ===============================
+   ROTAS
+================================ */
 
-// ==========================================
-// EMAIL — ADMIN + CLIENTE
-// ==========================================
-async function sendOrderEmail(dados) {
-    console.log("\x1b[33m[EMAIL] Enviando e-mails...\x1b[0m");
-
-    try {
-        // ADMIN
-        await resend.emails.send({
-            from: "Kamisaria Zanuto <onboarding@resend.dev>",
-            to: process.env.ORDER_TO,
-            subject: "📦 Novo Pedido — Kamisaria Zanuto",
-            html: gerarTemplatePedido(dados),
-        });
-
-        console.log("\x1b[32m✔ Email enviado para ADMIN\x1b[0m");
-
-        // CLIENTE
-        await resend.emails.send({
-            from: "Kamisaria Zanuto <onboarding@resend.dev>",
-            to: dados.email,
-            subject: "Seu Pedido foi Recebido - Kamisaria Zanuto",
-            html: gerarTemplateCliente(dados),
-        });
-
-        console.log("\x1b[32m✔ Email enviado para CLIENTE\x1b[0m");
-        return true;
-    } catch (err) {
-        console.error("\x1b[31m❌ ERRO EMAIL:\x1b[0m", err);
-        return false;
-    }
-}
-
-// ==========================================
-// ROTAS
-// ==========================================
-
-// 🔎 Root
-app.get("/", (req, res) => {
-    res.send("API Kamisaria Zanuto rodando OK 🚀");
+// Healthcheck
+app.get("/", (_, res) => {
+    res.send("🚀 API Kamisaria Zanuto rodando");
 });
 
-// 📧 Teste Resend
-app.get("/test-resend", async (req, res) => {
-    try {
-        await resend.emails.send({
-            from: "Kamisaria Zanuto <onboarding@resend.dev>",
-            to: process.env.ORDER_TO,
-            subject: "🔥 Teste Resend OK",
-            html: "<h2>Servidor enviando emails corretamente 🚀</h2>",
-        });
-
-        res.send("📧 Email de teste enviado!");
-    } catch (err) {
-        console.error("❌ Erro Resend:", err);
-        res.status(500).send("Erro ao testar email.");
-    }
-});
-
-// 📦 Enviar Pedido (Email)
+/* ---------- EMAIL ---------- */
 app.post("/send-email", async (req, res) => {
-    console.log("\x1b[35m[PEDIDO RECEBIDO]\x1b[0m", req.body);
+    try {
+        const data = req.body;
 
-    const ok = await sendOrderEmail(req.body);
-
-    if (!ok) {
-        return res.status(500).json({
-            status: "erro",
-            message: "Falha ao enviar emails",
+        await transporter.sendMail({
+            from: `"Kamisaria Zanuto" <${process.env.EMAIL_USER}>`,
+            to: process.env.ORDER_TO,
+            subject: "🧾 Novo Pedido - Kamisaria Zanuto",
+            html: `
+        <h2>Novo Pedido</h2>
+        <p><strong>Cliente:</strong> ${data.nome}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Telefone:</strong> ${data.telefone}</p>
+        <p><strong>Produto:</strong> Camisa Social</p>
+        <p><strong>Tamanho:</strong> ${data.tamanho}</p>
+        <p><strong>Cor:</strong> ${data.cor}</p>
+        <p><strong>Quantidade:</strong> ${data.quantidade}</p>
+        <p><strong>Total:</strong> R$ ${data.valorTotal}</p>
+      `,
         });
-    }
 
-    return res.json({
-        status: "ok",
-        message: "Emails enviados com sucesso!",
-    });
+        res.json({ success: true });
+    } catch (err) {
+        console.error("❌ Erro ao enviar email:", err);
+        res.status(500).json({ error: "Erro ao enviar email" });
+    }
 });
 
-// 💳 Checkout Pro — Mercado Pago
-app.post("/checkout_pro", async (req, res) => {
-    console.log("\x1b[36m[CHECKOUT]\x1b[0m", req.body);
+/* ---------- WHATSAPP ---------- */
+app.post("/send-whatsapp", async (req, res) => {
+    try {
+        const data = req.body;
 
+        const msg = `
+🧾 *Novo Pedido*
+Cliente: ${data.nome}
+Produto: Camisa Social
+Tamanho: ${data.tamanho}
+Cor: ${data.cor}
+Quantidade: ${data.quantidade}
+Total: R$ ${data.valorTotal}
+`;
+
+        const url = `https://wa.me/${
+            process.env.WHATSAPP_NUMBER
+        }?text=${encodeURIComponent(msg)}`;
+
+        res.json({ url });
+    } catch (err) {
+        console.error("❌ Erro WhatsApp:", err);
+        res.status(500).json({ error: "Erro WhatsApp" });
+    }
+});
+
+/* ---------- MERCADO PAGO ---------- */
+app.post("/checkout_pro", async (req, res) => {
     try {
         const { titulo, quantidade, valorUnitario, emailPagador } = req.body;
 
-        if (!titulo || !emailPagador || quantidade <= 0 || valorUnitario <= 0) {
-            return res.status(400).json({ error: "Dados inválidos" });
+        const response = await fetch(
+            "https://api.mercadopago.com/checkout/preferences",
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    items: [
+                        {
+                            title: titulo,
+                            quantity: Number(quantidade),
+                            unit_price: Number(valorUnitario),
+                            currency_id: "BRL",
+                        },
+                    ],
+                    payer: {
+                        email: emailPagador,
+                    },
+                    back_urls: {
+                        success: "https://kamisariazanuto.com.br",
+                        failure: "https://kamisariazanuto.com.br",
+                        pending: "https://kamisariazanuto.com.br",
+                    },
+                    auto_return: "approved",
+                }),
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.init_point) {
+            console.error("❌ Mercado Pago erro:", data);
+            return res.status(400).json(data);
         }
 
-        const preference = {
-            items: [
-                {
-                    title: titulo,
-                    quantity: Number(quantidade),
-                    unit_price: Number(valorUnitario),
-                    currency_id: "BRL",
-                },
-            ],
-            payer: {
-                email: emailPagador,
-            },
-            back_urls: {
-                success: "https://kamisariazanuto.com.br/sucesso",
-                failure: "https://kamisariazanuto.com.br/falha",
-                pending: "https://kamisariazanuto.com.br/pendente",
-            },
-            auto_return: "approved",
-        };
-
-        const response = await mercadopago.preferences.create(preference);
-
-        console.log("\x1b[32m✔ Preference criada\x1b[0m");
-
-        return res.json({
-            init_point: response.body.init_point,
-        });
+        res.json(data);
     } catch (err) {
-        console.error("\x1b[31m❌ ERRO MERCADO PAGO:\x1b[0m", err);
-        return res.status(500).json({
-            error: "Erro ao criar pagamento Mercado Pago",
-        });
+        console.error("❌ Erro Mercado Pago:", err);
+        res.status(500).json({ error: "Erro Mercado Pago" });
     }
 });
 
-// ==========================================
-// START SERVER
-// ==========================================
+/* ===============================
+   START
+================================ */
+
 app.listen(PORT, () => {
-    console.log("\x1b[32m");
     console.log(`🚀 Servidor rodando na porta ${PORT}`);
-    console.log("\x1b[0m");
 });
