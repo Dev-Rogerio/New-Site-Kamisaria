@@ -132,6 +132,7 @@ const Order = (props) => {
     // -------------------------------
 
     const checkoutMercadoPago = async () => {
+        console.log("🔥 BOTÃO MERCADO PAGO CLICADO");
         setLoading(true);
         setError("");
 
