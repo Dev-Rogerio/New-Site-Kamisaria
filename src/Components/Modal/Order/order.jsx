@@ -1,10 +1,9 @@
-// src/Order/Order.jsx
 import React, { useState } from "react";
 import "../Order/order.css";
 import ModalPagamento from "../modalPagamento/ModalPagamento";
 
 // =======================================
-// API LOCAL (ambiente de desenvolvimento)
+// API (DEV / PROD)
 // =======================================
 const API_URL =
     window.location.hostname === "localhost"
@@ -35,14 +34,17 @@ const Order = (props) => {
         frete,
     } = props;
 
-    const [showPagamento, setShowPagamento] = useState(false);
-    const [loading, setLoading] = useState(false);
+    // =======================================
+    // STATES
+    // =======================================
+    const [loadingWhats, setLoadingWhats] = useState(false);
+    const [loadingMP, setLoadingMP] = useState(false);
     const [error, setError] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
 
-    // -------------------------------
-    // Funções utilitárias
-    // -------------------------------
+    // =======================================
+    // HELPERS
+    // =======================================
     const formatBRL = (v) =>
         `R$ ${Number(v || 0)
             .toFixed(2)
@@ -59,9 +61,9 @@ const Order = (props) => {
         setHideAddress(false);
     };
 
-    // -------------------------------
-    // Payload único para API
-    // -------------------------------
+    // =======================================
+    // PAYLOAD BASE
+    // =======================================
     const buildPedidoPayload = () => ({
         nome,
         cpf,
@@ -84,9 +86,9 @@ const Order = (props) => {
         valorTotal: Number(valCamisa) + (frete ? Number(frete) : 0),
     });
 
-    // -------------------------------
-    // Requisição POST padrão
-    // -------------------------------
+    // =======================================
+    // API POST
+    // =======================================
     const apiPost = async (route, payload) => {
         try {
             const res = await fetch(`${API_URL}/${route}`, {
@@ -98,105 +100,82 @@ const Order = (props) => {
             if (!res.ok) throw new Error(`Erro na rota ${route}`);
             return await res.json();
         } catch (err) {
-            console.error(`❌ Erro na rota ${route}:`, err);
+            console.error(`❌ API ${route}:`, err);
             return null;
         }
     };
 
-    // -------------------------------
-    // Enviar E-MAIL
-    // -------------------------------
+    // =======================================
+    // EMAIL
+    // =======================================
     const enviarPedido = async () => {
-        const ok = await apiPost("send-email", buildPedidoPayload());
-        if (!ok) {
-            setError("Erro ao enviar pedido. Tente novamente.");
-            return false;
-        }
-        return true;
+        return await apiPost("send-email", buildPedidoPayload());
     };
 
-    // -------------------------------
-    // Enviar WHATSAPP
-    // -------------------------------
-    const enviarWhatsApp = async () => {
-        const data = await apiPost("send-whatsapp", buildPedidoPayload());
-        if (!data?.url) {
-            setError("Erro ao preparar mensagem no WhatsApp.");
-            return null;
-        }
-        return data.url;
-    };
-
-    // -------------------------------
-    // Mercado Pago — Checkout Pro
-    // -------------------------------
-
-    const checkoutMercadoPago = async () => {
-        console.log("🔥 BOTÃO MERCADO PAGO CLICADO");
-        setLoading(true);
+    // =======================================
+    // WHATSAPP
+    // =======================================
+    const handleWhatsApp = async () => {
         setError("");
+        setSuccessMsg("");
+        setLoadingWhats(true);
+
+        const emailOK = await enviarPedido();
+        if (!emailOK) {
+            setError("Erro ao enviar pedido.");
+            setLoadingWhats(false);
+            return;
+        }
+
+        const data = await apiPost("send-whatsapp", buildPedidoPayload());
+        setLoadingWhats(false);
+
+        if (!data?.url) {
+            setError("Erro ao abrir WhatsApp.");
+            return;
+        }
+
+        setSuccessMsg("Pedido pronto — abrindo WhatsApp...");
+        window.open(data.url, "_blank");
+    };
+
+    // =======================================
+    // MERCADO PAGO
+    // =======================================
+    const checkoutMercadoPago = async () => {
+        setError("");
+        setLoadingMP(true);
 
         const qtd = Number(quantidade);
-
-        // 🔥 valor total REAL (sem vírgula)
         const total = Number(String(calcularTotalCompra()).replace(",", "."));
 
         if (!qtd || !total || total <= 0) {
             setError("Valor inválido para pagamento.");
-            setLoading(false);
+            setLoadingMP(false);
             return;
         }
-
-        const valorUnitario = Number((total / qtd).toFixed(2));
 
         const payload = {
             titulo: "Camisa Social Masculina",
             quantidade: qtd,
-            valorUnitario,
+            valorUnitario: Number((total / qtd).toFixed(2)),
             emailPagador: email,
         };
 
-        console.log("🟢 PAYLOAD MERCADO PAGO:", payload);
-
         const data = await apiPost("checkout_pro", payload);
-
-        setLoading(false);
+        setLoadingMP(false);
 
         if (data?.init_point) {
             window.location.href = data.init_point;
             return;
         }
 
-        console.error("❌ Resposta Mercado Pago inválida:", data);
         setError("Erro ao iniciar pagamento (Mercado Pago).");
     };
 
-    // -------------------------------
-    // Handler principal (WhatsApp)
-    // -------------------------------
-    const handlePagar = async () => {
-        setError("");
-        setSuccessMsg("");
-        setLoading(true);
-
-        const emailOK = await enviarPedido();
-        if (!emailOK) {
-            setLoading(false);
-            return;
-        }
-
-        const whatsappUrl = await enviarWhatsApp();
-        setLoading(false);
-
-        if (whatsappUrl) {
-            setSuccessMsg("Pedido pronto — abrindo WhatsApp...");
-            window.open(whatsappUrl, "_blank");
-        }
-    };
-
-    // -------------------------------
+    // =======================================
     // JSX
-    // -------------------------------
+    // =======================================
     return (
         <div className="modal-backdrop">
             <div className="order" role="dialog" aria-modal="true">
@@ -204,7 +183,6 @@ const Order = (props) => {
                     <div className="dadosCompras">
                         <h2>Confirmação do Pedido</h2>
 
-                        {/* Dados pessoais */}
                         <p>
                             <strong>Nome:</strong> {nome}
                         </p>
@@ -250,7 +228,6 @@ const Order = (props) => {
 
                         <hr />
 
-                        {/* Produto */}
                         <p>
                             <strong>Produto:</strong> Camisa Social Masculina
                             Slim Fit
@@ -279,31 +256,18 @@ const Order = (props) => {
                             </strong>
                         </p>
 
-                        {error && (
-                            <p
-                                className="error-msg"
-                                style={{ color: "crimson" }}
-                            >
-                                {error}
-                            </p>
-                        )}
+                        {error && <p style={{ color: "crimson" }}>{error}</p>}
                         {successMsg && (
-                            <p
-                                className="success-msg"
-                                style={{ color: "green" }}
-                            >
-                                {successMsg}
-                            </p>
+                            <p style={{ color: "green" }}>{successMsg}</p>
                         )}
 
-                        {/* Botões */}
                         <div className="botoesModal" style={{ marginTop: 12 }}>
                             <button
                                 className="buttonConfirmar"
-                                onClick={handlePagar}
-                                disabled={loading}
+                                onClick={handleWhatsApp}
+                                disabled={loadingWhats}
                             >
-                                {loading
+                                {loadingWhats
                                     ? "Processando..."
                                     : "Pagar (WhatsApp)"}
                             </button>
@@ -311,10 +275,12 @@ const Order = (props) => {
                             <button
                                 className="buttonConfirmar"
                                 onClick={checkoutMercadoPago}
-                                disabled={loading}
+                                disabled={loadingMP}
                                 style={{ marginLeft: 8 }}
                             >
-                                Pagar com Mercado Pago
+                                {loadingMP
+                                    ? "Redirecionando..."
+                                    : "Pagar com Mercado Pago"}
                             </button>
 
                             <button
@@ -327,18 +293,6 @@ const Order = (props) => {
                         </div>
                     </div>
                 </div>
-
-                {showPagamento && (
-                    <ModalPagamento
-                        descricao="Camisa Personalizada"
-                        valCamisa={valCamisa}
-                        quantidade={quantidade}
-                        selectedSize={selectedSize}
-                        selectedColor={selectedColor}
-                        email={email}
-                        fecharPagamento={() => setShowPagamento(false)}
-                    />
-                )}
             </div>
         </div>
     );
